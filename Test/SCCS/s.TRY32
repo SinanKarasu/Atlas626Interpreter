@@ -1,0 +1,33 @@
+h55445
+s 00000/00000/00000
+d R 1.2 97/09/10 14:37:04 Codemgr 2 1
+c SunPro Code Manager data about conflicts, renames, etc...
+c Name history : 1 0 Test/TRY32
+e
+s 00015/00000/00000
+d D 1.1 97/09/10 14:37:03 frank 1 0
+c CodeManager Uniquification: Test/TRY32
+c 
+e
+u
+U
+f e 0
+t
+T
+I 1
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, VARIABLE, 'RECEIVED1','RECEIVED2' IS STRING (20) OF CHAR $
+        DEFINE,'CONC',PROCEDURE
+           ( 'X' ,'Y' IS STRING (8) OF CHAR) 
+            RESULT ('DATA'    IS STRING (20) OF CHAR) $
+            CALCULATE, 'DATA' = 'X' & 'Y' $
+            LEAVE, 'CONC' $
+            OUTPUT,TEXT,FROM 'DATA' $
+        END, 'CONC' $
+ 099000 COMMENCE, MAIN PROCEDURE $
+        PERFORM, 'CONC' ,TABLE 3 VAR 2 TIMES
+        (C'HELLO',C'THERE') RESULT ('RECEIVED1'), 
+        (C'OUCH ',C'COUCH') RESULT ('RECEIVED2') $
+        OUTPUT,TEXT,FROM 'RECEIVED1' ,C':','RECEIVED2' $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $
+E 1

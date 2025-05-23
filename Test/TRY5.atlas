@@ -1,0 +1,13 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, VARIABLE, 'X' IS ARRAY(1 THRU 5) OF DECIMAL $
+        DEFINE,'MULT',FUNCTION
+           ( 'X' IS INTEGER,'Y' IS DECIMAL) DECIMAL$
+           CALCULATE, 'MULT' = 'X' * 'Y' $
+        END, 'MULT' $
+ 099000 COMMENCE, MAIN PROCEDURE $
+        CALCULATE, 'X'(1) = 3 $
+        OUTPUT,TEXT,FROM 'X'(1) $
+        CALCULATE, 'X'(2) = 6 + 'MULT'('X'(1),3.0) $
+        CALCULATE, 'X'(3) =  'MULT'('X'(1),'X'(2)) $
+        OUTPUT,TEXT,FROM 'X'(1), 'X'(2),'X'(3) $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $

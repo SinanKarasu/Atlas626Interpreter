@@ -1,0 +1,15 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, VARIABLE, 'X','Y' IS DECIMAL $
+ 099000 COMMENCE, MAIN PROCEDURE $
+        CALCULATE, 'X' =1.9      $
+        OUTPUT,TEXT,FROM 'X' $
+        WHILE, 'X' LE 9.9 , THEN    $
+           CALCULATE, 'X' ='X' + 1.0      $
+           OUTPUT, TEXT, FROM  C'X IS ','X' $
+           IF, 'X' GT 3.0 , THEN    $
+              OUTPUT, TEXT, FROM  C' LEAVING ARIZONA' $
+              LEAVE,WHILE $
+           END, IF $
+        END, WHILE $
+        OUTPUT,TEXT,FROM C' FINAL X IS ', 'X' $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $

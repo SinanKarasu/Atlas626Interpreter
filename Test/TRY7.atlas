@@ -1,0 +1,15 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, VARIABLE, 'X','Y' IS DECIMAL $
+ 099000 COMMENCE, MAIN PROCEDURE $
+        CALCULATE, 'X' =1.9      $
+        OUTPUT,TEXT,FROM 'X' $
+        IF, 'X' LT 2.0 , THEN    $
+           OUTPUT, TEXT, FROM  10 $
+        ELSE IF, 'X' GT 2.0 ,THEN $
+           OUTPUT, TEXT, FROM   20 $
+        ELSE $
+           OUTPUT, TEXT, FROM   30 $
+        END, IF $
+ 100000 CALCULATE, 'X' = 'X' * 'X' $
+        OUTPUT,TEXT,FROM 'X' $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $

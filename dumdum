@@ -1,0 +1,2269 @@
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:239: target `+' given more than once in the same rule.
+Makefile:246: warning: overriding commands for target `+'
+Makefile:240: warning: ignoring old commands for target `+'
+Makefile:245: target `+' given more than once in the same rule.
+In file included from verbs.cpp:18:
+In file included from ./atlas.h:5:
+In file included from ./AtlasStd.h:4:
+./Std.h:3:9: warning: 'RWBOUNDS_CHECK' macro redefined [-Wmacro-redefined]
+    3 | #define RWBOUNDS_CHECK 1
+      |         ^
+./RWCompat.h:15:9: note: previous definition is here
+   15 | #define RWBOUNDS_CHECK 0
+      |         ^
+In file included from verbs.cpp:18:
+In file included from ./atlas.h:6:
+In file included from ./AtlasDefinitions.h:13:
+In file included from ./AST.h:4:
+In file included from ./AtlasAST.h:6:
+In file included from ./Scope.h:7:
+./Dictionary.h:95:21: error: member access into incomplete type 'AST'
+   95 |             if (item->matches(key)) {
+      |                     ^
+./pccts/h/ASTBase.h:121:7: note: forward declaration of 'AST'
+  121 | class AST;      // announce that this class will be coming along shortly
+      |       ^
+In file included from verbs.cpp:18:
+In file included from ./atlas.h:6:
+In file included from ./AtlasDefinitions.h:13:
+In file included from ./AST.h:4:
+./AtlasAST.h:110:16: warning: 'AST::preorder_action' hides overloaded virtual function [-Woverloaded-virtual]
+  110 |         virtual void            preorder_action();
+      |                                 ^
+./pccts/h/ASTBase.h:86:15: note: hidden overloaded virtual function 'ASTBase::preorder_action' declared here: different number of parameters (1 vs 0)
+   86 |         virtual void preorder_action(void* /*pData*/ = NULL /* MR23 */) { ; }
+      |                      ^
+In file included from verbs.cpp:18:
+In file included from ./atlas.h:6:
+In file included from ./AtlasDefinitions.h:13:
+In file included from ./AST.h:4:
+./AtlasAST.h:111:16: warning: 'AST::preorder_before_action' hides overloaded virtual function [-Woverloaded-virtual]
+  111 |         virtual void            preorder_before_action();
+      |                                 ^
+./pccts/h/ASTBase.h:87:15: note: hidden overloaded virtual function 'ASTBase::preorder_before_action' declared here: different number of parameters (1 vs 0)
+   87 |         virtual void preorder_before_action(void* /*pData*/ = NULL /* MR23 */) { /* MR23 */ printMessage(stdout, " ("); }
+      |                      ^
+In file included from verbs.cpp:18:
+In file included from ./atlas.h:6:
+In file included from ./AtlasDefinitions.h:13:
+In file included from ./AST.h:4:
+./AtlasAST.h:112:16: warning: 'AST::preorder_after_action' hides overloaded virtual function [-Woverloaded-virtual]
+  112 |         virtual void            preorder_after_action();
+      |                                 ^
+./pccts/h/ASTBase.h:88:15: note: hidden overloaded virtual function 'ASTBase::preorder_after_action' declared here: different number of parameters (1 vs 0)
+   88 |         virtual void preorder_after_action(void* /*pData*/ = NULL /* MR23 */) { /* MR23 */ printMessage(stdout, " )"); }
+      |                      ^
+In file included from verbs.cpp:18:
+In file included from ./atlas.h:6:
+In file included from ./AtlasDefinitions.h:13:
+In file included from ./AST.h:12:
+In file included from ./SignalTypeAST.h:7:
+./TimerObject.h:22:2: warning: conversion function converting 'TimeSpec' to its base class 'timespec' will never be used [-Wclass-conversion]
+   22 |         operator timespec();
+      |         ^
+verbs.cpp:37:12: warning: unused variable '_ast' [-Wunused-variable]
+   37 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:37:26: warning: unused variable '_sibling' [-Wunused-variable]
+   37 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:37:44: warning: unused variable '_tail' [-Wunused-variable]
+   37 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:39:8: warning: unused variable '_ast11' [-Wunused-variable]
+   39 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:39:21: warning: unused variable '_ast12' [-Wunused-variable]
+   39 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:39:34: warning: unused variable '_ast13' [-Wunused-variable]
+   39 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:41:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+   41 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:41:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+   41 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:36:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+   36 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:36:3: warning: unused variable 'zzpf' [-Wunused-variable]
+   36 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:36:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+   36 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:80:12: warning: unused variable '_ast' [-Wunused-variable]
+   80 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:80:26: warning: unused variable '_sibling' [-Wunused-variable]
+   80 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:80:44: warning: unused variable '_tail' [-Wunused-variable]
+   80 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:82:8: warning: unused variable '_ast11' [-Wunused-variable]
+   82 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:82:21: warning: unused variable '_ast12' [-Wunused-variable]
+   82 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:82:34: warning: unused variable '_ast13' [-Wunused-variable]
+   82 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:84:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+   84 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:84:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+   84 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:79:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+   79 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:79:3: warning: unused variable 'zzpf' [-Wunused-variable]
+   79 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:79:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+   79 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:123:12: warning: unused variable '_ast' [-Wunused-variable]
+  123 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:123:26: warning: unused variable '_sibling' [-Wunused-variable]
+  123 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:123:44: warning: unused variable '_tail' [-Wunused-variable]
+  123 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:125:8: warning: unused variable '_ast11' [-Wunused-variable]
+  125 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:125:21: warning: unused variable '_ast12' [-Wunused-variable]
+  125 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:125:34: warning: unused variable '_ast13' [-Wunused-variable]
+  125 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:127:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  127 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:127:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  127 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:122:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  122 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:122:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  122 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:122:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  122 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:166:12: warning: unused variable '_ast' [-Wunused-variable]
+  166 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:166:26: warning: unused variable '_sibling' [-Wunused-variable]
+  166 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:166:44: warning: unused variable '_tail' [-Wunused-variable]
+  166 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:168:8: warning: unused variable '_ast11' [-Wunused-variable]
+  168 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:168:21: warning: unused variable '_ast12' [-Wunused-variable]
+  168 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:168:34: warning: unused variable '_ast13' [-Wunused-variable]
+  168 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:170:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  170 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:170:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  170 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:165:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  165 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:165:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  165 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:165:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  165 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:209:12: warning: unused variable '_ast' [-Wunused-variable]
+  209 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:209:26: warning: unused variable '_sibling' [-Wunused-variable]
+  209 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:209:44: warning: unused variable '_tail' [-Wunused-variable]
+  209 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:211:8: warning: unused variable '_ast11' [-Wunused-variable]
+  211 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:211:21: warning: unused variable '_ast12' [-Wunused-variable]
+  211 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:211:34: warning: unused variable '_ast13' [-Wunused-variable]
+  211 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:213:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  213 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:213:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  213 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:208:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  208 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:208:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  208 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:208:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  208 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:252:12: warning: unused variable '_ast' [-Wunused-variable]
+  252 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:252:26: warning: unused variable '_sibling' [-Wunused-variable]
+  252 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:252:44: warning: unused variable '_tail' [-Wunused-variable]
+  252 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:254:8: warning: unused variable '_ast11' [-Wunused-variable]
+  254 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:254:21: warning: unused variable '_ast12' [-Wunused-variable]
+  254 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:254:34: warning: unused variable '_ast13' [-Wunused-variable]
+  254 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:256:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  256 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:256:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  256 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:251:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  251 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:251:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  251 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:251:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  251 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:295:12: warning: unused variable '_ast' [-Wunused-variable]
+  295 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:295:26: warning: unused variable '_sibling' [-Wunused-variable]
+  295 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:295:44: warning: unused variable '_tail' [-Wunused-variable]
+  295 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:297:8: warning: unused variable '_ast11' [-Wunused-variable]
+  297 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:297:21: warning: unused variable '_ast12' [-Wunused-variable]
+  297 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:297:34: warning: unused variable '_ast13' [-Wunused-variable]
+  297 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:299:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  299 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:299:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  299 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:294:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  294 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:294:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  294 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:294:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  294 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:338:12: warning: unused variable '_ast' [-Wunused-variable]
+  338 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:338:26: warning: unused variable '_sibling' [-Wunused-variable]
+  338 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:338:44: warning: unused variable '_tail' [-Wunused-variable]
+  338 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:340:8: warning: unused variable '_ast11' [-Wunused-variable]
+  340 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:340:21: warning: unused variable '_ast12' [-Wunused-variable]
+  340 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:340:34: warning: unused variable '_ast13' [-Wunused-variable]
+  340 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:342:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  342 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:342:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  342 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:337:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  337 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:337:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  337 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:337:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  337 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:381:12: warning: unused variable '_ast' [-Wunused-variable]
+  381 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:381:26: warning: unused variable '_sibling' [-Wunused-variable]
+  381 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:381:44: warning: unused variable '_tail' [-Wunused-variable]
+  381 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:383:8: warning: unused variable '_ast11' [-Wunused-variable]
+  383 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:383:21: warning: unused variable '_ast12' [-Wunused-variable]
+  383 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:383:34: warning: unused variable '_ast13' [-Wunused-variable]
+  383 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:385:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  385 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:385:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  385 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:380:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  380 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:380:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  380 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:380:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  380 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:424:12: warning: unused variable '_ast' [-Wunused-variable]
+  424 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:424:26: warning: unused variable '_sibling' [-Wunused-variable]
+  424 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:424:44: warning: unused variable '_tail' [-Wunused-variable]
+  424 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:426:8: warning: unused variable '_ast11' [-Wunused-variable]
+  426 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:426:21: warning: unused variable '_ast12' [-Wunused-variable]
+  426 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:426:34: warning: unused variable '_ast13' [-Wunused-variable]
+  426 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:428:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  428 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:428:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  428 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:423:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  423 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:423:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  423 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:423:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  423 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:467:12: warning: unused variable '_ast' [-Wunused-variable]
+  467 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:467:26: warning: unused variable '_sibling' [-Wunused-variable]
+  467 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:467:44: warning: unused variable '_tail' [-Wunused-variable]
+  467 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:469:8: warning: unused variable '_ast11' [-Wunused-variable]
+  469 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:469:21: warning: unused variable '_ast12' [-Wunused-variable]
+  469 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:469:34: warning: unused variable '_ast13' [-Wunused-variable]
+  469 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:471:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  471 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:471:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  471 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:466:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  466 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:466:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  466 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:466:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  466 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:510:12: warning: unused variable '_ast' [-Wunused-variable]
+  510 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:510:26: warning: unused variable '_sibling' [-Wunused-variable]
+  510 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:510:44: warning: unused variable '_tail' [-Wunused-variable]
+  510 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:512:8: warning: unused variable '_ast11' [-Wunused-variable]
+  512 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:512:21: warning: unused variable '_ast12' [-Wunused-variable]
+  512 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:512:34: warning: unused variable '_ast13' [-Wunused-variable]
+  512 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:514:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  514 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:514:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  514 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:509:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  509 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:509:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  509 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:509:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  509 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:553:12: warning: unused variable '_ast' [-Wunused-variable]
+  553 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:553:26: warning: unused variable '_sibling' [-Wunused-variable]
+  553 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:553:44: warning: unused variable '_tail' [-Wunused-variable]
+  553 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:555:8: warning: unused variable '_ast11' [-Wunused-variable]
+  555 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:555:21: warning: unused variable '_ast12' [-Wunused-variable]
+  555 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:555:34: warning: unused variable '_ast13' [-Wunused-variable]
+  555 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:557:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  557 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:557:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  557 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:552:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  552 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:552:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  552 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:552:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  552 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:596:12: warning: unused variable '_ast' [-Wunused-variable]
+  596 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:596:26: warning: unused variable '_sibling' [-Wunused-variable]
+  596 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:596:44: warning: unused variable '_tail' [-Wunused-variable]
+  596 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:598:8: warning: unused variable '_ast11' [-Wunused-variable]
+  598 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:598:21: warning: unused variable '_ast12' [-Wunused-variable]
+  598 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:598:34: warning: unused variable '_ast13' [-Wunused-variable]
+  598 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:600:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  600 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:600:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  600 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:595:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  595 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:595:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  595 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:595:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  595 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:639:12: warning: unused variable '_ast' [-Wunused-variable]
+  639 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:639:26: warning: unused variable '_sibling' [-Wunused-variable]
+  639 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:639:44: warning: unused variable '_tail' [-Wunused-variable]
+  639 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:641:8: warning: unused variable '_ast11' [-Wunused-variable]
+  641 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:641:21: warning: unused variable '_ast12' [-Wunused-variable]
+  641 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:641:34: warning: unused variable '_ast13' [-Wunused-variable]
+  641 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:643:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  643 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:643:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  643 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:638:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  638 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:638:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  638 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:638:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  638 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:682:12: warning: unused variable '_ast' [-Wunused-variable]
+  682 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:682:26: warning: unused variable '_sibling' [-Wunused-variable]
+  682 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:682:44: warning: unused variable '_tail' [-Wunused-variable]
+  682 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:684:8: warning: unused variable '_ast11' [-Wunused-variable]
+  684 |   AST *_ast11=NULL,*_ast12=NULL;
+      |        ^~~~~~
+verbs.cpp:684:21: warning: unused variable '_ast12' [-Wunused-variable]
+  684 |   AST *_ast11=NULL,*_ast12=NULL;
+      |                     ^~~~~~
+verbs.cpp:686:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  686 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:686:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  686 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:681:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  681 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:681:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  681 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:681:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  681 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:720:12: warning: unused variable '_ast' [-Wunused-variable]
+  720 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:720:26: warning: unused variable '_sibling' [-Wunused-variable]
+  720 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:720:44: warning: unused variable '_tail' [-Wunused-variable]
+  720 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:722:8: warning: unused variable '_ast11' [-Wunused-variable]
+  722 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:722:21: warning: unused variable '_ast12' [-Wunused-variable]
+  722 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:722:34: warning: unused variable '_ast13' [-Wunused-variable]
+  722 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:724:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  724 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:724:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  724 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:719:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  719 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:719:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  719 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:719:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  719 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:763:12: warning: unused variable '_ast' [-Wunused-variable]
+  763 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:763:26: warning: unused variable '_sibling' [-Wunused-variable]
+  763 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:763:44: warning: unused variable '_tail' [-Wunused-variable]
+  763 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:765:8: warning: unused variable '_ast11' [-Wunused-variable]
+  765 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:765:21: warning: unused variable '_ast12' [-Wunused-variable]
+  765 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:765:34: warning: unused variable '_ast13' [-Wunused-variable]
+  765 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:767:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  767 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:767:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  767 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:762:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  762 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:762:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  762 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:762:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  762 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:806:12: warning: unused variable '_ast' [-Wunused-variable]
+  806 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:806:26: warning: unused variable '_sibling' [-Wunused-variable]
+  806 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:806:44: warning: unused variable '_tail' [-Wunused-variable]
+  806 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:808:8: warning: unused variable '_ast11' [-Wunused-variable]
+  808 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:808:21: warning: unused variable '_ast12' [-Wunused-variable]
+  808 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:808:34: warning: unused variable '_ast13' [-Wunused-variable]
+  808 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:810:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  810 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:810:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  810 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:805:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  805 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:805:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  805 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:805:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  805 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:849:12: warning: unused variable '_ast' [-Wunused-variable]
+  849 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:849:26: warning: unused variable '_sibling' [-Wunused-variable]
+  849 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:849:44: warning: unused variable '_tail' [-Wunused-variable]
+  849 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:851:8: warning: unused variable '_ast11' [-Wunused-variable]
+  851 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:851:21: warning: unused variable '_ast12' [-Wunused-variable]
+  851 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:851:34: warning: unused variable '_ast13' [-Wunused-variable]
+  851 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:853:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  853 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:853:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  853 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:848:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  848 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:848:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  848 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:848:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  848 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:892:12: warning: unused variable '_ast' [-Wunused-variable]
+  892 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:892:26: warning: unused variable '_sibling' [-Wunused-variable]
+  892 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:892:44: warning: unused variable '_tail' [-Wunused-variable]
+  892 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:894:8: warning: unused variable '_ast11' [-Wunused-variable]
+  894 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:894:21: warning: unused variable '_ast12' [-Wunused-variable]
+  894 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:894:34: warning: unused variable '_ast13' [-Wunused-variable]
+  894 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:896:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  896 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:896:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  896 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:891:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  891 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:891:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  891 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:891:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  891 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:935:12: warning: unused variable '_ast' [-Wunused-variable]
+  935 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:935:26: warning: unused variable '_sibling' [-Wunused-variable]
+  935 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:935:44: warning: unused variable '_tail' [-Wunused-variable]
+  935 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:937:8: warning: unused variable '_ast11' [-Wunused-variable]
+  937 |   AST *_ast11=NULL,*_ast12=NULL;
+      |        ^~~~~~
+verbs.cpp:937:21: warning: unused variable '_ast12' [-Wunused-variable]
+  937 |   AST *_ast11=NULL,*_ast12=NULL;
+      |                     ^~~~~~
+verbs.cpp:939:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  939 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:939:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  939 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:934:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  934 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:934:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  934 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:934:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  934 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:973:12: warning: unused variable '_ast' [-Wunused-variable]
+  973 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:973:26: warning: unused variable '_sibling' [-Wunused-variable]
+  973 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:973:44: warning: unused variable '_tail' [-Wunused-variable]
+  973 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:975:8: warning: unused variable '_ast11' [-Wunused-variable]
+  975 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:975:21: warning: unused variable '_ast12' [-Wunused-variable]
+  975 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:975:34: warning: unused variable '_ast13' [-Wunused-variable]
+  975 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:977:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+  977 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:977:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+  977 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:972:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+  972 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:972:3: warning: unused variable 'zzpf' [-Wunused-variable]
+  972 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:972:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+  972 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1016:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1016 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1016:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1016 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1016:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1016 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1018:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1018 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1018:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1018 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1018:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1018 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1020:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1020 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1020:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1020 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1015:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1015 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1015:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1015 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1015:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1015 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1059:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1059 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1059:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1059 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1059:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1059 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1061:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1061 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1061:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1061 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1061:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1061 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1063:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1063 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1063:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1063 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1058:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1058 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1058:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1058 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1058:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1058 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1102:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1102 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1102:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1102 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1102:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1102 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1104:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1104 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1104:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1104 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1104:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1104 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1106:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1106 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1106:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1106 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1101:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1101 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1101:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1101 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1101:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1101 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1145:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1145 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1145:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1145 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1145:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1145 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1147:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1147 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1147:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1147 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1147:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1147 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1149:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1149 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1149:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1149 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1144:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1144 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1144:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1144 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1144:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1144 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1188:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1188 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1188:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1188 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1188:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1188 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1190:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1190 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1190:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1190 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1190:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1190 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1192:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1192 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1192:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1192 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1187:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1187 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1187:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1187 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1187:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1187 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1231:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1231 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1231:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1231 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1231:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1231 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1233:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1233 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1233:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1233 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1233:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1233 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1235:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1235 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1235:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1235 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1230:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1230 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1230:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1230 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1230:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1230 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1274:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1274 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1274:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1274 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1274:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1274 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1276:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1276 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1276:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1276 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1276:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1276 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1278:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1278 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1278:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1278 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1273:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1273 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1273:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1273 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1273:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1273 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1317:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1317 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1317:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1317 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1317:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1317 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1319:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1319 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1319:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1319 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1319:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1319 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1321:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1321 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1321:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1321 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1316:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1316 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1316:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1316 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1316:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1316 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1360:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1360 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1360:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1360 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1360:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1360 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1362:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1362 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1362:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1362 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1362:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1362 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1364:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1364 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1364:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1364 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1359:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1359 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1359:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1359 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1359:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1359 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1403:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1403 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1403:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1403 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1403:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1403 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1405:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1405 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1405:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1405 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1405:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1405 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1407:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1407 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1407:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1407 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1402:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1402 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1402:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1402 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1402:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1402 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1446:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1446 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1446:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1446 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1446:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1446 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1448:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1448 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1448:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1448 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1448:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1448 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1450:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1450 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1450:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1450 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1445:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1445 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1445:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1445 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1445:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1445 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1489:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1489 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1489:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1489 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1489:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1489 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1491:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1491 |   AST *_ast11=NULL,*_ast12=NULL;
+      |        ^~~~~~
+verbs.cpp:1491:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1491 |   AST *_ast11=NULL,*_ast12=NULL;
+      |                     ^~~~~~
+verbs.cpp:1493:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1493 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1493:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1493 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1488:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1488 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1488:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1488 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1488:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1488 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1527:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1527 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1527:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1527 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1527:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1527 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1529:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1529 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1529:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1529 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1529:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1529 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1531:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1531 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1531:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1531 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1526:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1526 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1526:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1526 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1526:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1526 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1570:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1570 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1570:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1570 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1570:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1570 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1572:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1572 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1572:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1572 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1572:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1572 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1574:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1574 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1574:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1574 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1569:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1569 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1569:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1569 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1569:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1569 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1613:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1613 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1613:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1613 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1613:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1613 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1615:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1615 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1615:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1615 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1615:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1615 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1617:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1617 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1617:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1617 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1612:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1612 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1612:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1612 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1612:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1612 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1656:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1656 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1656:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1656 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1656:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1656 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1658:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1658 |   AST *_ast11=NULL,*_ast12=NULL;
+      |        ^~~~~~
+verbs.cpp:1658:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1658 |   AST *_ast11=NULL,*_ast12=NULL;
+      |                     ^~~~~~
+verbs.cpp:1660:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1660 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1660:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1660 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1655:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1655 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1655:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1655 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1655:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1655 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1694:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1694 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1694:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1694 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1694:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1694 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1696:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1696 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1696:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1696 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1696:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1696 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1698:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1698 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1698:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1698 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1693:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1693 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1693:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1693 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1693:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1693 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1737:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1737 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1737:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1737 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1737:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1737 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1739:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1739 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1739:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1739 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1739:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1739 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1741:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1741 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1741:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1741 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1736:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1736 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1736:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1736 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1736:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1736 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1780:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1780 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1780:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1780 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1780:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1780 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1782:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1782 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1782:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1782 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1782:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1782 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1784:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1784 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1784:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1784 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1779:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1779 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1779:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1779 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1779:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1779 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1823:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1823 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1823:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1823 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1823:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1823 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1825:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1825 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1825:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1825 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1825:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1825 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1827:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1827 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1827:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1827 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1822:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1822 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1822:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1822 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1822:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1822 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1866:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1866 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1866:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1866 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1866:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1866 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1868:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1868 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1868:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1868 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1868:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1868 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1870:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1870 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1870:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1870 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1865:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1865 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1865:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1865 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1865:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1865 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1909:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1909 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1909:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1909 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1909:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1909 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1911:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1911 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1911:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1911 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1911:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1911 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1913:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1913 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1913:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1913 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1908:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1908 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1908:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1908 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1908:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1908 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1952:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1952 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1952:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1952 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1952:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1952 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1954:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1954 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1954:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1954 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1954:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1954 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1956:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1956 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1956:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1956 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1951:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1951 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1951:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1951 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1951:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1951 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:1995:12: warning: unused variable '_ast' [-Wunused-variable]
+ 1995 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:1995:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 1995 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:1995:44: warning: unused variable '_tail' [-Wunused-variable]
+ 1995 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:1997:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 1997 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:1997:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 1997 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:1997:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 1997 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:1999:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 1999 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:1999:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 1999 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:1994:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 1994 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:1994:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 1994 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:1994:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 1994 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:2038:12: warning: unused variable '_ast' [-Wunused-variable]
+ 2038 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:2038:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 2038 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:2038:44: warning: unused variable '_tail' [-Wunused-variable]
+ 2038 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:2040:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 2040 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL,*_ast14=NULL;
+      |        ^~~~~~
+verbs.cpp:2040:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 2040 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL,*_ast14=NULL;
+      |                     ^~~~~~
+verbs.cpp:2040:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 2040 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL,*_ast14=NULL;
+      |                                  ^~~~~~
+verbs.cpp:2040:47: warning: unused variable '_ast14' [-Wunused-variable]
+ 2040 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL,*_ast14=NULL;
+      |                                               ^~~~~~
+verbs.cpp:2042:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 2042 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:2042:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 2042 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:2037:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 2037 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:2037:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 2037 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:2037:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 2037 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+verbs.cpp:2086:12: warning: unused variable '_ast' [-Wunused-variable]
+ 2086 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |            ^~~~
+verbs.cpp:2086:26: warning: unused variable '_sibling' [-Wunused-variable]
+ 2086 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                          ^~~~~~~~
+verbs.cpp:2086:44: warning: unused variable '_tail' [-Wunused-variable]
+ 2086 |   ASTBase *_ast = NULL, *_sibling = NULL, *_tail = NULL;
+      |                                            ^~~~~
+verbs.cpp:2088:8: warning: unused variable '_ast11' [-Wunused-variable]
+ 2088 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |        ^~~~~~
+verbs.cpp:2088:21: warning: unused variable '_ast12' [-Wunused-variable]
+ 2088 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                     ^~~~~~
+verbs.cpp:2088:34: warning: unused variable '_ast13' [-Wunused-variable]
+ 2088 |   AST *_ast11=NULL,*_ast12=NULL,*_ast13=NULL;
+      |                                  ^~~~~~
+verbs.cpp:2090:8: warning: unused variable 'stat_ast' [-Wunused-variable]
+ 2090 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |        ^~~~~~~~
+verbs.cpp:2090:24: warning: unused variable 'verb_ast' [-Wunused-variable]
+ 2090 |   AST *stat_ast=NULL, *verb_ast=NULL;
+      |                        ^~~~~~~~
+verbs.cpp:2085:3: warning: unused variable 'zzBadText' [-Wunused-variable]
+ 2085 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:356:44: note: expanded from macro 'zzRULE'
+  356 |                 _ANTLRTokenPtr zzBadTok=NULL; ANTLRChar *zzBadText=(ANTLRChar *)"";     \
+      |                                                          ^~~~~~~~~
+verbs.cpp:2085:3: warning: unused variable 'zzpf' [-Wunused-variable]
+ 2085 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:357:16: note: expanded from macro 'zzRULE'
+  357 |                 int zzErrk=1,zzpf=0; \
+      |                              ^~~~
+verbs.cpp:2085:3: warning: unused variable 'zzTracePrevRuleName' [-Wunused-variable]
+ 2085 |   zzRULE;
+      |   ^~~~~~
+./pccts/h/AParser.h:358:9: note: expanded from macro 'zzRULE'
+  358 |         zzTRACEdata \
+      |         ^~~~~~~~~~~
+./pccts/h/AParser.h:101:42: note: expanded from macro 'zzTRACEdata'
+  101 | #define zzTRACEdata     const ANTLRChar *zzTracePrevRuleName = NULL;
+      |                                          ^~~~~~~~~~~~~~~~~~~
+541 warnings and 1 error generated.
+make: *** [verbs.o] Error 1

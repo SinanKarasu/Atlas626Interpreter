@@ -1,0 +1,22 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, VARIABLE, 'X' IS DECIMAL INITIAL=1.1 $
+        DECLARE,VARIABLE, 'I' IS INTEGER  INITIAL = 0 $
+ 099000 COMMENCE, MAIN PROCEDURE $
+C        CALCULATE, 'X' =1      $
+        OUTPUT,TEXT,FROM 'X' $
+        FOR , 'X' = 1 THRU 6 , THEN$
+           IF, 'X' EQ 2.0 , THEN $
+             IF, 'I' EQ 0 , THEN  $
+                CALCULATE,'I'=1 $
+                OUTPUT, TEXT, FROM C' RESUMING FOR' $
+                RESUME, FOR $
+              END, IF $
+           END,IF$
+           OUTPUT, TEXT, FROM  C'X IS ','X' $
+           IF, 'X' GT 4.0 , THEN    $
+              OUTPUT, TEXT, FROM  C' ESCAPING LA' $
+              LEAVE,FOR $
+           END, IF $
+        END, FOR $
+        OUTPUT,TEXT,FROM C' FINAL X IS ', 'X' $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $

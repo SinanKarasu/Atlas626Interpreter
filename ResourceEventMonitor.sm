@@ -1,0 +1,149 @@
+FSMName ResourceEventMonitor
+Context AnalogResourceContext
+Initial Unallocated_
+Header AnalogResourceContext.h
+
+{
+
+
+Illegal_
+	{
+		APPLYevent		Illegal_		{ }
+		COMPAREevent		Illegal_		{ }
+	}
+
+AsyncReset_
+	{
+		RESETevent		Unallocated_		{ RESETtoTedl ResourceResettoTedl }
+		REMOVEevent		AsyncReset_		{ }
+		DISCONNECTevent		AsyncReset_		{ DISCONNECTtoTedl }
+		DISCONNECTedevent	AsyncReset_		{ }
+		DISABLE_EVENTevent	AsyncReset_		{ DISABLE_EVENTtoTedl }
+		AsyncResetevent		AsyncReset_		{ }
+		ResourceResetevent	Unallocated_		{ RESETtoTedl ResourceResettoTedl }
+	}
+
+Unallocated_
+	{
+		RESETevent		Unallocated_		{ }
+		SETUPevent		Set_			{ SETUPtoTedl }
+		MEASUREevent		Unallocated_		{ MEASUREtoTedl }
+		MONITORevent		Unallocated_		{ MONITORtoTedl}
+		VERIFYevent		Unallocated_		{ VERIFYtoTedl }
+		WAIT_FORevent		Unallocated_		{ WAIT_FORtoTedl }
+		Selectevent		Unallocated_		{ }
+		REMOVEevent		AsyncReset_		{ REMOVEtoTedl }
+		ResourceResetevent	Unallocated_		{ }
+		AsyncResetevent		AsyncReset_		{ }
+	}
+	
+Set_
+	{
+		RESETevent		Unallocated_		{ RESETtoTedl ResourceResettoTedl }	
+		REMOVEevent		AsyncReset_		{ REMOVEtoTedl }	
+		CONNECTevent		Prepared_		{ CONNECTtoTedl }	
+		DISCONNECTedevent	Set_			{ }
+		AsyncResetevent		AsyncReset_		{ }
+	}
+
+Prepared_
+	{
+		ARMevent		Armed_			{ ARMtoTedl }
+		ENABLE_EVENTevent	UnArmed_Enabled_	{ ENABLE_EVENTtoTedl }
+		INITIATEevent		Prepared_		{ INITIATEtoTedl }
+		READevent		Prepared_		{ READtoTedl }
+		CHANGEevent		UnArmed_Disabled_	{ CHANGEtoTedl }
+		AsyncResetevent		AsyncReset_		{ }
+	}
+
+
+(UnArmed_)
+	{
+		AsyncResetevent		AsyncReset_		{ }
+	}	
+
+UnArmed_Disabled_:UnArmed_
+	{
+		ARMevent		Ready_Disabled_		{ ARMtoTedl }
+	}	
+
+UnArmed_Enabled_:UnArmed_
+	{
+		ARMevent		Ready_Enabled_		{ ARMtoTedl }
+	}	
+
+Armed_
+	{
+		ENABLE_EVENTevent	Ready_Enabled_		{ ENABLE_EVENTtoTedl }
+		SkipStateevent		Ready_Disabled_		{ SkipStatetoTedl }
+		INITIATEevent		Ready_Disabled_		{ INITIATEtoTedl }
+		AsyncResetevent		AsyncReset_		{ }
+	}
+
+(Ready_)
+	{
+		DISCONNECTevent		Set_			{ DISCONNECTtoTedl }
+		REMOVEevent		AsyncReset_		{ REMOVEtoTedl }
+		AsyncResetevent		AsyncReset_		{ }
+	}
+	
+Ready_Disabled_:Ready_
+	{
+		MEASUREMENTevent	Measured_Disabled_	{ MeasuredtoTedl }
+		MAXTIMEevent		Measured_Disabled_	{ InvalidatedResult }
+		SkipStateevent		Measured_Disabled_	{ MeasuredtoTedl }
+		INITIATEevent		Ready_Disabled_		{ }
+	}
+
+Ready_Enabled_:Ready_
+	{
+		MEASUREMENTevent	Measured_Enabled_	{ MeasuredtoTedl }
+		MAXTIMEevent		Measured_Enabled_	{ InvalidatedResult }
+		FETCHevent		Completed_Enabled_	{ FETCHtoTedl }
+		SkipStateevent		Measured_Enabled_	{ MeasuredtoTedl }
+	}
+
+
+(Measured_)
+	{
+		REMOVEevent		AsyncReset_		{ REMOVEtoTedl }
+		DISCONNECTevent		Set_			{ DISCONNECTtoTedl }
+		AsyncResetevent		AsyncReset_		{ }
+	}
+
+Measured_Enabled_:Measured_
+	{
+		DISABLE_EVENTevent	Measured_Disabled_	{ DISABLE_EVENTtoTedl }
+		FETCHevent		Completed_Enabled_	{ FETCHtoTedl }
+		SkipStateevent		Measured_Enabled_	{ }
+	}
+
+Measured_Disabled_:Measured_
+	{
+		FETCHevent		Completed_Disabled_	{ FETCHtoTedl }
+		SkipStateevent		Measured_Disabled_	{ }
+	}
+
+(Completed_)
+	{
+		DISCONNECTevent		Set_			{ DISCONNECTtoTedl }
+		REMOVEevent		AsyncReset_		{ REMOVEtoTedl }
+		AsyncResetevent		AsyncReset_		{ }
+	}
+
+Completed_Enabled_: Completed_
+	{
+		READevent		Completed_Enabled_	{ READtoTedl }
+		ARMevent		Ready_Enabled_		{ ARMtoTedl }
+		CHANGEevent		Prepared_		{ CHANGEtoTedl }
+		DISABLE_EVENTevent	Completed_Disabled_	{ DISABLE_EVENTtoTedl }
+	}
+
+Completed_Disabled_: Completed_
+	{
+		READevent		Completed_Disabled_	{ READtoTedl }
+		ARMevent		Armed_			{ ARMtoTedl }
+		CHANGEevent		Prepared_		{ CHANGEtoTedl }
+		DISABLE_EVENTevent	Completed_Disabled_	{ DISABLE_EVENTtoTedl }
+	}
+}

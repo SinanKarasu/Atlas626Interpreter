@@ -1,0 +1,19 @@
+ 000001 BEGIN, ATLAS PROGRAM 'STRY1'                               $	
+
+ 001100 REQUIRE, 'VAR-DC-SUPPLY', SOURCE, DC SIGNAL,	
+          CONTROL,	
+            VOLTAGE RANGE -32 V TO 32 V BY .01 V ERRLMT +-.2 V,	
+          LIMIT,	
+            CURRENT-LMT MAX 2 A,	
+          CNX HI LO                                                $
+
+ 099000 COMMENCE, MAIN PROCEDURE                                   $	
+
+
+     40 APPLY, DC SIGNAL USING 'VAR-DC-SUPPLY',	
+               VOLTAGE 4.0V  ERRLMT +-.2V,	
+               CURRENT-LMT MAX 1 A,	
+               CNX HI P1-B3	
+                   LO EARTH                                        $	
+
+ 999999 TERMINATE, ATLAS PROGRAM 'STRY1'                           $	

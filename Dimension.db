@@ -1,0 +1,132 @@
+( Acceleration
+	( M/S2 [1] | GRAV [9.81] )
+)
+
+( Angle_Plane
+	( 
+		DEG	[1]
+	|	REV	[360]
+	|	MIL	[6.0E-2]
+	|	RAD	[57.29577951]
+	|	MRAD	[57.29577951E-3]
+	|	URAD	[57.29577951E-6]
+	|	SECOND	[2.777777778e-4]
+	|	MINUTE	[1.666666667e-2]
+	)     
+)
+  
+( Burst_Length
+	( CYCLES [1] | PULSES [1] )
+)  
+
+( Capacitance   
+    	( FD [1] | UFD [1E-6] | NFD [1E-9] | PFD [1E-12] |  MFD [1E-3] )
+)
+
+( Current 
+	( A [1] | MA [1E-3] | UA [1E-6] | KA [1E3] | NA [1E-9])
+)   
+
+( Digital_Bit_Rate
+	( BITS/SEC [1] | KBITS/SEC [1E3] | MBITS/SEC [1E6] )
+)
+  
+( Digital_Word_Length
+	( DIGITS | CHAR | BITS )
+) 
+
+( Digital_Word_Rate
+	( WORDS/SEC [1] | KWORDS/SEC [1E3] | MWORDS/SEC [1E6] )
+)
+
+( Energy
+	(	
+		J [1]		|	KJ[1E3]		|	MJ [1E-3]
+	|	PJ [1E-12]	|	TJ[1E12]	|	GJ [1E9]
+	|	UJ [1E-6]	|	NJ[1E-9]
+	|	EV[1.6E-19]	|	KEV[1.6E-16]	|	MEV [1.6E-13]
+	|	GEV[1.6E-10]
+	|	DBJ		|	DBPJ		|	DBMJ 
+ 	)   
+)
+
+( Events   
+	( TIMES | COUNTS | STEPS )
+)  
+
+( Frequency   
+	( HZ[1] | THZ[1E12] | GHZ[1E9] | MHZ[1E6]| KHZ[1E3] | PPS | KPPS ) 
+)  
+
+( Illuminance
+	( LX )
+)
+
+( Impedance
+	( OHM[1] | MOHM[1E6] | KOHM[1E3] )
+)
+
+( Impedance_Real
+	( OHM[1] | MOHM[1E6] | KOHM[1E3] )
+)
+
+( Inductance
+	( H[1] | MH[1E-3] | UH[1E-6] | NH[1E-9] | PH[1E-12] )
+)
+
+( Length   
+	(	M[1]      | KM[1E3] | CM[1E-2]     | MM[1E-3] |
+		UM[1E-6]     | NM[1E-9] | N-MILE | FT | 
+		S-MILE | IN | MILS
+	)
+)
+
+( Luminance   
+	( NT | CD/M2 )
+)
+
+( Luminous_Flux   
+	( LM )
+)
+
+( Luminous_Intensity   
+	( CD )
+)  
+
+( Power   
+	( W[1]   | KW[1E3] |  MW[1E-3] | UW[1E-6] | NW[1E-9] | GW[1E9] | TW[1E12] |
+		DBW |  DBKW | DBM  | HP )
+)
+
+( Pressure   
+	( PA[1]  | KPA[1E3]  | MPA[1E-3] | UPA[1E-6] | MBAR  | MMHG |   
+		INHG | FTSW | PSI | IN-WATER | BAR | UBAR )
+)
+ 
+( Ratio   
+	( DB | PC | None )
+)
+
+( Rotational_Frequency   
+	( SEC-1 | MIN-1 )  
+)
+
+( Temperature 
+	( DEGC | DEGK | DEGR | DEGF )
+)
+
+( Time   
+	( D | HR  | MIN | SEC[1] | MSEC[1E-3] |  USEC[1E-6] | NSEC[1E-9] | PSEC[1E-12] | KSEC[1E3] )
+)
+ 
+( Velocity_Linear
+	( FT/SEC | M/SEC | MACH | KT | M/HR   | KM/HR )
+)
+
+( Voltage
+	( V[1]  |  KV[1E3]  | MV[1E-3]  | UV[1E-6] )
+)
+
+( None
+	( None )
+)

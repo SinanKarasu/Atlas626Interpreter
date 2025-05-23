@@ -1,0 +1,11 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, VARIABLE, 'X' IS STRING (50) OF CHAR $
+ 099000 COMMENCE, MAIN PROCEDURE $
+        CALCULATE, 'X' =  C'HELLO'  $
+        OUTPUT,TEXT,FROM 'X' $
+        CALCULATE, 'X' = 'X' & C' Mark' $
+        CALCULATE, 'X' = C'HEY ' & 'X' & C' Stamper '$
+        OUTPUT,TEXT,FROM 'X' $
+        CALCULATE, 'X' = C'HEY ' & 'X' & C' Stamper ' $
+        OUTPUT,TEXT,FROM 'X', COS(2*3)+6 $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $

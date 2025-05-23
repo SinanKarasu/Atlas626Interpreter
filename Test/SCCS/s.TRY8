@@ -1,0 +1,21 @@
+h25380
+s 00000/00000/00000
+d R 1.2 97/09/10 14:37:08 Codemgr 2 1
+c SunPro Code Manager data about conflicts, renames, etc...
+c Name history : 1 0 Test/TRY8
+e
+s 00004/00000/00000
+d D 1.1 97/09/10 14:37:07 frank 1 0
+c 
+e
+u
+U
+f e 0
+t
+T
+I 1
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+ 099000 COMMENCE, MAIN PROCEDURE $
+        OUTPUT,TEXT,FROM  C'HELLO  ',999,C'  THERE' $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $
+E 1

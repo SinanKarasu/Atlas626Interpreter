@@ -1,0 +1,30 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, TYPE, 'COLORS' IS ENUMERATION ('RED', 'ORANGE', 'YELLOW', 'GREEN',
+                                                'BLUE', 'INDIGO', 'VIOLET' )$
+        DECLARE, TYPE, 'PEOPLE' IS ENUMERATION ('SINAN', 'MICHAEL', 'TODD') $
+        DECLARE, VARIABLE, 'X','Y' IS 'COLORS' $
+        DECLARE, VARIABLE, 'Z' IS DECIMAL $
+C $
+ 099000 COMMENCE, MAIN PROCEDURE $
+        FOR, 'X'= 'RED' THRU 'VIOLET', THEN $
+           OUTPUT,TEXT,FROM 'X' $
+        END, FOR $
+C $
+        FOR, 'Z'= ORD('RED') THRU ORD('VIOLET'), THEN $
+           OUTPUT,TEXT,FROM 'Z' $
+        END, FOR $
+C $
+        FOR, 'X'= 'VIOLET' THRU 'VIOLET', THEN $
+           OUTPUT,TEXT,FROM 'X' $
+        END, FOR $
+C $
+        FOR, 'X'= 'VIOLET' THRU 'RED', THEN $
+           OUTPUT,TEXT,FROM 'X' $
+        END, FOR $
+C $
+        FOR, 'Y'= SUCC('RED') THRU PRED('VIOLET'), THEN $
+           OUTPUT,TEXT,FROM 'Y' $
+        END, FOR $
+C $
+C $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $

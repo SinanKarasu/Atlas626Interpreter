@@ -1,0 +1,50 @@
+FSMName ResourceDataBus
+Context DataBusResourceContext
+Initial Unallocated_
+Header DataBusResourceContext.h
+
+{
+
+
+Unallocated_
+	{
+		ENABLE_EXCHANGEevent		Active_			{ ENABLE_EXCHANGEtoTedl }
+	}
+	
+Active_
+	{
+		CONNECT_EXCHANGEevent		Connected_		{ CONNECT_EXCHANGEtoTedl }
+		DO_EXCHANGEevent		Active_			{ CONNECT_EXCHANGEtoTedl DO_EXCHANGEtoTedl }
+		DISABLE_EXCHANGEevent		Unallocated_		{ DISABLE_EXCHANGEtoTedl }
+	}
+
+Connected_
+	{
+		DO_EXCHANGEevent		Exchange_Scheduled_	{ DO_EXCHANGEtoTedl }
+		CONNECT_EXCHANGEevent		Connected_		{ CONNECT_EXCHANGEtoTedl }
+		DISCONNECT_EXCHANGEevent	Connected_		{ DISCONNECT_EXCHANGEtoTedl }
+		DISABLE_EXCHANGEevent		Unallocated_		{ DISCONNECT_EXCHANGEtoTedl DISABLE_EXCHANGEtoTedl }
+	}
+
+
+Exchange_Scheduled_
+	{
+		do_HOLDevent			Exchange_Hold_		{ do_HOLDtoTedl }
+		do_PROCEEDevent			Exchange_Proceed_	{ do_PROCEEDtoTedl }
+		DISABLE_EXCHANGEevent		Unallocated_		{ DISCONNECT_EXCHANGEtoTedl DISABLE_EXCHANGEtoTedl }
+	}
+
+Exchange_Hold_
+	{
+		do_PROCEEDevent			Exchange_Proceed_	{ do_PROCEEDtoTedl }
+		DISABLE_EXCHANGEevent		Unallocated_		{ DISCONNECT_EXCHANGEtoTedl DISABLE_EXCHANGEtoTedl }
+	}
+
+Exchange_Proceed_
+	{
+		FETCH_EXCHANGEevent		Exchange_Proceed_	{ FETCH_EXCHANGEtoTedl }
+		UPDATE_EXCHANGEevent		Exchange_Proceed_	{ UPDATE_EXCHANGEtoTedl }
+		DISABLE_EXCHANGEevent		Unallocated_		{ DISCONNECT_EXCHANGEtoTedl DISABLE_EXCHANGEtoTedl }
+	}
+}
+
