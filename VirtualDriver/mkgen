@@ -1,4 +1,0 @@
-#!/bin/csh
-
-CC -g -o libvid.so -G genDriver.cc -library=rwtools7,iostream 
-exit
