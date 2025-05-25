@@ -1,0 +1,4 @@
+#!/bin/csh
+
+CC -g -o libvid.so -G simDriver.cc -library=rwtools7,iostream 
+exit

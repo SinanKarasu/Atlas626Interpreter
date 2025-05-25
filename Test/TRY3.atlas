@@ -1,0 +1,15 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, VARIABLE, 'X','Y' IS DECIMAL $
+        DEFINE,'MULT',FUNCTION
+           ( 'X' IS DECIMAL,'Y' IS DECIMAL) DECIMAL$
+           CALCULATE, 'MULT' = 'X' * 'Y' $
+           OUTPUT, TEXT, FROM C' LEAVING FUNCTION ' $
+           LEAVE, 'MULT' $
+           OUTPUT, TEXT, FROM C' I HOPE ' $
+        END, 'MULT' $
+ 099000 COMMENCE, MAIN PROCEDURE $
+        CALCULATE, 'X' = 'MULT'('MULT'(2.1,2.2),1.1) $
+        OUTPUT,TEXT,FROM 'X' ,C' ', 'X' $
+        CALCULATE, 'X' =  'MULT'('X','X') $
+        OUTPUT,TEXT,FROM 'X' $
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $

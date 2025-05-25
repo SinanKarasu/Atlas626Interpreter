@@ -1,0 +1,97 @@
+FSMName ResourceSourceLoad
+Context AnalogResourceContext
+Initial Unallocated_
+Header AnalogResourceContext.h
+
+{
+
+Illegal_
+	{
+		MAXTIMEevent		Illegal_	{}
+		ARMevent		Illegal_	{}
+		COMPAREevent		Illegal_	{}
+		FETCHevent		Illegal_	{}
+		MEASUREevent		Illegal_	{}
+		MEASUREMENTevent	Illegal_	{}
+		MONITORevent		Illegal_	{}
+		READevent		Illegal_	{}
+		VERIFYevent		Illegal_	{}
+		
+	}
+
+AsyncReset_
+	{
+		RESETevent		Unallocated_	{ RESETtoTedl ResourceResettoTedl }
+		DISCONNECTevent		AsyncReset_	{ DISCONNECTtoTedl }
+		DISCONNECTedevent	AsyncReset_	{ }
+		DISABLE_EVENTevent	AsyncReset_	{ DISABLE_EVENTtoTedl }
+		REMOVEevent		AsyncReset_	{ REMOVEtoTedl }
+		AsyncResetevent		AsyncReset_	{ }
+		ResourceResetevent	Unallocated_	{ RESETtoTedl ResourceResettoTedl }
+	}
+
+Unallocated_
+	{
+		SETUPevent		Set_		{ SETUPtoTedl }
+		CONNECTevent		Connected_	{ CONNECTtoTedl }	
+		APPLYevent		Unallocated_	{ APPLYtoTedl }
+		Selectevent		Unallocated_	{ }
+		REMOVEevent		AsyncReset_	{ REMOVEtoTedl }
+		AsyncResetevent		AsyncReset_	{ }
+		ResourceResetevent	Unallocated_	{ }
+	}
+
+Connected_
+{
+		SETUPevent		Prepared_	{ SETUPtoTedl }
+		CONNECTevent		Connected_	{ CONNECTtoTedl }	
+		DISCONNECTevent		Connected_	{ DISCONNECTtoTedl }
+		DISCONNECTedevent	Unallocated_	{ RESETtoTedl  }
+		REMOVEevent		AsyncReset_	{ REMOVEtoTedl }
+		RESETevent		Unallocated_	{ RESETtoTedl ResourceResettoTedl }	
+		AsyncResetevent		AsyncReset_	{ }
+}
+
+
+Set_
+	{
+		RESETevent		Unallocated_	{ RESETtoTedl }	
+		REMOVEevent		AsyncReset_	{ REMOVEtoTedl }
+		CONNECTevent		Prepared_	{ CONNECTtoTedl }	
+		CHANGEevent		Set_		{ CHANGEtoTedl }
+		AsyncResetevent		AsyncReset_	{ }
+	}
+
+
+Prepared_
+	{
+		ENABLE_EVENTevent	Ready_		{ ENABLE_EVENTtoTedl }
+		CHANGEevent		Ready_		{ CHANGEtoTedl }
+		SkipStateevent		Applied_	{ }
+		CONNECTevent		Prepared_	{ CONNECTtoTedl }	
+		DISCONNECTevent		Prepared_	{ DISCONNECTtoTedl }
+		DISCONNECTedevent	Set_		{ }
+		RESETevent		Connected_	{ RESETtoTedl }	
+		REMOVEevent		AsyncReset_	{ REMOVEtoTedl }
+		AsyncResetevent		AsyncReset_	{ }
+	}
+
+Ready_
+	{
+		EventOccursevent	Applied_	{ }
+		DISABLE_EVENTevent	Prepared_	{ DISABLE_EVENTtoTedl }
+		AsyncResetevent		AsyncReset_	{ }
+	}
+
+Applied_
+	{
+		DISCONNECTevent		Applied_	{ DISCONNECTtoTedl }
+		DISCONNECTedevent	Set_		{ }
+		CHANGEevent		Applied_	{ CHANGEtoTedl }
+		CONNECTevent		Applied_	{ CONNECTtoTedl }
+		DISABLE_EVENTevent	Applied_	{ DISABLE_EVENTtoTedl }
+		REMOVEevent		AsyncReset_	{ REMOVEtoTedl }
+		AsyncResetevent		AsyncReset_	{ }
+	}
+}
+

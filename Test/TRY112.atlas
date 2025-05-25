@@ -1,0 +1,34 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+
+        DECLARE, TYPE, 'recursive' IS RECORD OF
+        	[
+        		'a' IS INTEGER ;
+        		'b' IS CHAR
+        	] $
+
+        DECLARE, VARIABLE, 'd','e' IS RECORD OF
+        	[
+        		'a' IS INTEGER ;
+        		'b' IS 'recursive'
+        	] $
+
+        DECLARE, VARIABLE, 'x' IS INTEGER $
+
+ 099000 COMMENCE, MAIN PROCEDURE $
+
+        CALCULATE, 'd'.'a'     = 1 $
+        CALCULATE, 'e'.'a'     = 2 $
+        CALCULATE, 'd'.'b'.'a' = 3 $
+        CALCULATE, 'e'.'b'.'a' = 4 $
+
+        OUTPUT, TEXT, FROM 'd'.'a' $
+        OUTPUT, TEXT, FROM 'e'.'a' $
+        OUTPUT, TEXT, FROM 'd'.'b'.'a' $
+        OUTPUT, TEXT, FROM 'e'.'b'.'a' $
+
+        OUTPUT, TEXT, FROM C'd.a   = ', 'd'.'a' $
+        OUTPUT, TEXT, FROM C'e.a   = ', 'e'.'a' $
+        OUTPUT, TEXT, FROM C'd.b.a = ', 'd'.'b'.'a' $
+        OUTPUT, TEXT, FROM C'e.b.a = ', 'e'.'b'.'a' $
+
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY' $

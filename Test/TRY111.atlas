@@ -1,0 +1,67 @@
+ 000001 BEGIN, ATLAS PROGRAM 'TRY' $
+     70 DECLARE, VARIABLE, 'X' IS ARRAY(1 THRU 2) OF STRING (50) OF CHAR $
+        DECLARE, VARIABLE, 'Y' IS ARRAY(1 THRU 2) OF STRING (50) OF CHAR $
+        DECLARE, VARIABLE, 'Z' IS ARRAY(1 THRU 2) OF ARRAY(1 THRU 2) OF STRING(50) OF CHAR $
+        DECLARE, VARIABLE, 'W' IS ARRAY(1 THRU 2) OF ARRAY(1 THRU 2) OF STRING(10) OF CHAR $
+        DECLARE, VARIABLE, 'a' IS INTEGER $
+        DECLARE, VARIABLE, 'b' IS CHAR $
+        DECLARE, VARIABLE, 'c' IS STRING(10) OF BIT $
+        DECLARE, VARIABLE, 'd','e' IS RECORD OF
+        	[
+        		'a' IS INTEGER ;
+        		'b' IS CHAR
+        	] $
+        DECLARE, VARIABLE, 'f' IS RECORD OF
+        	[
+        		'a' IS INTEGER ;
+        		'b' IS CHAR
+        	] $
+        DECLARE, VARIABLE, 'file' IS FILE OF CHAR $
+
+ 099000 COMMENCE, MAIN PROCEDURE $
+
+        CALCULATE, 'X'(1) =  C'HELLO'  $
+        OUTPUT,TEXT,FROM C'X(1) = ', 'X'(1) $
+
+        CALCULATE, 'Y' = 'X' $
+        OUTPUT,TEXT,FROM C'Y(1) = ', 'Y'(1) $
+
+        CALCULATE, 'X'(1)(2) = 'X'(1)(4) $
+        OUTPUT,TEXT,FROM C'X(1) = ', 'X'(1) $
+        OUTPUT,TEXT,FROM C'Y(1) = ', 'Y'(1) $
+
+        CALCULATE, 'X'(1,2) = C'E' $
+        OUTPUT,TEXT,FROM C'X(1) = ', 'X'(1) $
+
+        CALCULATE, 'Z'(1) = 'Y' $
+
+        CALCULATE, 'Z'(2,1) = C'auvwxyz' $
+        CALCULATE, 'W' = 'Z' $
+        OUTPUT,TEXT,FROM C'Z(2,1) = ', 'Z'(2,1) $
+
+        FOR, 'a' = 1, 2, 3+4, 2, 100, THEN $
+        	OUTPUT,TEXT,FROM C'a = ', 'a' $
+        END, FOR $
+
+        FOR, 'b' = C'a', C'b', C'c', C'd', THEN $
+        	OUTPUT, TEXT, FROM C'b = ', 'b' $
+        END, FOR $
+
+        CALCULATE, 'X'(2) = C' : Good Bye ' $
+        CALCULATE, 'Y'(1) = C' : Adios ' $
+        CALCULATE, 'Y'(2) = C'Hola!' $
+        OUTPUT, TEXT, FROM 'X'(1;2), 'Y'(2;1) $
+
+        CALCULATE, 'c' = B'00010110' $
+        OUTPUT, TEXT, FROM 'c' : BINARY 6 $
+
+        CALCULATE, 'd' = 'e' $
+        CALCULATE, 'd'.'a' = 1 $
+        CALCULATE, 'e'.'a' = 2 $
+        OUTPUT, TEXT, FROM C'd.a = ', 'd'.'a' $
+
+        ENABLE,  OUTPUT TO NEW C'/home/frank/DATA', VIA 'file' $
+        OUTPUT,  TO 'file' 0, FROM 'd'.'a' $
+        DISABLE, 'file' $
+
+ 999999 TERMINATE, ATLAS PROGRAM 'TRY'        $
