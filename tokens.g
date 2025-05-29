@@ -60,7 +60,6 @@
 		//--------------------------------------------------------------------
 		void	popMode()
 		{
-			//Func func;
 
 			if(stackDepth <= 0) {
 				panic("Mode stack underflow ");

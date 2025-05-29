@@ -1,6 +1,4 @@
-#ifndef InitList_H
-#define InitList_H
-
+#pragma once
 
 #include "Std.h"
 
@@ -9,9 +7,9 @@
 
 
 
-class InitList;
+// sik weird, this causes an error, a conflict:  class InitList;
 
-class InitData 
+class InitData
 {
     public:
 	InitData(AST * rep,AST * data,InitList * list);
@@ -23,19 +21,18 @@ class InitData
 	InitList * _list;
 	class InitListIterator *_iterator;
 };
+// sik cleanup and rename the file to InitData.h
 
-class InitList : public RWTPtrSlist<InitData>
-{
-public:
-	InitList();
-};
+////class InitList : public RWTPtrSlist<InitData>
+////{
+////public:
+////	InitList();
+////};
+////
+////class InitListIterator:public  RWTPtrSlistIterator<InitData> 
+////{
+////public:
+////	InitListIterator(InitList & il);
+////};
+////
 
-class InitListIterator:public  RWTPtrSlistIterator<InitData> 
-{
-public:
-	InitListIterator(InitList & il);
-};
-
-
-
-#endif //InitList_H

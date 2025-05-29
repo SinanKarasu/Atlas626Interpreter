@@ -2,8 +2,8 @@
 #define NounsModifiersDimensions_h
 
 #include	"Types.h"
-
-
+//#include "Dictionary.h"
+#include "AppendCompat.h"
 class Quantity{
 public:
 	Quantity();
@@ -14,15 +14,28 @@ public:
 	int level;	
 };
 
-class QuantityList:public RWTValOrderedVector<Quantity * >{
+class SuffixEntry{
 public:
+	SuffixEntry();
+	RWCString suffix;
+	RWCString modifier;
 };
 
-class QuantitiesList:public RWTValOrderedVector<QuantityList * >{
-public:
-};
 
-class SuffixDictionary;
+// class QuantityList:public RWTValOrderedVector<Quantity * >{
+// public:
+// };
+
+// class QuantitiesList:public RWTValOrderedVector<QuantityList * >{
+// public:
+// };
+
+
+using QuantityList = AppendableVector<Quantity *>;
+using QuantitiesList = AppendableVector<QuantityList *>;
+
+using SuffixDictionary = Dictionary<std::string,SuffixEntry *>;
+using SuffixDictionaryIterator = DictionaryIterator<std::string, SuffixEntry*>;
 
 class ModifierEntry{
 public:
@@ -50,12 +63,40 @@ public:
 
 };
 
-class SuffixEntry{
-public:
-	SuffixEntry();
-	RWCString suffix;
-	RWCString modifier;
+class DimensionEntry;
+
+
+using DimensionDictionary = Dictionary<std::string,DimensionEntry *>;
+using DimensionDictionaryIterator = DictionaryIterator<std::string, DimensionEntry*>;
+
+
+
+class QuantityDimensions{
+	RWCString quantity;	
+	DimensionDictionary dimensions;
 };
+
+
+using ModifierDictionary = Dictionary<std::string,ModifierEntry *>;
+using ModifierDictionaryIterator = DictionaryIterator<std::string, ModifierEntry*>;
+
+class NounEntry{
+public:
+	NounEntry();
+	RWCString noun;
+	ModifierDictionary modifierDictionary;
+};
+
+using NounDictionary = Dictionary<std::string,NounEntry *>;
+using NounDictionaryIterator = DictionaryIterator<std::string, NounEntry*>;
+
+using QuantityDictionary = Dictionary<std::string,DimensionDictionary *>;
+using QuantityDictionaryIterator = DictionaryIterator<std::string, DimensionDictionary*>;
+
+// unsigned NounHash(const RWCString& str);
+// unsigned ModifierHash(const RWCString& str);
+// unsigned QuantityHash(const RWCString& str); 
+// unsigned DimensionHash(const RWCString& str);
 
 class DimensionEntry{
 public:
@@ -66,78 +107,8 @@ public:
 	double scale;
 };
 
-class DimensionDictionary : public RWTValHashDictionary<RWCString,DimensionEntry *> {
-public:
-	DimensionDictionary();
-	
-private:
-   enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
 
-class QuantityDimensions{
-	RWCString quantity;	
-	DimensionDictionary dimensions;
-};
-
-
-
-class ModifierDictionary : public RWTValHashDictionary<RWCString,ModifierEntry *> {
-public:
-	ModifierDictionary();
-	
-private:
-   enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-class ModifierDictionaryIterator : public RWTValHashDictionaryIterator<RWCString,ModifierEntry *>{
-	
-public:
-	ModifierDictionaryIterator( ModifierDictionary &d );
-};
-
-class SuffixDictionary : public RWTValHashDictionary<RWCString,SuffixEntry *> {
-public:
-	SuffixDictionary();
-	
-private:
-   enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-class NounEntry{
-public:
-	NounEntry();
-	RWCString noun;
-	ModifierDictionary modifierDictionary;
-};
-
-class NounDictionary : public RWTValHashDictionary<RWCString,NounEntry *> {
-public:
-	NounDictionary();
-	
-private:
-   enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-
-
-
-class QuantityDictionary : public RWTValHashDictionary<RWCString,DimensionDictionary *> {
-public:
-	QuantityDictionary();
-	
-private:
-   enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-	
-
-unsigned NounHash(const RWCString& str);
-unsigned ModifierHash(const RWCString& str);
-unsigned QuantityHash(const RWCString& str); 
-unsigned DimensionHash(const RWCString& str);
-
-
-class StringList : public RWTValSlist<RWCString>{
-};
+class StringList : public RWTValSlist<RWCString>{};
 
 class StringListIterator : public RWTValSlistIterator<RWCString>{
 public:

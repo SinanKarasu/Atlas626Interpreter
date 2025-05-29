@@ -1,8 +1,9 @@
 #include	"Types.h"
 #include	"ASTVector.h"
 
-ASTVector::ASTVector()
-	:RWTValOrderedVector<AST *>()
-	{
-	}
-
+////ASTVector::ASTVector()
+////	:RWTValOrderedVector<AST *>()
+////	{
+////	}
+////
+////

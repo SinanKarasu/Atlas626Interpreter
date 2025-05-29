@@ -105,7 +105,7 @@ int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 		} else if(token=="ADAPTER"){
 			if(getConfStr(conf)=="CONFIGURATION"){
 				skipStr(conf,":");
-				tpsContext.AdapterConfiguration.append(getConfStr(conf));
+				tpsContext.AdapterConfiguration.push_back(getConfStr(conf));
 			} else {
 				cerr << "ADAPTER CONFIGURATION expected" << endl;
 				exit(1);
@@ -133,7 +133,7 @@ int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 				tpsContext.AtlasTps=getConfStr(conf);
 			} else if(name=="MODULE"){
 				skipStr(conf,":");
-				tpsContext.AtlasModules.append(getConfStr(conf));
+				tpsContext.AtlasModules.push_back(getConfStr(conf));
 			} else {
 				cerr << "ATLAS TPS or MODULE expected" << endl;
 				exit(1);
@@ -143,15 +143,15 @@ int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 			skipStr(conf,"=");
 			RWCString real_dev=getConfStr(conf);
 			
-			deviceEquivalence.insertKeyAndValue(virt_dev,new DeviceEquivalence(real_dev));
+			deviceEquivalence[virt_dev] = new DeviceEquivalence(real_dev);
 		} else if(token=="EVENT"){
 			skipStr(conf,"MONITOR");
 			RWCString virt_mon=getQuotedConfStr(conf);
 			skipStr(conf,"=");
 			RWCString real_dev=getConfStr(conf);
 			RWCString real_cap=getConfStr(conf);
-			deviceEquivalence.insertKeyAndValue(virt_mon,new DeviceEquivalence(real_dev,real_cap));
-			monitorEquivalence.insertKeyAndValue(virt_mon,new DeviceEquivalence(real_dev,real_cap));
+			deviceEquivalence[virt_mon] = new DeviceEquivalence(real_dev,real_cap);
+			monitorEquivalence[virt_mon] = new DeviceEquivalence(real_dev,real_cap);
 		}
 	}
 	return 1;
@@ -165,7 +165,7 @@ atlasmain( RWCString  v ,const RWCString & dbd,int mode);
 
 void * deviceDriverLibraryHandle=0;
 
-main( int argc, char* argv[] )
+int main( int argc, char* argv[] )
 {
 
 	evalVisitor	go;
@@ -178,31 +178,33 @@ main( int argc, char* argv[] )
 	}
 	execEnv.ProcessArgs(argc-1, &(argv[1]));
 	
-	RWCString dbd;
+	string dbd;
 
 	if(execEnv.dbDirectory()){
 		dbd=RWCString(execEnv.dbDirectory());
 		dbd=dbd+"/";
 	} else {
-		char * pathcopy=strdup(getexecname());
-		dbd=RWCString(dirname(pathcopy));
+		string pathcopy(argv[0]);
+		//dbd=RWCString(dirname(pathcopy));
+		dbd = pathcopy.substr(pathcopy.find_last_of("/\\") + 1);
+
 		if(dbd.length()==0){
 			dbd=dbd+".";
 		}
 		dbd=dbd+"/";
-		free(pathcopy);
+		//free(pathcopy);
 	}
 
 	//debugtrace.open("debugtrace");
 
-	debugtrace.attach(1);
+    debugtrace.open("debug.log");
 		
-	sout.attach(1);
+    sout.open("output.log");
 	
 	ParseTpsContext(execEnv.cfFile(),tpsContext);
 
 	if(tpsContext.DeviceDriver !=""){
-		deviceDriverLibraryHandle=dlopen(tpsContext.DeviceDriver, RTLD_LAZY );
+		deviceDriverLibraryHandle=dlopen(tpsContext.DeviceDriver.c_str(), RTLD_LAZY );
 		if(deviceDriverLibraryHandle==0){
 			cerr << "Device Library Error " << dlerror() << endl;
 		}
@@ -214,22 +216,36 @@ main( int argc, char* argv[] )
 	}
 	
 	
+	//1
 	
-	StringListIterator slit( tpsContext.AdapterConfiguration );
-	
-	while(++slit){
-		if(slit.key()!="NONE"){
-			tedlmain(  slit.key(),dbd );
-		}
-	}		
+	for (const auto& module : tpsContext.AdapterConfiguration) {
+        if (module != "NONE") {
+            tedlmain(module, dbd);
+        }
+    }
+////	StringListIterator slit( tpsContext.AdapterConfiguration );
+////	
+////	while(++slit){
+////		if(slit.key()!="NONE"){
+////			tedlmain(  slit.key(),dbd );
+////		}
+////	}	
+	//
 
-	StringListIterator mlit( tpsContext.AtlasModules);
-	
-	while(++mlit){
-		if(mlit.key()!="NONE"){
-			atlasmain(  mlit.key(),dbd ,1);
-		}
-	}		
+// 2
+	for (const auto& module : tpsContext.AtlasModules) {
+        if (module != "NONE") {
+            atlasmain(module, dbd, 1);
+        }
+    }
+////	StringListIterator mlit( tpsContext.AtlasModules);
+////	
+////	while(++mlit){
+////		if(mlit.key()!="NONE"){
+////			atlasmain(  mlit.key(),dbd ,1);
+////		}
+////	}		
+////	//
 
 	AST *Root=atlasmain( tpsContext.AtlasTps ,dbd,0 );
 	if ( Root ){

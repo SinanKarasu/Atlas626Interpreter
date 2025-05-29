@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <deque>
+#include <list>
 #include <unordered_map>
 #include <unordered_set>
 #include <forward_list>
@@ -30,7 +31,7 @@ template<typename T>
 using RWTValVector = std::vector<T>;
 
 template<typename T>
-using RWTValSlist = std::forward_list<T>;
+using RWTValSlist = std::list<T>;
 
 template<typename K, typename V>
 using RWTValHashDictionary = std::unordered_map<K, V>;
@@ -43,7 +44,7 @@ using RWTPtrSlist = std::forward_list<std::shared_ptr<T>>;
 
 // --- Iterators ---
 template<typename T>
-using RWTValSlistIterator = typename RWTValSlist<T>::iterator;
+using RWTValSlistIterator = typename std::list<T>::iterator;
 
 template<typename T>
 using RWTPtrSlistIterator = typename RWTPtrSlist<T>::iterator;
@@ -71,3 +72,5 @@ class RWFile {
     // Placeholder for file streams; use std::ifstream / std::ofstream instead.
     // This can be replaced with a class adapter if needed.
 };
+
+

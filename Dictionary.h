@@ -1,103 +1,119 @@
-#ifndef Dictionary_h
-#define Dictionary_h
+#pragma once
 
-#include	"AtlasAST.h"
+#include <string>
+#include <unordered_map>
+#include <list>
+#include <algorithm>
+#include "AtlasAST.h"
+//#include "ResourceAST.h"
 
-//#include	"Std.h"
-//#include	"Types.h"
-// #include	"AtlasAST.h"
-//                       symbol table support                        //
+#include "AppendCompat.h"
 
-unsigned LabelHash(const RWCString& str);
+// // --- Modern Dictionary Template ---
+// template <typename Key, typename Value>
+// class Dictionary : public std::unordered_map<Key, Value> {
+// public:
+//     using std::unordered_map<Key, Value>::unordered_map;
+// 
+//     void insertKeyAndValue(const Key& k, const Value& v) {
+//         this->operator[](k) = v;
+//     }
+// 
+//     bool insertIfAbsent(const Key& k, const Value& v) {
+//         return this->emplace(k, v).second;
+//     }
+// };
+// 
+// template <typename Key, typename Value>
+// class DictionaryIterator {
+// public:
+//     using iterator = typename std::unordered_map<Key, Value>::iterator;
+// 
+//     DictionaryIterator(std::unordered_map<Key, Value>& dict)
+//         : it(dict.begin()), end(dict.end()) {}
+// 
+//     bool operator()() {
+//         if (it == end) return false;
+//         ++it;
+//         return it != end;
+//     }
+// 
+//     Key key() const { return it->first; }
+//     Value value() const { return it->second; }
+// 
+// private:
+//     iterator it;
+//     iterator end;
+// };
 
-// chat class AST; // forward declaration
-class Resource;
-class Capability;
-class ResourceAST;
+#include <vector>
 
-class SymbolDictionary : public RWTValHashDictionary<RWCString,AST *> {
-	public:
-		SymbolDictionary();
-
-	private:
-		enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-class SymbolDictionaryIterator : public RWTValHashDictionaryIterator<RWCString,AST *>{
-	public: SymbolDictionaryIterator( SymbolDictionary &d );
-};
-
-class FstatnoDictionary : public RWTValHashDictionary<RWInteger,Fstatno *>{
-	public:
-		FstatnoDictionary();
-
-	private:
-		enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-class GoToStatementStack : public RWTStack< TargetStatement * , RWTValOrderedVector < TargetStatement * > >{
-	public:
-};
-
-class GoToDictionary : public RWTValHashDictionary< RWInteger , GoToStatementStack * >{
-	public:
-		GoToDictionary();
-
-	private:
-		enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-class GoToDictionaryIterator : public RWTValHashDictionaryIterator< RWInteger,GoToStatementStack *>{
-	public: GoToDictionaryIterator(GoToDictionary &d);
-};
-
-class EntryDictionary : public RWTValHashDictionary< RWInteger,TargetStatement * >{
-	public:
-		EntryDictionary();
-
-	private:
-		enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-
-class DeviceDictionary : public RWTValHashDictionary< RWCString, ResourceAST * >{
-	public:
-		DeviceDictionary();
-		
-	private:
-		enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-class DeviceDictionaryIterator : public RWTValHashDictionaryIterator< RWCString, ResourceAST * >{
+class GoToStatementStack {
 public:
-	DeviceDictionaryIterator( DeviceDictionary & d );
-};
+    using value_type = TargetStatement*;
 
-// chat class ASTList : public RWTValSlist<AST *>{
-// chat public:
-// chat 	RWBoolean	findValue( RWCString, AST *& );
-// chat };
-// chat 
-// chat class ASTListIterator : public RWTValSlistIterator<AST *>{
-// chat public:
-// chat 	ASTListIterator(ASTList &d);
-// chat };
+    void push(value_type stmt) {
+        stack_.push_back(stmt);
+    }
 
+    value_type pop() {
+        if (stack_.empty()) return nullptr;
+        value_type val = stack_.back();
+        stack_.pop_back();
+        return val;
+    }
 
-class ASTList {
+    value_type top() const {
+        return stack_.empty() ? nullptr : stack_.back();
+    }
+
+    bool empty() const {
+        return stack_.empty();
+    }
+
+    size_t size() const {
+        return stack_.size();
+    }
+
+    void clear() {
+        stack_.clear();
+    }
+
 private:
-    std::list<AST*> items;
-public:
-    void insert(AST* ast) { items.push_back(ast); }
-
-    bool findValue(const std::string& key, AST*& result);
-
-    // maybe iterator access too
-    auto begin() { return items.begin(); }
-    auto end()   { return items.end();   }
+    std::vector<value_type> stack_;
 };
 
 
+using SymbolDictionary = Dictionary<std::string, AST*>;
+using SymbolDictionaryIterator = DictionaryIterator<std::string, AST*>;
+using FstatnoDictionary = Dictionary<int, Fstatno*>;
+using GoToDictionary = Dictionary<int, GoToStatementStack*>;
+using GoToDictionaryIterator = DictionaryIterator<int, GoToStatementStack*>;
+using EntryDictionary = Dictionary<int, TargetStatement*>;
+
+class ResourceAST;
+using DeviceDictionary = Dictionary<std::string, ResourceAST*>;
+using DeviceDictionaryIterator = DictionaryIterator<std::string, ResourceAST*>;
+class ReverseMapEntry;
+
+using ReverseMapDictionary = Dictionary<std::string, ReverseMapEntry*>;
+using ReverseMapDictionaryIterator = DictionaryIterator<std::string, ReverseMapEntry*>;
+
+////class ASTList {
+////private:
+////    std::list<AST*> items;
+////
+////public:
+////    void insert(AST* ast) { items.push_back(ast); }
+////
+////    bool findValue(const std::string& key, AST*& result); // Not implemented yet
+////
+////    using iterator = std::list<AST*>::iterator;
+////
+////    iterator begin() { return items.begin(); }
+////    iterator end()   { return items.end();   }
+////};
+////
 class ASTListIterator {
 public:
     using iterator = std::list<AST*>::iterator;
@@ -105,95 +121,101 @@ public:
     ASTListIterator(ASTList& list)
         : current(list.begin()), end(list.end()) {}
 
-    AST* key() {
-        if (current == end) return nullptr;
-        return *current;
+    AST* key() const {
+        return (current != end) ? *current : nullptr;
     }
 
-    void operator++() { if (current != end) ++current; }
-    bool hasMore() const { return current != end; }
+    ASTListIterator& operator++() {
+        if (current != end) ++current;
+        return *this;
+    }
+
+    bool hasMore() const {
+        return current != end;
+    }
+
+    explicit operator bool() const {
+        return current != end;
+    }
+    
+    bool atEnd() const { return current == end; }
 
 private:
     iterator current;
     iterator end;
 };
 
-
-class StringSet : public RWTValHashSet< RWCString >{
+class StringSet : public std::unordered_set<std::string> {
 public:
-		StringSet();
+    StringSet() = default;
+};
+
+class ErrorLimit {
+public:
+    ErrorLimit();
+    virtual int compare(ErrorLimit&);
+
 private:
-		enum { NbrBuckets = RWDEFAULT_CAPACITY };
+    double m_percentage;
+    std::string m_nounModifier;
+    double m_min;
+    double m_max;
 };
 
-class	ErrorLimit{
-	public:
-		ErrorLimit();
-		
-		virtual int	compare( ErrorLimit & );
-		
-	private:
-		double		m_percentage;
-		RWCString	m_nounModifier;
-		double		m_min;
-		double		m_max;
+class Capability {
+public:
+    Capability(AST* a = nullptr);
+    virtual int compare(Capability&);
+    virtual void require();
+    virtual bool required();
+    virtual void setMax(double);
+    virtual void setMin(double);
+    virtual void setNoun(std::string);
+    virtual void setModifier(std::string);
+    virtual void setAST(AST* a);
+    virtual AST* getAST();
+
+    friend Capability;
+
+private:
+    bool m_required;
+    std::string m_noun;
+    std::string m_nounModifier;
+    std::string m_command;
+    double m_min;
+    double m_max;
+    double m_by;
+    bool m_limit;
+    AST* m_ast;
 };
 
-class	Capability{
-	public:
-		Capability(AST * a=0);
-		
-		// compare()
-		// Returns -1 ==> Less than, or the passed characteristic within.
-		//         +1 ==> Greater than, or the passed characteristic is outside
-		//		  the bounds of this Characteristic.
-				  
-		virtual int		compare( Capability & );
-		virtual void		require();
-		virtual RWBoolean	required();
-		virtual void		setMax	( double );
-		virtual void		setMin	( double );
-		virtual void		setNoun	( RWCString );
-		virtual void		setModifier	( RWCString );
-		virtual	void		setAST	( AST * a);
-		virtual	AST	*	getAST	();
-
-	friend Capability;
-	
-	private:
-		RWBoolean	m_required;
-		RWCString	m_noun;
-		RWCString	m_nounModifier;
-		RWCString	m_command;
-		double		m_min;
-		double		m_max;
-		double		m_by;
-		RWBoolean	m_limit;
-		//ErrorLimit	m_errorLimit;
-		AST	*	m_ast;
+class CapabilityList : public std::list<Capability*> {
+public:
+    bool findValue(const std::string& key, AST*& result); // Stub
 };
 
-class	CapabilityList : public RWTPtrSlist<Capability>{
-	public:
-		RWBoolean	findValue( RWCString, AST *& );
+class CapabilityListIterator {
+public:
+    using iterator = std::list<Capability*>::iterator;
+
+    CapabilityListIterator(CapabilityList& l)
+        : current(l.begin()), end(l.end()) {}
+
+    Capability* next() {
+        if (current == end) return nullptr;
+        return *current++;
+    }
+
+private:
+    iterator current;
+    iterator end;
 };
 
-class	CapabilityListIterator : public RWTPtrSlistIterator<Capability>{	public:
-		CapabilityListIterator( CapabilityList & l );
-};
+////using ModifierDictionary = Dictionary<std::string, AST*>;
+////using ModifierDictionaryIterator = DictionaryIterator<std::string, AST*>;
+////
+////using DimensionDictionary = Dictionary<std::string, AST*>;
+////using DimensionDictionaryIterator = DictionaryIterator<std::string, AST*>;
+////
 
 class ReverseMapEntry;
-
-class ReverseMapDictionary : public RWTValHashDictionary<RWCString,ReverseMapEntry *> {
-	public:
-		ReverseMapDictionary();
-
-	private:
-		enum { NbrBuckets = 10007 };
-};
-
-class ReverseMapDictionaryIterator : public RWTValHashDictionaryIterator<RWCString,ReverseMapEntry *>{
-	public: ReverseMapDictionaryIterator( ReverseMapDictionary &d );
-};
-
-#endif //Dictionary_h

@@ -1,8 +1,10 @@
 #include	"Types.h"
 #include	"StringVector.h"
+#include <algorithm>
 
-StringVector::StringVector()
-	:RWTValOrderedVector<RWCString>()
-	{
-	}
-
+// sik disabled
+////StringVector::StringVector()
+////	:RWTValOrderedVector<RWCString>()
+////	{
+////	}
+	

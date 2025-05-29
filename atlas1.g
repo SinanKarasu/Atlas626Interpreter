@@ -516,18 +516,21 @@ variable_type![Scope * which]:                                  // fsd-- 6.3D
 		)*
 		IS t:type { << Init_List=new InitList;>> initial[Init_List] }
 		<<
-			ASTListIterator var_it( *Label_List );
-			
-			for ( int more = 0; ++var_it; more = 1 ) {
-				if(sane()){
-					#( var_it.key(), more?#t->clone():#t );
-					which->insert_label(var_it.key(),scope);
-				} else {
-					delete var_it.key();
-				}
-			}
+		ASTListIterator var_it(*Label_List);
+   		int more = 0;
+
+		for (; !var_it.atEnd(); ++var_it, more = 1) {
+    		AST* p = var_it.key();
+        	if (sane()) {
+            	#( p, more ? #t->clone() : #t );
+            	which->insert_label(p, scope);
+        	} else {
+            	delete p;
+        	}
+    	}
+
 			if(sane()) {
-				if ( Init_List->isEmpty() ){
+				if ( Init_List->empty() ){
 					delete Label_List;
 					delete Init_List;
 				}else{
@@ -564,7 +567,7 @@ enum_type!:
 					Enum_List= new ASTList;
 					#(#ee1,#(new EnumerationType( #ee1->getToken(), pos++ ), new EnumerationsType(Enum_List)));
 					Enum_List->insert( #ee1->ASTdown() );
-					evec.insert( #ee1->getName() );
+					evec.push_back( #ee1->getName() );
 				>>
 				
 			 	(
@@ -574,7 +577,7 @@ enum_type!:
 							{
 								#(#een,#(new EnumerationType(#een->getToken(),pos++),new EnumerationsType(Enum_List)));
 								Enum_List->insert(#een->ASTdown());
-								evec.insert(#een->getName());
+								evec.push_back(#een->getName());
 							}else{
 								Error_Report( "Duplicate Enumeration ", #een );
 							}							
@@ -600,8 +603,10 @@ conn_type!:
 			<<
 				Conn_List= new SymbolDictionary;
 				cvec=new StringVector;
-				Conn_List->insertKeyAndValue(#cl1->getName(),#cl1);
-				cvec->append(#cl1->getName());
+////				Conn_List->insertKeyAndValue(#cl1->getName(),#cl1);
+				(*Conn_List)[#cl1->getName()] = #cl1;
+
+				cvec->push_back(#cl1->getName());
 			>>
 			
 		 	(
@@ -1119,32 +1124,50 @@ end_function_statement!>[ANTLRTokenPtr fnend]:                         // fsd-- 
 
 formal_parameter![int &argcount]:                               // fsd-- 14.38
 		<<
-			RWTPtrSlist<ANTLRTokenPtr> Var_Names_List  ;AST * local;AST * param;
+			VarNamesList Var_Names_List  ;AST * local;AST * param;
 		>>      
-		id1:ID	<< Var_Names_List.insert(new ANTLRTokenPtr($id1)); >>
+		id1:ID	<< Var_Names_List.insert(ANTLRTokenPtr($id1)); >>
 		(
-			Fd idn:ID	<< Var_Names_List.insert(new ANTLRTokenPtr($idn)); >>
+			Fd idn:ID	<< Var_Names_List.insert(ANTLRTokenPtr($idn)); >>
 		)* IS t:type
+////		<<
+////			auto var_it = Var_Names_List.begin();  // std::list<ANTLRTokenPtr>::iterator
+////			while (++var_it){
+////				// dummy local variable
+////				local=new VariableIdentifierLabel(*var_it.key());
+////				scope->insert_label((AST *)#(local,#0?(sane()?#t->clone():0):#t));
+////				
+////				if(#0){
+////					#0=#(0,#0,#(new ParameterLabel(*var_it.key()),local));
+////				} else {
+////					#0=#(new ParameterLabel(*var_it.key()),local);
+////				}
+////				argcount++;
+////			};
+////		>>
+		
 		<<
-			RWTPtrSlistIterator<ANTLRTokenPtr> var_it(Var_Names_List);
-			while (++var_it){
-				// dummy local variable
-				local=new VariableIdentifierLabel(*var_it.key());
-				scope->insert_label((AST *)#(local,#0?(sane()?#t->clone():0):#t));
-				
-				if(#0){
-					#0=#(0,#0,#(new ParameterLabel(*var_it.key()),local));
-				} else {
-					#0=#(new ParameterLabel(*var_it.key()),local);
-				}
-				argcount++;
-			};
+		for (auto var_it = std::next(Var_Names_List.begin()); var_it != Var_Names_List.end(); ++var_it) {
+		    // dummy local variable
+		    local = new VariableIdentifierLabel(*var_it);
+		    scope->insert_label((AST *)#(local, #0 ? (sane() ? #t->clone() : 0) : #t));
+		
+		    if (#0) {
+		        #0 = #(0, #0, #(new ParameterLabel(*var_it), local));
+		    } else {
+		        #0 = #(new ParameterLabel(*var_it), local);
+		    }
+		    argcount++;
+		};
 		>>
+
+		
+		
 	;
 
 require_statement!:                              // fsd-- 6.9
 	<<
-		RWTValSlist<ANTLRTokenPtr> Var_Names_List  ;
+		VarNamesList Var_Names_List  ;
 		Scope * which=0;
 		ANTLRTokenPtr name;
 	>>
@@ -1166,16 +1189,31 @@ require_statement!:                              // fsd-- 6.9
   		sr:signal_requirement
   		statement_terminator
   		<<
-			RWTValSlistIterator<ANTLRTokenPtr> var_it(Var_Names_List);
-  			for( int more_objects=0;++var_it;more_objects=1 ){
-  				AST * new_req=	which->insert_label( new RequirementLabel( var_it.key() ),scope);		
-				if ( more_objects ) {
+////			VarNamesListIterator var_it(Var_Names_List);
+////  			for( int more_objects=0;++var_it;more_objects=1 ){
+////  				AST * new_req=	which->insert_label( new RequirementLabel( var_it.key() ),scope);		
+////				if ( more_objects ) {
+//// 					#( new_req, #sr->clone() );
+//// 				} else {
+//// 					#( new_req, #sr );
+//// 				}
+////  				if(sane()&&!(new_req->check())){
+////  					Error_Report("REQUIREMENT is NOT satisfied:",var_it.key());
+////  				}
+////				#0=#(0,#(new Proxy,new_req),#0);
+////  			}
+  			
+  			for (auto var_it = std::next(Var_Names_List.begin()); var_it != Var_Names_List.end(); ++var_it) {
+  				////AST * new_req=	which->insert_label( new RequirementLabel( var_it.key() ),scope);	
+  				AST* new_req = which->insert_label(new RequirementLabel(*var_it), scope);
+
+				if (var_it != std::next(Var_Names_List.begin())) {
  					#( new_req, #sr->clone() );
  				} else {
  					#( new_req, #sr );
  				}
   				if(sane()&&!(new_req->check())){
-  					Error_Report("REQUIREMENT is NOT satisfied:",var_it.key());
+  					Error_Report("REQUIREMENT is NOT satisfied:", *var_it);
   				}
 				#0=#(0,#(new Proxy,new_req),#0);
   			}
@@ -1206,65 +1244,108 @@ signal_requirement!:      // fsd-- 6.9A
 	{	rcap:require_capability	[nounEntry,capmodifierList]	}
 	{	rlim:require_limit	[nounEntry,limmodifierList]	}
 	{	rcnx:require_cnx	[nounEntry]			}
+	
+////	<<
+////		// Verify that everything that occured in rmodifierList
+////		// also occurs in smodifierList
+////		ASTListIterator reqita(*reqmodifierList);
+////		ASTListIterator cntita(*cntmodifierList);
+////		ASTListIterator capita(*capmodifierList);
+////		while(++reqita){
+////			cntita.reset();
+////			int found=0;
+////			capita.reset();
+////			while(++cntita){
+////				if(reqita.key()->getName()==cntita.key()->getName()){
+////					found=1;
+////					break;
+////				}
+////			}
+////			if(!found){
+////				while(++capita){
+////					if(reqita.key()->getName()==capita.key()->getName()){
+////						found=1;
+////						break;
+////					}
+////				}
+////			}
+////			if(!found){
+////				Error_Report("MODIFIER "+reqita.key()->getName()+" Has no  CHARACTERISTICS specified",reqita.key());
+////			}
+////		}
+////		// Verify that no modifiers  exist both in 
+////		// control and capability lists
+////		cntita.reset();
+////		while(++cntita){
+////			capita.reset();
+////			while(++capita){
+////				if(cntita.key()->getName()==capita.key()->getName()){
+////					Error_Report(
+////						"MODIFIER "+cntita.key()->getName()+" is both in CONTROL and CAPABILITY:",
+////						VerbLineNo
+////					);
+////				}
+////			}
+////		}
+////		#(0,n,new ReqModifierListType(cntmodifierList,capmodifierList,limmodifierList),#rcnx);
+////		// try without RequireAnalogAction
+////		//	#0=#(new RequireAnalogAction,#ra);
+////		#0=#ra;
+////		// what do we have?
+////		// RequireAnalogAction
+////		//      |
+////		//      v
+////		//    Virtual(Something)
+////		//      |
+////		//      v
+////		//    Noun --> ModifierListType --> #rcnx
+////		//      |
+////		//      v
+////		//    mcm(empty for source etc..)
+////		 
+////	>>
+
 	<<
-		// Verify that everything that occured in rmodifierList
-		// also occurs in smodifierList
-		ASTListIterator reqita(*reqmodifierList);
-		ASTListIterator cntita(*cntmodifierList);
-		ASTListIterator capita(*capmodifierList);
-		while(++reqita){
-			cntita.reset();
-			int found=0;
-			capita.reset();
-			while(++cntita){
-				if(reqita.key()->getName()==cntita.key()->getName()){
-					found=1;
-					break;
-				}
-			}
-			if(!found){
-				while(++capita){
-					if(reqita.key()->getName()==capita.key()->getName()){
-						found=1;
-						break;
-					}
-				}
-			}
-			if(!found){
-				Error_Report("MODIFIER "+reqita.key()->getName()+" Has no  CHARACTERISTICS specified",reqita.key());
-			}
-		}
-		// Verify that no modifiers  exist both in 
-		// control and capability lists
-		cntita.reset();
-		while(++cntita){
-			capita.reset();
-			while(++capita){
-				if(cntita.key()->getName()==capita.key()->getName()){
-					Error_Report(
-						"MODIFIER "+cntita.key()->getName()+" is both in CONTROL and CAPABILITY:",
-						VerbLineNo
-					);
-				}
-			}
-		}
-		#(0,n,new ReqModifierListType(cntmodifierList,capmodifierList,limmodifierList),#rcnx);
-		// try without RequireAnalogAction
-		//	#0=#(new RequireAnalogAction,#ra);
-		#0=#ra;
-		// what do we have?
-		// RequireAnalogAction
-		//      |
-		//      v
-		//    Virtual(Something)
-		//      |
-		//      v
-		//    Noun --> ModifierListType --> #rcnx
-		//      |
-		//      v
-		//    mcm(empty for source etc..)
-		 
+	    for (auto reqit = std::next(reqmodifierList->begin()); reqit != reqmodifierList->end(); ++reqit) {
+	        bool found = false;
+	
+	        for (auto cntit = std::next(cntmodifierList->begin()); cntit != cntmodifierList->end(); ++cntit) {
+	            if ((*reqit)->getName() == (*cntit)->getName()) {
+	                found = true;
+	                break;
+	            }
+	        }
+	
+	        if (!found) {
+	            for (auto capit = std::next(capmodifierList->begin()); capit != capmodifierList->end(); ++capit) {
+	                if ((*reqit)->getName() == (*capit)->getName()) {
+	                    found = true;
+	                    break;
+	                }
+	            }
+	        }
+	
+	        if (!found) {
+	            Error_Report("MODIFIER " + (*reqit)->getName() + " Has no CHARACTERISTICS specified", *reqit);
+	        }
+	    }
+	
+	    // Verify that no modifiers exist in both control and capability lists
+	    for (auto cntit = std::next(cntmodifierList->begin()); cntit != cntmodifierList->end(); ++cntit) {
+	        for (auto capit = std::next(capmodifierList->begin()); capit != capmodifierList->end(); ++capit) {
+	            if ((*cntit)->getName() == (*capit)->getName()) {
+	                Error_Report(
+	                    "MODIFIER " + (*cntit)->getName() + " is both in CONTROL and CAPABILITY:",
+	                    VerbLineNo
+	                );
+	            }
+	        }
+	    }
+	
+	    #(0, n, new ReqModifierListType(cntmodifierList, capmodifierList, limmodifierList), #rcnx);
+	    #0 = #ra;
 	>>
+
 	;
 							//<<Esc_1 >> 
 //  &*     This bypass must be used with nouns that do not  
@@ -2343,15 +2424,20 @@ new_dimension[ModifierEntry *& modifierEntry,DimensionDictionary *& dimensionDic
 		id:ID
 		<<
 			QuantityList *ql=0;
-			RWCRegexp re("'");
+			std::regex single_quote("'");
 			dimensionEntry=new DimensionEntry;
 			ql=modifierEntry->quantitiesList[0];
 			dimensionEntry->quantity=(*ql)[0]->quantity;
 			dimensionEntry->dimension=$id->getText();
-			dimensionEntry->dimension(re)="";
+			dimensionEntry->dimension = std::regex_replace(dimensionEntry->dimension, single_quote, "");
+			//dimensionEntry->dimension(re)="";
 			dimensionDictionary->insertKeyAndValue(dimensionEntry->dimension,dimensionEntry);
 		>>
 	) +
+
+	
+	
+	
 	{ DIMdSPEC external_semantics_specification }
 	;
   
@@ -2426,16 +2512,38 @@ databus_extension!:                              // fsd-- 6.21O
 					>>
 		get_extension_names[modifiers]
 	)
+////		<<
+////			RWCRegexp re("'");RWCString pruned;
+////			ModifierEntry * me;
+////			QuantityList * quantityList=new QuantityList;
+////			modifierEntry->insertQuantityList(quantityList); 
+////			for(int i=0; i< modifiers.entries();i++){
+////				pruned=(modifiers[i](re)="");	// get rid of the single quotes.
+////				if(i==0){
+////					me=modifierEntry;
+////					quantityList->insert(new Quantity("q"+pruned));
+////				} else {
+////					me=modifierEntry->clone();
+////				}
+////				me->modifier=pruned;
+////				nounEntry->modifierDictionary.insertKeyAndValue(me->modifier,me);
+////			}
+////		
+////		>>
+
 		<<
-			RWCRegexp re("'");RWCString pruned;
+			std::regex single_quote("'");
+			std::string pruned;
 			ModifierEntry * me;
 			QuantityList * quantityList=new QuantityList;
 			modifierEntry->insertQuantityList(quantityList); 
-			for(int i=0; i< modifiers.entries();i++){
-				pruned=(modifiers[i](re)="");	// get rid of the single quotes.
-				if(i==0){
+			for(auto it = modifiers.begin(); it != modifiers.end(); ++it) {
+				pruned = std::regex_replace((*it), single_quote, "");
+
+				//pruned=(*it)="");	// get rid of the single quotes.
+				if(it==modifiers.begin()){
 					me=modifierEntry;
-					quantityList->insert(new Quantity("q"+pruned));
+					quantityList->append(new Quantity("q"+pruned));
 				} else {
 					me=modifierEntry->clone();
 				}
@@ -2444,12 +2552,14 @@ databus_extension!:                              // fsd-- 6.21O
 			}
 		
 		>>
+
+
 	;
  
 get_extension_names![RWTValSlist<RWCString> & modifiers]:
 	id:ID
 		<<
-			modifiers.append($id->getText());
+			modifiers.push_back($id->getText());
 		>>
 		{
 			Fd get_extension_names[modifiers]
@@ -3325,16 +3435,28 @@ go_to_statement!:                                // fsd-- 10.5
 		st:STEP
 		snum:statement_number
 		statement_terminator
+////		<<
+////			#0=#(#verb,#(new GoToAction($st,scope),#snum));
+////			int tno=((StatementNumber *)#snum)->getInteger(0);
+////			unresolved=new TargetStatement(#snum,ContextLevel,ContextDepth);
+////			if(!GoToTargets.findValue(tno,target)){
+////				insertUnresolved(tno,#snum);
+////			} else {
+////				#snum->init(verifyGoToTarget(unresolved,target));
+////			}
+////		>>
 		<<
 			#0=#(#verb,#(new GoToAction($st,scope),#snum));
 			int tno=((StatementNumber *)#snum)->getInteger(0);
 			unresolved=new TargetStatement(#snum,ContextLevel,ContextDepth);
-			if(!GoToTargets.findValue(tno,target)){
+			auto it = GoToTargets.find(tno);
+			if (it == GoToTargets.end()) {
 				insertUnresolved(tno,#snum);
 			} else {
 				#snum->init(verifyGoToTarget(unresolved,target));
 			}
 		>>
+
 	;       
     
     
