@@ -111,7 +111,7 @@
 #lexclass STARTAtlas
 #token	StatementTerminator	"$"		<<
 							TedlError("Rogue $ in column 1:", line() );
-							pushMode(ProcessStatementTerminator,&resetModeStack);
+							pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);
 						>>
 #token				"C"		<<skip();pushMode(CommentMode);>>
 #token	BFlag			"B"		<<pushMode(CommentMode);>>
@@ -142,43 +142,43 @@
 
 #lexclass SkipMode
 #token				"\n"			<<newline();skip();>>
-#token				"$"			<<skip();pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token				"$"			<<skip();pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token				"\r"			<<skip();>>
 #token				"~[\n$]"		<<skip();>>
 
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass CommentMode
-#token	StatementTerminator	"$"			<<skip();pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"			<<skip();pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token				"\n"			<<newline();skip();>>
 #token				"~[\n\$]"		<<skip();>>		// Comment is consumed in DLG
 
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass FStatNoMode
-#token	StatementTerminator	"$"			<<pushMode(ProcessStatementTerminator,&resetModeStack);sawFStatno=0;>>
-#token				"[\ ][\ ][\ ][\ ]"	<<pushMode(StepNumberMode,&popMode);more();sawFStatno=0;>>
-#token				"[0-9][0-9][0-9][0-9]"	<<pushMode(StepNumberMode,&popMode);more();sawFStatno=1;>>
+#token	StatementTerminator	"$"			<<pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);sawFStatno=0;>>
+#token				"[\ ][\ ][\ ][\ ]"	<<pushMode(StepNumberMode,&AtlasDLG::popMode);more();sawFStatno=0;>>
+#token				"[0-9][0-9][0-9][0-9]"	<<pushMode(StepNumberMode,&AtlasDLG::popMode);more();sawFStatno=1;>>
 #token	FStatno			"{[\ ]}[\t]"		<<
 								if((ch=='\n')||(ch=='\r')){
-									pushMode(ProcessStatementTerminator,&resetModeStack);
+									pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);
 									sawFStatno=0;
 									skip();
 								} else {
 									replstr("       ");
-									pushMode(StepNumberMode,&popMode);
+									pushMode(StepNumberMode,&AtlasDLG::popMode);
 									more();sawFStatno=0;
 								}
 							>>
 
 #token				"[\ ]{[\ ]}{[\ ]}"	<<
 								if(ch=='\n'){
-									pushMode(ProcessStatementTerminator,&resetModeStack);
+									pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);
 									sawFStatno=0;
 									skip();
 								} else {
 									TedlError(RWCString( "Unrecognized TESTNO field")+lextext(), line() );
-									pushMode(ProcessStatementTerminator,&resetModeStack);
+									pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);
 									skip();sawFStatno=0;
 								}
 							>>
@@ -186,12 +186,12 @@
 #token	Bad_statement_no	"~[\n\ \$\r]~[\n\ \$\r]~[\n\ \$\r]~[\n\ \$\r]"		
 							<<
 								TedlError(RWCString( "Unrecognized TESTNO field")+lextext(), line() );
-								pushMode(VerbMode,&popMode);sawFStatno=0;
+								pushMode(VerbMode,&AtlasDLG::popMode);sawFStatno=0;
 							>>
 							
 #token	Bad_statement_no	"~[\n\r\$]"		<<
 								TedlError(RWCString( "Unclassifiable TESTNO. Skipping to $:")+lextext(), line() );
-								skip();pushMode(SkipMode,&resetModeStack);sawFStatno=0;
+								skip();pushMode(SkipMode,&AtlasDLG::resetModeStack);sawFStatno=0;
 							>>
 							
 #token				"\n"			<<newline();skip();popMode();sawFStatno=0;>>
@@ -202,7 +202,7 @@
 #lexclass StepNumberMode
 #token	StatementTerminator	"$"			<<
 								TedlError( RWCString( "Premature $ at ")+lextext(), line() );
-								skip();pushMode(ProcessStatementTerminator,&resetModeStack);
+								skip();pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);
 							>>
 							
 #token				"\n"			<<
@@ -214,22 +214,22 @@
 							>>
 							
 #token	FStatno			"[0-9][0-9]"		<<
-								pushMode(VerbMode,&popMode);sawFStatno=1;
+								pushMode(VerbMode,&AtlasDLG::popMode);sawFStatno=1;
 							>>
 								
 #token	FStatno			"[\ ][\ ][\ ]*"		<<
 								if((ch=='\n') &&  (sawFStatno==0)){
 									skip();	// empty line
-									pushMode(ProcessStatementTerminator,&resetModeStack);
+									pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);
 								} else {
-									pushMode(VerbMode,&popMode);sawFStatno=0;
+									pushMode(VerbMode,&AtlasDLG::popMode);sawFStatno=0;
 								}
 							>>
 							
 #token	Bad_statement_no	"~[\n\ \$]~[\n\ \$]"	<<
 								TedlError( RWCString( "Unrecognized STEPNO field")+lextext(), line() );
 								replstr("       ");
-								pushMode(VerbMode,&popMode);
+								pushMode(VerbMode,&AtlasDLG::popMode);
 							>>
 
 #token	Unrecognized_char	"~[\n \$]"		<<
@@ -237,75 +237,75 @@
 									RWCString( "Unclassifiable STEPNO. Skipping to $:")+lextext(),
 									line()
 								);
-								pushMode(SkipMode,&popMode);skip();
+								pushMode(SkipMode,&AtlasDLG::popMode);skip();
 							>>
 
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass VerbMode
-#token	StatementTerminator	"$"		<<pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"		<<pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token				"\n"		<<newline();skip();>>
 #token				"\r"		<<skip();>>
 #token				"[\ \t]"	<<skip();>>
-#token	APPLY			"APPLY"		<<pushMode(StatementMode,&popMode);>>
-#token	ARM			"ARM"		<<pushMode(StatementMode,&popMode);>>
-#token	BEGIN 			"BEGIN"		<<pushMode(StatementMode,&popMode);>>
-#token	CALCULATE		"CALCULATE"	<<pushMode(StatementMode,&popMode);>>
-#token	CHANGE			"CHANGE"	<<pushMode(StatementMode,&popMode);>>
-#token	COMMENCE		"COMMENCE"	<<pushMode(StatementMode,&popMode);>>
-#token	COMPARE			"COMPARE"	<<pushMode(StatementMode,&popMode);>>
-#token	CONNECT			"CONNECT"	<<pushMode(StatementMode,&popMode);>>
-#token	CREATE			"CREATE"	<<pushMode(StatementMode,&popMode);>>
-#token	DECLARE			"DECLARE"	<<pushMode(StatementMode,&popMode);>>
-#token	DEFINE			"DEFINE"	<<pushMode(StatementMode,&popMode);>>
-#token	DELETE			"DELETE"	<<pushMode(StatementMode,&popMode);>>
-#token	DISABLE			"DISABLE"	<<pushMode(StatementMode,&popMode);>>
-#token	DISCONNECT		"DISCONNECT"	<<pushMode(StatementMode,&popMode);>>
-#token	DO			"DO"		<<pushMode(StatementMode,&popMode);>>
-#token	ELSE			"ELSE"		<<pushMode(StatementMode,&popMode);>>
-#token	ENABLE			"ENABLE"	<<pushMode(StatementMode,&popMode);>>
-#token	END			"END"		<<pushMode(StatementMode,&popMode);>>
-#token	ESTABLISH		"ESTABLISH"	<<pushMode(StatementMode,&popMode);>>
-#token	EXTEND			"EXTEND"	<<pushMode(StatementMode,&popMode);>>
-#token	FETCH			"FETCH"		<<pushMode(StatementMode,&popMode);>>
-#token	FINISH			"FINISH"	<<pushMode(StatementMode,&popMode);>>
-#token	FOR			"FOR"		<<pushMode(StatementMode,&popMode);>>
-#token	GO_TO			"GO[\ \t]+TO"	<<pushMode(StatementMode,&popMode);>>
-#token	IDENTIFY		"IDENTIFY"	<<pushMode(StatementMode,&popMode);>>
-#token	IF			"IF"		<<pushMode(StatementMode,&popMode);>>
-#token	INCLUDE			"INCLUDE"	<<pushMode(StatementMode,&popMode);>>
-#token	INITIATE		"INITIATE"	<<pushMode(StatementMode,&popMode);>>
-#token	INPUT			"INPUT"		<<pushMode(StatementMode,&popMode);>>
-#token	LEAVE			"LEAVE"		<<pushMode(StatementMode,&popMode);>>
-#token	MEASURE			"MEASURE"	<<pushMode(StatementMode,&popMode);>>
-#token	MONITOR			"MONITOR"	<<pushMode(StatementMode,&popMode);>>
-#token	OUTPUT			"OUTPUT"	<<pushMode(StatementMode,&popMode);>>
-#token	PERFORM			"PERFORM"	<<pushMode(StatementMode,&popMode);>>
-#token	PROVE			"PROVE"		<<pushMode(StatementMode,&popMode);>>
-#token	READ			"READ"		<<pushMode(StatementMode,&popMode);>>
-#token	REMOVE			"REMOVE"	<<pushMode(StatementMode,&popMode);>>
-#token	REQUIRE			"REQUIRE"	<<pushMode(StatementMode,&popMode);>>
-#token	RESET			"RESET"		<<pushMode(StatementMode,&popMode);>>
-#token	RESUME			"RESUME"	<<pushMode(StatementMode,&popMode);>>
-#token	SENSE			"SENSE"		<<pushMode(StatementMode,&popMode);>>
-#token	SETUP			"SETUP"		<<pushMode(StatementMode,&popMode);>>
-#token	SPECIFY			"SPECIFY"	<<pushMode(StatementMode,&popMode);>>
-#token	STIMULATE		"STIMULATE"	<<pushMode(StatementMode,&popMode);>>
-#token	TERMINATE		"TERMINATE"	<<pushMode(StatementMode,&popMode);>>
-#token	UPDATE			"UPDATE"	<<pushMode(StatementMode,&popMode);>>
-#token	VERIFY			"VERIFY"	<<pushMode(StatementMode,&popMode);>>
-#token	WAIT			"WAIT"		<<pushMode(StatementMode,&popMode);>>
-#token	WHILE			"WHILE"		<<pushMode(StatementMode,&popMode);>>
+#token	APPLY			"APPLY"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	ARM			"ARM"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	BEGIN 			"BEGIN"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	CALCULATE		"CALCULATE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	CHANGE			"CHANGE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	COMMENCE		"COMMENCE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	COMPARE			"COMPARE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	CONNECT			"CONNECT"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	CREATE			"CREATE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	DECLARE			"DECLARE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	DEFINE			"DEFINE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	DELETE			"DELETE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	DISABLE			"DISABLE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	DISCONNECT		"DISCONNECT"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	DO			"DO"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	ELSE			"ELSE"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	ENABLE			"ENABLE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	END			"END"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	ESTABLISH		"ESTABLISH"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	EXTEND			"EXTEND"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	FETCH			"FETCH"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	FINISH			"FINISH"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	FOR			"FOR"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	GO_TO			"GO[\ \t]+TO"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	IDENTIFY		"IDENTIFY"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	IF			"IF"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	INCLUDE			"INCLUDE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	INITIATE		"INITIATE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	INPUT			"INPUT"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	LEAVE			"LEAVE"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	MEASURE			"MEASURE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	MONITOR			"MONITOR"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	OUTPUT			"OUTPUT"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	PERFORM			"PERFORM"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	PROVE			"PROVE"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	READ			"READ"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	REMOVE			"REMOVE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	REQUIRE			"REQUIRE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	RESET			"RESET"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	RESUME			"RESUME"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	SENSE			"SENSE"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	SETUP			"SETUP"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	SPECIFY			"SPECIFY"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	STIMULATE		"STIMULATE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	TERMINATE		"TERMINATE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	UPDATE			"UPDATE"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	VERIFY			"VERIFY"	<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	WAIT			"WAIT"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
+#token	WHILE			"WHILE"		<<pushMode(StatementMode,&AtlasDLG::popMode);>>
 
 #token				"~[\n\ \t,\'\r]+"	<<
 							TedlError(RWCString( "Unclassifiable VERB. Skipping to $:")+lextext(), line() );
-							skip();pushMode(SkipMode,&popMode);
+							skip();pushMode(SkipMode,&AtlasDLG::popMode);
 						>>
 
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass StatementMode
-#token	StatementTerminator	"$"			<<pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"			<<pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token				"\n"			<<newline();skip();>>
 #token				"[\ \t\r]"		<<skip();>>
 
@@ -674,7 +674,7 @@
 #token	EID			"[A-Za-z](~[\=\t\ \n\,$\'\(\)\;\r]*)"
 
 #lexclass CStringMode
-#token	StatementTerminator	"$"			<<pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"			<<pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token				"\n"			<<TedlError(" END Of LINE in quoted string",line());newline();more();>>
 #token	Single_Char		"~[\'$]\'"		<<popMode();>>
 #token	Character_String	"~[\'$]*\'"		<<popMode();>>
@@ -682,7 +682,7 @@
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass LabelMode
-#token	StatementTerminator	"$"			<<pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"			<<pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token	ID "\'"						<<popMode();>>
 #token	"[\!\"\#\%\&\:\;\<\>\?\@\~\[\]\|\_\\\^\`\{\}]+"	<<more();>> // SymbolExtensionSet
 #token	"[a-z]+"					<<more();>> // LowerCaseLetters	
@@ -704,8 +704,8 @@
 #token			"\n"					<<newline();skip();>>
 
 #token			"[\t\r\ ]"				<<skip();>>
-#token		Fd	","					<<pushMode(DrawingIDMode,&popMode);>>
-#token	StatementTerminator	"$"			<<popMode();pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token		Fd	","					<<pushMode(DrawingIDMode,&AtlasDLG::popMode);>>
+#token	StatementTerminator	"$"			<<popMode();pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
@@ -715,7 +715,7 @@
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass ConnectionBeginMode
-#token	StatementTerminator	"$"	<<popMode();pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"	<<popMode();pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 
 #token			"[\ \t\r]+"	<<
 						skip();
@@ -723,7 +723,7 @@
 						case '\n':break;
 						case '$' :break;
 						case '(' :break;
-						default:pushMode(ConnectionMode,&popMode);
+						default:pushMode(ConnectionMode,&AtlasDLG::popMode);
 						};
 					>>
 					
@@ -735,18 +735,18 @@
 						case '\n':break;
 						case '$' :break;
 						case '(' :break;
-						default:pushMode(ConnectionMode,&popMode);
+						default:pushMode(ConnectionMode,&AtlasDLG::popMode);
 						};
 					>>
 #token	LP	"\("			<<
-						pushMode(ConnectionInParenMode,&popMode);
+						pushMode(ConnectionInParenMode,&AtlasDLG::popMode);
 						pushMode(ConnectionMode);
 					>>
 
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass ConnectionInParenMode
-#token	StatementTerminator	"$"	<<popMode();pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"	<<popMode();pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token				"\ "	<<skip();>>
 #token				"\t"	<<skip();>>
 #token				"\r"	<<skip();>>
@@ -758,7 +758,7 @@
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass CNXMode
-#token	StatementTerminator	"$"		<<popMode();pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"		<<popMode();pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token				"[\ \t\r]+"		<<
 							skip();
 							switch (ch) {
@@ -787,7 +787,7 @@
 ////------------------ Lexical Class ----------------------------------------------------------------------------------------////
 
 #lexclass ConnectionMode
-#token	StatementTerminator	"$"		<<popMode();pushMode(ProcessStatementTerminator,&resetModeStack);>>
+#token	StatementTerminator	"$"		<<popMode();pushMode(ProcessStatementTerminator,&AtlasDLG::resetModeStack);>>
 #token	LP       		"\("		<<popMode();>>
 #token	RP        		"\)"		<<popMode();>>
 #token				"\n"		<<
@@ -798,7 +798,7 @@
 							//case '\r':break;
 							//case '\t':break;
 							//case '$' :break;
-							//default:pushMode(ConnectionMode,&popMode);
+							//default:pushMode(ConnectionMode,&AtlasDLG::popMode);
 							default:break;
 							};
 						>>
@@ -846,7 +846,7 @@
 #token	C			"C"		<<popMode();>>
 #token	N			"N"		<<popMode();>>
 
-#token				"\'"					<<pushMode(LabelMode,&popMode);more();>>
+#token				"\'"					<<pushMode(LabelMode,&AtlasDLG::popMode);more();>>
 #token	TID			"\*([A-Z]|[a-z]|[0-9]|[\+]|[\-]|[\.])+"	<<popMode();>>
 #token	CID			"([A-Z]|[a-z]|[0-9]|[\+]|[\-]|[\.])+"	<<popMode();>>
 

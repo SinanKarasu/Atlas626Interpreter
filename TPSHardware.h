@@ -5,7 +5,7 @@
 
 class TPSHardware : public Resource{
 public:
-	TPSHardware( RWCString & name,    RWCString & version );
+	TPSHardware( const RWCString & name, const RWCString & version );
 	TPSHardware( RWCString & newName, Resource * source   );
 	
 	virtual Resource * clone(Resource * previous,RWCString & newName);

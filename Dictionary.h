@@ -99,21 +99,30 @@ class ReverseMapEntry;
 using ReverseMapDictionary = Dictionary<std::string, ReverseMapEntry*>;
 using ReverseMapDictionaryIterator = DictionaryIterator<std::string, ReverseMapEntry*>;
 
-////class ASTList {
-////private:
-////    std::list<AST*> items;
-////
-////public:
-////    void insert(AST* ast) { items.push_back(ast); }
-////
-////    bool findValue(const std::string& key, AST*& result); // Not implemented yet
-////
-////    using iterator = std::list<AST*>::iterator;
-////
-////    iterator begin() { return items.begin(); }
-////    iterator end()   { return items.end();   }
-////};
-////
+class ASTList {
+private:
+   std::list<AST*> items;
+
+public:
+   void insert(AST* ast) { items.push_back(ast); }
+
+   bool findValue(const std::string& key, AST*& result); // Not implemented yet
+
+    void append(AST* item) {
+        items.push_back(item);
+    }
+ 
+ 	bool contains(AST* value) {
+		return std::find(items.begin(), items.end(), value) != items.end();
+	}
+
+ 
+   using iterator = std::list<AST*>::iterator;
+
+   iterator begin() { return items.begin(); }
+   iterator end()   { return items.end();   }
+};
+
 class ASTListIterator {
 public:
     using iterator = std::list<AST*>::iterator;
@@ -145,11 +154,11 @@ private:
     iterator end;
 };
 
-class StringSet : public std::unordered_set<std::string> {
-public:
-    StringSet() = default;
-};
-
+////class StringSet : public std::unordered_set<std::string> {
+////public:
+////    StringSet() = default;
+////};
+////
 class ErrorLimit {
 public:
     ErrorLimit();

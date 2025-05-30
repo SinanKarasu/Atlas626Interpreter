@@ -53,6 +53,12 @@ using ASTVector = AppendableVector<AST*>;
 ////    }
 ////};
 
+
+template<typename T>
+bool contains(const std::list<std::shared_ptr<T>>& list, const std::shared_ptr<T>& value) {
+    return std::find(list.begin(), list.end(), value) != list.end();
+}
+
 template<typename T>
 struct AppendableList : public std::list<T> {
     using std::list<T>::list; // inherit constructors
@@ -65,7 +71,19 @@ struct AppendableList : public std::list<T> {
         this->push_back(item); // RW-style insert maps to push_back
     }
 
+	bool findValue(T& result) const {
+	    auto it = std::find(this->begin(), this->end(), result);
+	    if (it != this->end()) {
+	        result = *it;
+	        return true;
+	    }
+	    return false;
+	}
 
+	bool contains(const T& value) {
+		return std::find(this->begin(), this->end(), value) != this->end();
+	}
+	
     bool isEmpty() const {
         return this->empty();
     }
@@ -86,6 +104,7 @@ struct AppendableSet : public std::set<T> {
     }
 };
 
+using StringSet = AppendableSet<std::string>;
 // Utility free function for isEmpty()
 template<typename Container>
 bool isEmpty(const Container& c) {
@@ -97,7 +116,7 @@ using StringVector = AppendableVector<std::string>;
 
 // Example usage for AST* and similar legacy types
 class AST;  // forward declaration
-using ASTList = AppendableList<AST*>;
+//using ASTList = AppendableList<AST*>;
 class InitData;
 using InitList = AppendableVector<InitData *>;
 using ContactList = AppendableVector<class Edge*>;

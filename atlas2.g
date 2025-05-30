@@ -83,7 +83,7 @@ single_action_body_source!:				// fsd-- 11.2.2B
 	;
 
 
-measured_characteristics_with_noun_field![int mult]>[NounEntry * nounEntry, AST * re,AST * ds]:
+measured_characteristics_with_noun_field![int mult]>[NounEntry * nounEntry, AST * re,AST * ds, AST * wf]:
 	<<
 		ModifierEntry	* modifierEntry=0;
 		NounEntry	* nounEntry=0;
@@ -111,6 +111,7 @@ measured_characteristics_with_noun_field![int mult]>[NounEntry * nounEntry, AST 
 			Fd measured_characteristic[nounEntry]>[modifierEntry,ds]
 		)* RP Fd 
 		noun_field[nounEntry,re]>[nounEntry,re,wf] NoSuchToken
+		<< if(wf)$wf=wf; >>  // sik verify this. This was a bug hidden for over 25 years.
 	)?
 	|
 	(
@@ -451,9 +452,10 @@ monitor_statement!:                              // fsd-- 11.6
 		AST * re=0;
 		AST * ds=0;
 		AST * mt=0;
+		AST * wf=0;
 	>>
 	verb:fstatnoMONITORfd       
-	mcwnf:measured_characteristics_with_noun_field[0]>[nounEntry,re,ds]
+	mcwnf:measured_characteristics_with_noun_field[0]>[nounEntry,re,ds,wf]
 	( 
 		sc:statement_characteristics[nounEntry,re] gc:gate_conn_or_event_field[nounEntry]>[mt]
 			<<
@@ -484,9 +486,10 @@ verify_statement!:                               // fsd-- 11.7
 		ModifierEntry * modifierEntry=0;
 		AST * re=0;AST * ds=0;AST * ef=0;
 		AST * mt=0;
+		AST * wf=0;
 	>>
 	verb:fstatnoVERIFYfd       
-	mcwnf:measured_characteristics_with_noun_field[0]>[nounEntry,re,ds]
+	mcwnf:measured_characteristics_with_noun_field[0]>[nounEntry,re,ds,wf]
 		sc:eval_statement_characteristics[nounEntry,modifierEntry,re,ds]>[ef]
 		gc:gate_conn_or_event_field[nounEntry]>[mt]      
 			<<
