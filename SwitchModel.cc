@@ -8,7 +8,7 @@
 
 // SwitchModel -------------------------------------------------------
 
-SwitchModel::SwitchModel(Resource * previous,RWCString & name)
+SwitchModel::SwitchModel(Resource * previous,const std::string & name)
 	:Resource(previous,name,RWCString(""))
 	,m_SwitchState		(c_Und)
 	,m_DefaultState		(c_Und)
@@ -17,7 +17,7 @@ SwitchModel::SwitchModel(Resource * previous,RWCString & name)
 		m_ResourceContextAST=new ResourceContextAST(this,"~SWITCH");
 	}
 
-SwitchModel::SwitchModel(Resource * previous,RWCString & newName, SwitchModel * source)
+SwitchModel::SwitchModel(Resource * previous,const std::string & newName, SwitchModel * source)
 	:Resource(previous,newName,source)
 	,m_ConnectVector	( source->m_ConnectVector )
 	,m_SwitchState		( source->m_SwitchState   )
@@ -40,13 +40,13 @@ int
 SwitchModel::getState(){return m_SwitchState;}
 
 Resource *
-SwitchModel::clone(Resource * previous,RWCString & newName)
+SwitchModel::clone(Resource * previous,const std::string & newName)
 	{
 			return new SwitchModel(previous,newName,this);
 	}
 
 void
-SwitchModel::AddEdge(const RWCString & from,const RWCString & to,Edge * contact)
+SwitchModel::AddEdge(const const std::string & from,const const std::string & to,Edge * contact)
 	{
 		addContact(contact->m_state,from,to);
 	}
@@ -70,7 +70,7 @@ SwitchModel::setState(int state ,ReverseMap * rm)
 
 
 void
-SwitchModel::addContact(int state,const RWCString & from, const RWCString & to,AST * control)
+SwitchModel::addContact(int state,const const std::string & from, const const std::string & to,AST * control)
 	{
 		Edge * edge1 = 0 ;
 		Edge * edge2 = 0 ;
@@ -300,19 +300,19 @@ SwitchModel::createReverseMap(ReverseMap * rm){
 	Resource::createReverseMap(rm);	// it is turtles all the way down
 }
 
-MatrixSwitch::MatrixSwitch ( Resource * previous, RWCString & name )
+MatrixSwitch::MatrixSwitch ( Resource * previous, const std::string & name )
 	:SwitchModel(previous,name)
 	{
 	}
 	
-MatrixSwitch::MatrixSwitch ( Resource * previous, RWCString & newName, MatrixSwitch * source )
+MatrixSwitch::MatrixSwitch ( Resource * previous, const std::string & newName, MatrixSwitch * source )
 	:SwitchModel(previous,newName,source)
 	{
 		circuit()->Build(this,source);
 	}
 
 Resource *
-MatrixSwitch::clone(Resource * previous,RWCString & newName)
+MatrixSwitch::clone(Resource * previous,const std::string & newName)
 	{
 		return new MatrixSwitch(previous,newName,this);
 	}
@@ -351,12 +351,12 @@ MatrixSwitch::TellMe(Set & energizer)
 		return 0;
 	}
 
-GangSwitch::GangSwitch ( Resource * previous, RWCString & name )
+GangSwitch::GangSwitch ( Resource * previous, const std::string & name )
 	:SwitchModel(previous,name)
 	{
 	}
 
-GangSwitch::GangSwitch ( Resource * previous, RWCString & newName, GangSwitch * source )
+GangSwitch::GangSwitch ( Resource * previous, const std::string & newName, GangSwitch * source )
 	:SwitchModel(previous,newName,source)
 	{
 		circuit()->Build(this,source);
@@ -364,7 +364,7 @@ GangSwitch::GangSwitch ( Resource * previous, RWCString & newName, GangSwitch * 
 
 
 Resource *
-GangSwitch::clone(Resource * previous,RWCString & newName)
+GangSwitch::clone(Resource * previous,const std::string & newName)
 	{
 		return new GangSwitch(previous,newName,this);
 	}
@@ -408,19 +408,19 @@ GangSwitch::TellMe(Set & energizer)
 		return energizer.isSet(m_SwitchState);
 	}
 
-MultiplexSwitch::MultiplexSwitch ( Resource * previous, RWCString & name )
+MultiplexSwitch::MultiplexSwitch ( Resource * previous, const std::string & name )
 	:SwitchModel(previous,name)
 	{
 	}
 	
-MultiplexSwitch::MultiplexSwitch ( Resource * previous, RWCString & newName, MultiplexSwitch * source )
+MultiplexSwitch::MultiplexSwitch ( Resource * previous, const std::string & newName, MultiplexSwitch * source )
 	:SwitchModel(previous,newName,source)
 	{
 		circuit()->Build(this,source);
 	}
 
 Resource *
-MultiplexSwitch::clone(Resource * previous,RWCString & newName)
+MultiplexSwitch::clone(Resource * previous,const std::string & newName)
 		{
 			return new MultiplexSwitch(previous,newName,this);
 		}
@@ -460,19 +460,19 @@ int MultiplexSwitch::disconnToState(Association * usingAssociation,Association &
 		return SwitchModel::disconnToState(usingAssociation,edgeList,tstate);
 	}
 
-SpstSwitch::SpstSwitch ( Resource * previous, RWCString & name )
+SpstSwitch::SpstSwitch ( Resource * previous, const std::string & name )
 	:SwitchModel(previous,name)
 	{
 	}
 	
-SpstSwitch::SpstSwitch ( Resource * previous, RWCString & newName, SpstSwitch * source )
+SpstSwitch::SpstSwitch ( Resource * previous, const std::string & newName, SpstSwitch * source )
 	:SwitchModel(previous,newName,source)
 	{
 		circuit()->Build(this,source);
 	}
 
 Resource *
-SpstSwitch::clone(Resource * previous,RWCString & newName)
+SpstSwitch::clone(Resource * previous,const std::string & newName)
 	{
 		return new SpstSwitch(previous,newName,this);
 	}

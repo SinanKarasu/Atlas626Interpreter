@@ -40,11 +40,11 @@ DevicePath::isSource(Vertex * w)
 		return 0;
 	}
 
-unsigned
-DevicePathHash(const RWCString& str) { return str.hash(); }
+// unsigned
+// DevicePathHash(const RWCString& str) { return str.hash(); }
 
-DevicePathDictionary::DevicePathDictionary():RWTValHashDictionary<RWCString,DevicePath *>(DevicePathHash)
-        {resize(NbrBuckets);}
+// DevicePathDictionary::DevicePathDictionary():RWTValHashDictionary<RWCString,DevicePath *>(DevicePathHash)
+//         {resize(NbrBuckets);}
 
 DevicePathList::DevicePathList()
 	:RWTValSlist<DevicePath *>()
@@ -56,7 +56,7 @@ DevicePathListIterator::DevicePathListIterator( DevicePathList &d )
         {
         }
 
-DevicePathDictionaryIterator::DevicePathDictionaryIterator(DevicePathDictionary &d)
-	:RWTValHashDictionaryIterator< RWCString,DevicePath *> (d) 
-	{
-	}
+// DevicePathDictionaryIterator::DevicePathDictionaryIterator(DevicePathDictionary &d)
+// 	:RWTValHashDictionaryIterator< RWCString,DevicePath *> (d) 
+// 	{
+// 	}

@@ -1,21 +1,20 @@
-#ifndef TedlDictionary_h
-#define TedlDictionary_h
-
+#pragma once
 //                       symbol table support                        //
 
+#include <string>
 
 class DeviceEquivalence{
 public:
-	DeviceEquivalence(RWCString name, RWCString capability="-");
+	DeviceEquivalence(std::string name, std::string capability="-");
 	operator RWCString()	const;
 	
-	RWCString getCapabilityName()	const;
-	RWCString getName()		const;
+	std::string getCapabilityName()	const;
+	std::string getName()		const;
 	
 	
 protected:	
-	RWCString	m_Name;
-	RWCString	m_CapabilityName;	
+	std::string	m_Name;
+	std::string	m_CapabilityName;	
 	
 };
 
@@ -30,19 +29,19 @@ private:
 
 class Resource;
 
-class ResourceDictionary : public RWTValHashDictionary<RWCString,Resource *> {
-public:
-	ResourceDictionary();
-	
-private:
-   enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
+using ResourceDictionary = AppendableMap<std::string, Resource*>;
+// class ResourceDictionary : public RWTValHashDictionary<RWCString,Resource *> {
+// public:
+// 	ResourceDictionary();
+// 	
+// private:
+//    enum { NbrBuckets = RWDEFAULT_CAPACITY };
+// };
 
+using ResourceDictionaryIterator = ResourceDictionary::iterator;
 
-class ResourceDictionaryIterator : public RWTValHashDictionaryIterator<RWCString,Resource *>{
-public:
-	ResourceDictionaryIterator( ResourceDictionary &d );
-};
+// class ResourceDictionaryIterator : public RWTValHashDictionaryIterator<RWCString,Resource *>{
+// public:
+// 	ResourceDictionaryIterator( ResourceDictionary &d );
+// };
 
-
-#endif //Dictionary_h

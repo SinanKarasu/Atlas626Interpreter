@@ -27,18 +27,21 @@ class DevicePathListIterator : public RWTValSlistIterator<DevicePath *>{
 	public: DevicePathListIterator( DevicePathList &d );
 };
 
-class DevicePathDictionary : public RWTValHashDictionary< RWCString,DevicePath *> {
-	public:
-		DevicePathDictionary();
+using DevicePathDictionary = AppendableMap< std::string, DevicePath*>;
+using DevicePathDictionaryIterator = DevicePathDictionary::iterator;
 
-	private:
-		enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
-
-class DevicePathDictionaryIterator : public RWTValHashDictionaryIterator< RWCString,DevicePath *>{
-        public: DevicePathDictionaryIterator(DevicePathDictionary &d);
-};
-
+////class DevicePathDictionary : public RWTValHashDictionary< RWCString,DevicePath *> {
+////	public:
+////		DevicePathDictionary();
+////
+////	private:
+////		enum { NbrBuckets = RWDEFAULT_CAPACITY };
+////};
+////
+////class DevicePathDictionaryIterator : public RWTValHashDictionaryIterator< RWCString,DevicePath *>{
+////        public: DevicePathDictionaryIterator(DevicePathDictionary &d);
+////};
+////
 
 
 #endif	// DevicePath_H

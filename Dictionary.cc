@@ -7,3 +7,14 @@
 // Currently no implementation required here.
 // You can define custom logging, diagnostics, or non-templated helpers later.
 
+
+
+bool ASTList::findValue(const std::string& name, AST*& result){
+	for (auto var_it = begin(); var_it != end(); ++var_it) {
+    	if ((*var_it)->getName() == name) {
+       		result = *var_it;
+        	return true;
+		}
+	}
+    return false;
+}

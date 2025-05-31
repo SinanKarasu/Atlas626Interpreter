@@ -19,18 +19,68 @@
 
 // --------------------------- Resource ---------------------------------//
 
+class Capability {
+public:
+    Capability(AST* a = nullptr);
+    virtual int compare(Capability&);
+    virtual void require();
+    virtual bool required();
+    virtual void setMax(double);
+    virtual void setMin(double);
+    virtual void setNoun(std::string);
+    virtual void setModifier(std::string);
+    virtual void setAST(AST* a);
+    virtual AST* getAST();
+
+    friend Capability;
+
+private:
+    bool m_required;
+    std::string m_noun;
+    std::string m_nounModifier;
+    std::string m_command;
+    double m_min;
+    double m_max;
+    double m_by;
+    bool m_limit;
+    AST* m_ast;
+};
+
+class CapabilityList : public std::list<Capability*> {
+public:
+    bool findValue(const std::string& key, AST*& result); // Stub
+};
+
+class CapabilityListIterator {
+public:
+    using iterator = std::list<Capability*>::iterator;
+
+    CapabilityListIterator(CapabilityList& l)
+        : current(l.begin()), end(l.end()) {}
+
+    Capability* next() {
+        if (current == end) return nullptr;
+        return *current++;
+    }
+
+private:
+    iterator current;
+    iterator end;
+};
+
+
 class Resource{
 public:
-	Resource( Resource * previous, RWCString & name,    RWCString & version );
-	Resource( Resource * previous, RWCString & newName, Resource  * source  );
+	Resource( Resource * previous, const RWCString & name,   const RWCString & version );
+	Resource( Resource * previous, const RWCString & newName, Resource  * source  );
 	virtual ~Resource();
 	virtual Resource * getPrev	();
 	virtual Resource * AddResource	( Resource  * resource );
 	virtual Resource * clone	( Resource * previous, RWCString & newName );
-	virtual Resource * instantiate	( Resource * previous, RWCString & newName );
+	virtual Resource * instantiate	( Resource * previous, const RWCString & newName );
 	
 	virtual Resource *	renamePort	( RWCString & from, RWCString & to );
-	virtual Resource *	RenamePreface	( RWCString & preface );
+	virtual Resource *	RenamePreface	( const RWCString & preface );
 	virtual Vertex *	aliasPort	( RWCString & port,Vertex * v);
 	virtual Vertex *	vertex		( const RWCString & name );
 	virtual Vertex *	node		( const RWCString & name );

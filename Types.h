@@ -9,9 +9,11 @@
 
 //typedef RWCString String;
 
+#include "Dictionary.h"
+
 const	int c_Und=-1;
 
-typedef long long Long;
+//typedef long long Long;
 
 enum	TheType
 	{
@@ -124,6 +126,9 @@ class Fstatno{
 		int getLine() const ;
 };	
 
+using FstatnoDictionary = AppendableMap<int, Fstatno*>;
+using FstatnoDictionaryIterator = FstatnoDictionary::iterator;
+
 
 class TargetStatement{	// BFlag statements
 
@@ -135,6 +140,49 @@ class TargetStatement{	// BFlag statements
 		RWTValVector<RWInteger> _ContextLevel;
 		RWInteger _ContextDepth;
 };
+
+class GoToStatementStack {
+public:
+    using value_type = TargetStatement*;
+
+    void push(value_type stmt) {
+        stack_.push_back(stmt);
+    }
+
+    value_type pop() {
+        if (stack_.empty()) return nullptr;
+        value_type val = stack_.back();
+        stack_.pop_back();
+        return val;
+    }
+
+    value_type top() const {
+        return stack_.empty() ? nullptr : stack_.back();
+    }
+
+    bool empty() const {
+        return stack_.empty();
+    }
+
+    size_t size() const {
+        return stack_.size();
+    }
+
+    void clear() {
+        stack_.clear();
+    }
+
+private:
+    std::vector<value_type> stack_;
+};
+
+using GoToDictionary = AppendableMap<int, GoToStatementStack*>;
+using GoToDictionaryIterator = GoToDictionary::iterator;
+
+using EntryDictionary = AppendableMap<int, TargetStatement*>;
+using EntryDictionaryIterator = EntryDictionary::iterator;
+
+
 
 //#include	"Scope.h"
 

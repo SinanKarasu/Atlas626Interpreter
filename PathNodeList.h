@@ -1,19 +1,19 @@
-#ifndef PathNodeList_H
-#define PathNodeList_H
+#pragma once
 
 #include	"PathNode.h"
 
-class PathNodeList : public RWTValSlist<PathNode *> 
-{
-public:
-	PathNodeList();
-};
+using PathNodeList = AppendableList<PathNode*>;
+using PathNodeListIterator = PathNodeList::iterator;
 
-class PathNodeListIterator : public RWTValSlistIterator<PathNode *>
-{
-public:
-	PathNodeListIterator( PathNodeList &d );
-};
-
-
-#endif // PathNodeList_H
+////class PathNodeList : public RWTValSlist<PathNode *> 
+////{
+////public:
+////	PathNodeList();
+////};
+////
+////class PathNodeListIterator : public RWTValSlistIterator<PathNode *>
+////{
+////public:
+////	PathNodeListIterator( PathNodeList &d );
+////};
+////

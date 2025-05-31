@@ -9,6 +9,10 @@
 
 // sik weird, this causes an error, a conflict:  class InitList;
 
+class InitData;                      // forward declaration
+//class InitListIterator;              // forward declaration
+using InitList = AppendableVector<InitData *>;  // now safe
+using InitListIterator = InitList::iterator;
 class InitData
 {
     public:
@@ -19,9 +23,10 @@ class InitData
 	int _counter;
 	AST * _data;
 	InitList * _list;
-	class InitListIterator *_iterator;
+	InitListIterator *_iterator;
 };
 // sik cleanup and rename the file to InitData.h
+
 
 ////class InitList : public RWTPtrSlist<InitData>
 ////{

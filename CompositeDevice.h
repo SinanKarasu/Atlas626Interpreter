@@ -6,13 +6,13 @@
 
 class CompositeDevice : public Device{
 public:
-	CompositeDevice( RWCString & newName, Resource * source   );
+	CompositeDevice( const RWCString & newName, Resource * source   );
 	
-	virtual Resource * clone(Resource * previous,RWCString & newName);
+	virtual Resource * clone(Resource * previous,const RWCString & newName);
 
 	virtual ResourceDictionary * getResourceDictionary();
 
-	virtual Resource * getDevice(RWCString & dev);
+	virtual Resource * getDevice(const RWCString & dev);
 
 private:
 	// Disable copy/assignment

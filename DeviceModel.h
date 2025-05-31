@@ -5,11 +5,11 @@
 
 class DeviceModel : public Resource{
 public:
-	DeviceModel( RWCString & name,    RWCString & version );
-	DeviceModel( RWCString & newName, Resource * source   );
+	DeviceModel( const RWCString & name, const RWCString & version );
+	DeviceModel( const RWCString & newName, Resource * source   );
 	
-	virtual Resource * clone	( Resource * previous,RWCString & newName);
-	virtual Resource * instantiate	( Resource * previous, RWCString & newName );
+	virtual Resource * clone	( Resource * previous, const RWCString & newName);
+	virtual Resource * instantiate	( Resource * previous, const RWCString & newName );
 private:
 	// Disable copy/assignment
         DeviceModel (const DeviceModel &);

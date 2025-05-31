@@ -516,11 +516,11 @@ variable_type![Scope * which]:                                  // fsd-- 6.3D
 		)*
 		IS t:type { << Init_List=new InitList;>> initial[Init_List] }
 		<<
-		ASTListIterator var_it(*Label_List);
+		ASTListIterator var_it = Label_List->begin();
    		int more = 0;
 
-		for (; !var_it.atEnd(); ++var_it, more = 1) {
-    		AST* p = var_it.key();
+		for (; var_it != Label_List->end(); ++var_it, more = 1) {
+    		AST* p = *var_it;
         	if (sane()) {
             	#( p, more ? #t->clone() : #t );
             	which->insert_label(p, scope);
@@ -730,16 +730,27 @@ record_field_type:
 			)* 
 			IS t:type
 			<<
-				ASTListIterator var_it( *Label_List );
+				ASTListIterator var_it = Label_List->begin();
 
-				for ( int more_objects = 0; ++var_it; more_objects = 1 )
+////				for ( int more_objects = 0; ++var_it; more_objects = 1 )
+////				{
+////					if ( more_objects ) {
+////						#( *var_it.key, #t->clone() );
+////					} else {
+////						#( *var_it.key, #t );
+////					}
+////				}
+				int more_objects = 0;
+				for ( ASTListIterator var_it = Label_List->begin(); var_it != Label_List->end(); ++var_it, more_objects = 1 )
 				{
+				    AST* temp_ast = *var_it;
 					if ( more_objects ) {
-						#( var_it.key(), #t->clone() );
+						#( temp_ast, #t->clone() );
 					} else {
-						#( var_it.key(), #t );
+						#( temp_ast, #t );
 					}
 				}
+
 			>>
         ;     
 

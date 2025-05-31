@@ -7,12 +7,12 @@
 
 class SwitchModel : public Resource{
 public:
-	SwitchModel( Resource * previous, RWCString & name );
-	SwitchModel( Resource * previous, RWCString & newName, SwitchModel * source );
+	SwitchModel( Resource * previous, const std::string & name );
+	SwitchModel( Resource * previous, const std::string & newName, SwitchModel * source );
 
-	virtual Resource * clone(Resource * previous,RWCString & newName);
+	virtual Resource * clone(Resource * previous,const std::string & newName);
 
-	virtual void AddEdge(const RWCString & from,const RWCString & to,Edge * edge);
+	virtual void AddEdge(const const std::string & from,const const std::string & to,Edge * edge);
 	virtual int setState(int state, ReverseMap * rm=0);
 
 	virtual int getState();
@@ -46,16 +46,16 @@ private:
 
 	class ResourceContextAST * m_ResourceContextAST;
 	
-	void	addContact	( int, const RWCString &, const RWCString &, AST * control=0 );
+	void	addContact	( int, const const std::string &, const const std::string &, AST * control=0 );
 
 };
 
 
 class MatrixSwitch : public SwitchModel {
 public:
-	MatrixSwitch ( Resource * previous, RWCString & name );
-	MatrixSwitch ( Resource * previous, RWCString & newName, MatrixSwitch * source );
-	virtual Resource * clone(Resource * previous,RWCString & newName);
+	MatrixSwitch ( Resource * previous, const std::string & name );
+	MatrixSwitch ( Resource * previous, const std::string & newName, MatrixSwitch * source );
+	virtual Resource * clone(Resource * previous,const std::string & newName);
 	virtual void addContacts(	int state,int dstate,
 					StringVector & FromList,
 					StringVector & ToList,
@@ -71,9 +71,9 @@ private:
 
 class GangSwitch : public SwitchModel {
 public:
-	GangSwitch ( Resource * previous, RWCString & name );
-	GangSwitch ( Resource * previous, RWCString & newName, GangSwitch * source );
-	virtual Resource * clone(Resource * previous,RWCString & newName);
+	GangSwitch ( Resource * previous, const std::string & name );
+	GangSwitch ( Resource * previous, const std::string & newName, GangSwitch * source );
+	virtual Resource * clone(Resource * previous,const std::string & newName);
 	virtual void addContacts(	int state,int dstate,
 					StringVector & FromList,
 					StringVector & ToList,
@@ -88,9 +88,9 @@ private:
 
 class MultiplexSwitch : public SwitchModel {
 public:
-	MultiplexSwitch ( Resource * previous, RWCString & name );
-	MultiplexSwitch ( Resource * previous, RWCString & newName, MultiplexSwitch * source );
-	virtual Resource * clone(Resource * previous,RWCString & newName);
+	MultiplexSwitch ( Resource * previous, const std::string & name );
+	MultiplexSwitch ( Resource * previous, const std::string & newName, MultiplexSwitch * source );
+	virtual Resource * clone(Resource * previous,const std::string & newName);
 	virtual void addContacts(	int state,int dstate,
 					StringVector & FromList,
 					StringVector & ToList,
@@ -105,9 +105,9 @@ private:
 
 class SpstSwitch : public SwitchModel {
 public:
-	SpstSwitch ( Resource * previous, RWCString & name );
-	SpstSwitch ( Resource * previous, RWCString & newName, SpstSwitch * source );
-	virtual Resource * clone(Resource * previous,RWCString & newName);
+	SpstSwitch ( Resource * previous, const std::string & name );
+	SpstSwitch ( Resource * previous, const std::string & newName, SpstSwitch * source );
+	virtual Resource * clone(Resource * previous,const std::string & newName);
 	virtual void addContacts(	int state,int dstate,
 					StringVector & FromList,
 					StringVector & ToList,

@@ -1038,11 +1038,11 @@ conn_disconn_info![int num,int matrix]:    // 4,3.1B
 	(	<<StringVector FromList, ToList;int state=0,dstate=-1;Resource * relay;>>
 
 		(
-			CONNECT_PORT	fnm1:device_port_name << FromList.insert( #fnm1->getName() );delete #fnm1;>>
-			 	( Fd  	fnmn:device_port_name << FromList.insert( #fnmn->getName() );delete #fnmn;>> )*
+			CONNECT_PORT	fnm1:device_port_name << FromList.push_back( #fnm1->getName() );delete #fnm1;>>
+			 	( Fd  	fnmn:device_port_name << FromList.push_back( #fnmn->getName() );delete #fnmn;>> )*
 			
-			TO_PORT		tnm1:device_port_name << ToList.insert( #tnm1->getName() );delete #tnm1;>>
-				( Fd	tnmn:device_port_name << ToList.insert( #tnmn->getName() );delete #tnmn;>> )*
+			TO_PORT		tnm1:device_port_name << ToList.push_back( #tnm1->getName() );delete #tnm1;>>
+				( Fd	tnmn:device_port_name << ToList.push_back( #tnmn->getName() );delete #tnmn;>> )*
 			
 			{
 				dc:DEFAULT
@@ -1061,7 +1061,7 @@ conn_disconn_info![int num,int matrix]:    // 4,3.1B
 				} else {
 					relay = CurrentResource;
 				}
-				if ( FromList.entries() == ToList.entries() ){
+				if ( FromList.size() == ToList.size() ){
 					relay->addContacts(state++,dstate,FromList, ToList, #cntrl );
 				}else{
 					Error_Report( "FROM & TO Nodes are not equinumerous in CONNECT", #cntrl );
@@ -1167,12 +1167,18 @@ ports_and_control![NounEntry * nounEntry,NodeType & nodeType]:
 				n:device_port_name
 				<<
 					NodeType nt;
-					int l=#n->getName().length();
-					if((l>4) && (#n->getName().index("_REF")==(l-4))){
-						nt = DeviceReferencePortNodeType ;
-					} else {
-						nt = nodeType;
-					}
+////					int l=#n->getName().length();
+////					if((l>4) && (#n->getName().index("_REF")==(l-4))){
+////						nt = DeviceReferencePortNodeType ;
+////					} else {
+////						nt = nodeType;
+////					}
+						std::string name = #n->getName();
+						if (ends_with(name, "_REF")) {
+						    nt = DeviceReferencePortNodeType;
+						} else {
+						    nt = nodeType;
+						}
 					CurrentResource->AddNode( #n->getName() , nt );
 					cnxList->insert( new ConnectionType( #n->getToken() ) );
 					delete #n;

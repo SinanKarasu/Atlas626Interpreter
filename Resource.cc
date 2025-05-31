@@ -51,7 +51,7 @@ makeTypedData ( RWCString & type)
 // Resource     -------------------------------------------------------
 // Creates a blank slate. If it is not the first one in the hierarchy, it simply 
 // uses the previous ones dictionary (.i.e. the top level dictionaries)
-Resource::Resource( Resource * previous, RWCString & name, RWCString & version )
+Resource::Resource( Resource * previous, const RWCString & name, const RWCString & version )
 	:m_ResourceDictionary(0)
 	,m_previous(previous)
 	,m_callArgEntries(0)
@@ -91,7 +91,7 @@ Resource::Resource( Resource * previous, RWCString & name, RWCString & version )
 // However, then the vertices/edges defined at this level must be defined. Which is
 // done by calling the Graph clone constructor which also clones the stateList.
 //   
-Resource::Resource( Resource * previous, RWCString & newName, Resource * source )
+Resource::Resource( Resource * previous, const RWCString & newName, Resource * source )
 	:m_ResourceDictionary(0)
 	,m_previous(previous)
 	,m_callArgEntries(0)
@@ -165,7 +165,7 @@ Resource::clone	( Resource * previous, RWCString & newName )
 	}
 
 Resource *
-Resource::instantiate	( Resource * previous, RWCString & newName )
+Resource::instantiate	( Resource * previous, const RWCString & newName )
 	{
 		return clone(previous, newName);
 	}

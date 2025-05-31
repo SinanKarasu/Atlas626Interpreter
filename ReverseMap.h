@@ -25,6 +25,9 @@ protected:
 // chat typedef	(*ReverseMapCallBack)(class Vertex *, VertexList & vl);
 typedef void (*ReverseMapCallBack)(Vertex*, VertexList&);
 
+using ReverseMapDictionary = Dictionary<std::string, ReverseMapEntry*>;
+using ReverseMapDictionaryIterator = DictionaryIterator<std::string, ReverseMapEntry*>;
+
 
 class ReverseMap {
 public:
@@ -47,6 +50,8 @@ protected:
 	VertexDictionary	m_processedVertices;
 
 };
+
+
 
 
 #endif // ReverseMap_h

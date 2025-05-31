@@ -2,16 +2,19 @@
 #define VertexDictionary_H
 
 
-class VertexDictionary : public RWTValHashDictionary< RWCString,Vertex *> {
-	public:
-		VertexDictionary();
+using VertexDictionary = AppendableMap<std::string, Vertex *>;
 
-	private:
-		enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
+// class VertexDictionary : public RWTValHashDictionary< RWCString,Vertex *> {
+// 	public:
+// 		VertexDictionary();
+// 
+// 	private:
+// 		enum { NbrBuckets = RWDEFAULT_CAPACITY };
+// };
 
-class VertexDictionaryIterator : public RWTValHashDictionaryIterator< RWCString,Vertex *> {
-        public: VertexDictionaryIterator(VertexDictionary &d);
-};
+using VertexDictionaryIterator = VertexDictionary::iterator;
+// class VertexDictionaryIterator : public RWTValHashDictionaryIterator< RWCString,Vertex *> {
+//         public: VertexDictionaryIterator(VertexDictionary &d);
+// };
 
 #endif // VertexDictionary_H

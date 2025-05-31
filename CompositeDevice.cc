@@ -2,14 +2,14 @@
 #include	"Resource.h"
 #include	"CompositeDevice.h"
 
-CompositeDevice::CompositeDevice( RWCString & newName, Resource * source   )
+CompositeDevice::CompositeDevice( const RWCString & newName, Resource * source   )
 		:Device(newName, source   )
 	{
 		m_ResourceDictionary=new ResourceDictionary;
 	}
 	
 Resource * 
-CompositeDevice::clone(Resource * previous,RWCString & newName)
+CompositeDevice::clone(Resource * previous,const RWCString & newName)
 	{
 		assert(0);return new Device(newName,this);
 	}
@@ -21,7 +21,7 @@ CompositeDevice::getResourceDictionary()
 	}
 
 Resource * 
-CompositeDevice::getDevice(RWCString & dev)
+CompositeDevice::getDevice(const RWCString & dev)
 	{
 		Resource * r=0;
 		m_ResourceDictionary->findValue(dev,r);

@@ -1,18 +1,19 @@
+// AppendCompat.h — Modern STL-Compatible Container Extensions
 #pragma once
 
 #include <vector>
 #include <list>
 #include <set>
+#include <map>
+#include <unordered_map>
 #include <algorithm>
-#include <regex>
+#include <string>
 
-// Lightweight Rogue Wave compatibility shims for append, insert, contains, isEmpty
-
-// Append support (already covered by vector::push_back, but for stylistic uniformity)
+// --- Appendable Vector ---
 template<typename T>
 struct AppendableVector : public std::vector<T> {
-    using std::vector<T>::vector; // inherit constructors
-    using std::vector<T>::insert; // expose base class overloads
+    using std::vector<T>::vector;
+    using std::vector<T>::insert;
 
     void append(const T& item) {
         this->push_back(item);
@@ -31,66 +32,38 @@ struct AppendableVector : public std::vector<T> {
     }
 };
 
-
-using ASTVector = AppendableVector<AST*>;
-
-// AppendableList - equivalent to RWTPtrSlist
-// Uses std::list as a stand-in for pointer-based containers
-////template<typename T>
-////struct AppendableList : public std::list<T> {
-////    using std::list<T>::list; // inherit constructors
-////
-////    void append(const T& item) {
-////        this->push_back(item);
-////    }
-////
-////    void insert(const T& item) {
-////        this->push_back(item); // RW-style insert maps to push_back
-////    }
-////
-////    bool isEmpty() const {
-////        return this->empty();
-////    }
-////};
-
-
-template<typename T>
-bool contains(const std::list<std::shared_ptr<T>>& list, const std::shared_ptr<T>& value) {
-    return std::find(list.begin(), list.end(), value) != list.end();
-}
-
+// --- Appendable List ---
 template<typename T>
 struct AppendableList : public std::list<T> {
-    using std::list<T>::list; // inherit constructors
+    using std::list<T>::list;
 
     void append(const T& item) {
         this->push_back(item);
     }
-    
+
     void insert(const T& item) {
-        this->push_back(item); // RW-style insert maps to push_back
+        this->push_back(item);
     }
 
-	bool findValue(T& result) const {
-	    auto it = std::find(this->begin(), this->end(), result);
-	    if (it != this->end()) {
-	        result = *it;
-	        return true;
-	    }
-	    return false;
-	}
+    bool contains(const T& value) const {
+        return std::find(this->begin(), this->end(), value) != this->end();
+    }
 
-	bool contains(const T& value) {
-		return std::find(this->begin(), this->end(), value) != this->end();
-	}
-	
+    bool findValue(const T& key, T& result) const {
+        auto it = std::find(this->begin(), this->end(), key);
+        if (it != this->end()) {
+            result = *it;
+            return true;
+        }
+        return false;
+    }
+
     bool isEmpty() const {
         return this->empty();
     }
 };
 
-
-// Set with contains()
+// --- Appendable Set ---
 template<typename T>
 struct AppendableSet : public std::set<T> {
     using std::set<T>::set;
@@ -104,29 +77,53 @@ struct AppendableSet : public std::set<T> {
     }
 };
 
-using StringSet = AppendableSet<std::string>;
-// Utility free function for isEmpty()
-template<typename Container>
-bool isEmpty(const Container& c) {
-    return c.empty();
-}
+// --- Appendable Map (formerly Dictionary) ---
+template<typename Key, typename Value>
+struct AppendableMap : public std::unordered_map<Key, Value> {
+    using std::unordered_map<Key, Value>::unordered_map;
 
-// For string-specific cases (e.g., StringVector -> AppendableVector<std::string>)
+    void insertKeyAndValue(const Key& k, const Value& v) {
+        (*this)[k] = v;
+    }
+
+    bool insertIfAbsent(const Key& k, const Value& v) {
+        return this->emplace(k, v).second;
+    }
+
+    bool contains(const Key& k) const {
+        return this->find(k) != this->end();
+    }
+
+    bool findValue(const Key& k, Value& result) const {
+        auto it = this->find(k);
+        if (it != this->end()) {
+            result = it->second;
+            return true;
+        }
+        return false;
+    }
+
+    bool isEmpty() const {
+        return this->empty();
+    }
+};
+
+// --- Convenience Aliases ---
+using StringSet = AppendableSet<std::string>;
 using StringVector = AppendableVector<std::string>;
 
-// Example usage for AST* and similar legacy types
-class AST;  // forward declaration
-//using ASTList = AppendableList<AST*>;
-class InitData;
-using InitList = AppendableVector<InitData *>;
-using ContactList = AppendableVector<class Edge*>;
-//using PathNodeList = AppendableVector<class PathNode*>;
-
-// Add more aliases as needed
+using SymbolDictionary = AppendableMap<std::string, AST*>;
+using SymbolDictionaryIterator = SymbolDictionary::iterator;
 
 
-using VarNamesList = AppendableList<ANTLRTokenPtr>;
-using VarNamesListIterator = VarNamesList::iterator;
+////using FstatnoDictionary = AppendableMap<int, Fstatno*>;
+////using FstatnoDictionaryIterator = FstatnoDictionary::iterator;
+
+////using GoToDictionary = AppendableMap<int, GoToStatementStack*>;
+////using GoToDictionaryIterator = GoToDictionary::iterator;
+
+////using EntryDictionary = AppendableMap<int, TargetStatement*>;
+////using EntryDictionaryIterator = EntryDictionary::iterator;
 
 
 

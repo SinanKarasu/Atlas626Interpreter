@@ -6,12 +6,13 @@
 #include	"PathNodeList.h"
 
 
-PathNodeList::PathNodeList()
-	:RWTValSlist< PathNode * >()
-	{
-	}
-
-PathNodeListIterator::PathNodeListIterator( PathNodeList &d )
-        :RWTValSlistIterator<PathNode *> (d)
-	{
-	}
+////PathNodeList::PathNodeList()
+////	:RWTValSlist< PathNode * >()
+////	{
+////	}
+////
+////PathNodeListIterator::PathNodeListIterator( PathNodeList &d )
+////        :RWTValSlistIterator<PathNode *> (d)
+////	{
+////	}
+////
