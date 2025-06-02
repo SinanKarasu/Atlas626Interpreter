@@ -29,6 +29,15 @@ using VarNamesList = AppendableList<ANTLRTokenPtr>;
 class ASTList: public AppendableList<AST*> {
 public:
 	bool findValue(const std::string& name, AST*& result);
+	
+	
+	AST* at(size_t index) const {
+		if (index >= this->size()) throw std::out_of_range("ASTList index out of range");
+		auto it = this->begin();
+		std::advance(it, index);
+ 		return *it;
+    }
+    
 };
 using ASTListIterator = ASTList::iterator;
 	

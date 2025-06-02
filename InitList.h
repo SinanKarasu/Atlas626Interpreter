@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Std.h"
-
+#include "ResettableIterator.h"
 
 //                       variable initialization support                        //
 
@@ -12,7 +12,9 @@
 class InitData;                      // forward declaration
 //class InitListIterator;              // forward declaration
 using InitList = AppendableVector<InitData *>;  // now safe
-using InitListIterator = InitList::iterator;
+//using InitListIterator = InitList::iterator;
+using InitListIterator = ResettableIterator<InitList>;
+
 class InitData
 {
     public:

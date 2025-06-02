@@ -3,10 +3,7 @@
 #include	"AtlasStd.h"
 #include	"NounsModifiersDimensions.h"
 
-//#define USE_RTTI
-#ifdef USE_RTTI
-#include	"typeinfo.h"
-#endif
+#include	<typeinfo>
 
 
 
@@ -108,9 +105,9 @@ void
 AST::writeEvent() const
 	{
 		if(m_WriteProtect){
-			routeIt(setWriteProtect);
+			routeIt(&StatusWord::setWriteProtect);
 		} else if(m_WriteWatch){
-			routeIt(setWriteWatch);
+			routeIt(&StatusWord::setWriteWatch);
 		}
 			
 	}
@@ -122,7 +119,7 @@ bool AST::matches(const std::string& pattern) const {
 
 
 int
-StatusWord::getWriteProtect		()
+StatusWord::getWriteProtect()
 	{
 		return m_WriteProtect;
 	}
@@ -171,17 +168,17 @@ AST::getName() const
 
 void  AST::setName(RWCString a){
 
-	token->setText((char *)((const char *)a));
+	token->setText((char *)(a.c_str()));
 }
 
 void  AST::print(AST * a) const {
 
-	cout << "Default Print>>" << getName() << endl;
+	std::cout << "Default Print>>" << getName() << std::endl;
 }
 
 AST * AST::printEvaluation(AST * a) {
 
-	cout << "Default Print>>" << getName() << endl;
+	std::cout << "Default Print>>" << getName() << std::endl;
 	return this;
 }
 
@@ -368,37 +365,31 @@ const RWBitVec	* AST::vec() const	{ assert( 0 ); return 0; };
 
 void AST::preorder_action()
 	{
-#ifdef USE_RTTI
-		cerr << typeid( *this ).name() << ", ";
-#endif
+		std::cerr << typeid( *this ).name() << ", ";
 	}
 void AST::preorder_before_action()	// Going DOWN.
 	{
-#ifdef USE_RTTI
-		cerr << endl;
+		std::cerr << std::endl;
 		
 		for( int spacing=0; spacing < indent; ++spacing ){
 		
-			cerr << "    ";
+			std::cerr << "    ";
 		}
 		
-		cerr << "   (";
+		std::cerr << "   (";
 		++indent;
-#endif
 	}	
 void AST::preorder_after_action()	// Coming UP.
 	{
-#ifdef USE_RTTI
-		cerr << std::endl;
+		std::cerr << std::endl;
 		--indent;
 
 		for( int spacing=0; spacing < indent; ++spacing ){
 		
-			cerr << "    ";
+			std::cerr << "    ";
 		}
 
-		cerr << "   )";
-#endif
+		std::cerr << "   )";
 	}
 
 astream&	AST::operator>>( astream &s )
@@ -475,13 +466,13 @@ RWCString
 StringAST::getName	() const {return _s;}
 
 
-bool ASTList::findValue(const std::string& key, AST*& result) {
-        for (AST* item : items) {
-            if (item->matches(key)) {
-                result = item;
-                return true;
-            }
-        }
-        return false;
-    };
-
+////bool ASTList::findValue(const std::string& key, AST*& result) {
+////        for (AST* item : list->items) {
+////            if (item->matches(key)) {
+////                result = item;
+////                return true;
+////            }
+////        }
+////        return false;
+////    };
+////

@@ -773,3 +773,32 @@ ostream &	operator << (ostream & output,Scope * s)
 			return output;
 		}
 
+#include "astream.h"  // or wherever astream is defined
+
+astream& operator<<(astream& s, Scope* scope) {
+	if (!scope) {
+		s << "<null scope>";
+		return s;
+	}
+
+	if (scope->getCurrentFstatno()) {
+		if (scope->pursuePrint()) {
+			if (scope->getCallChain()) {
+				s << scope->getCallChain();
+			} else if (scope->getPrev()) {
+				s << scope->getPrev();
+			}
+		}
+		s << scope->getCurrentFstatno();
+		if (scope->getDeltaLine() != 0) {
+			s << "(+" << scope->getDeltaLine() << ")";
+		}
+		if (execEnv.execTrace()) {
+			s << "[" << scope->getFile() << "%" << scope->getCurrentLine() << "]" << ":";
+		}
+		s << ":";
+	}
+
+	return s;
+}
+

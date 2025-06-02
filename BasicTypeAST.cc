@@ -2,42 +2,81 @@
 #include	"BasicTypeAST.h"
 #include	"LabelAST.h"
 
-Long
-BitStrCompOp( const RWBitVec *x, const RWBitVec *y )
-	{
-		// The RWBitVec semantics are the same as ATLAS String Of Bit
-		// So we extend smaller to the larger size and return it.
-		
-		const RWBitVec *xx = x;
-		const RWBitVec *yy = y;
-		RWBitVec * z = 0;
-		
-		if ( x->length() > y->length() ){
-		
-			z = new RWBitVec( *y );
-			z->resize( x->length() );
-			yy = z;	
-			
-		}else if ( x->length() < y->length() ){
-		
-			z = new RWBitVec( *x );
-			z->resize( y->length() );
-			xx = z;
-		}
-		
-		// Here we use the builtin methods. 
-		// If these cause a performance hit, they should
-		// be converted to loop-bitwise compare. Sinan
-		
-		int x1 = (((*xx)^(*yy))&(*xx)).firstTrue();
-		int y1 = (((*xx)^(*yy))&(*yy)).firstTrue();
-		
-		delete z;
-		
-		if ( x1 <  y1 ) return -1;
-		if ( x1 == y1 ) return  0;
-		if ( x1  > y1 ) return  1;
-	}
+////Long
+////bitStrCompOp( const RWBitVec *x, const RWBitVec *y )
+////	{
+////		// The RWBitVec semantics are the same as ATLAS String Of Bit
+////		// So we extend smaller to the larger size and return it.
+////		
+////		const  std::vector<bool> *xx = x;
+////		const  std::vector<bool> *yy = y;
+////		std::vector<bool> * z = 0;
+////		
+////		if ( x->size() > y->size() ){
+////		
+////			z = new RWBitVec( *y );
+////			z->resize( x->size() );
+////			yy = z;	
+////			
+////		}else if ( x->size() < y->size() ){
+////		
+////			z = new RWBitVec( *x );
+////			z->resize( y->size() );
+////			xx = z;
+////		}
+////		
+////		// Here we use the builtin methods. 
+////		// If these cause a performance hit, they should
+////		// be converted to loop-bitwise compare. Sinan
+////		
+////		int x1 = (((*xx)^(*yy))&(*xx)).firstTrue();
+////		int y1 = (((*xx)^(*yy))&(*yy)).firstTrue();
+////		
+////		delete z;
+////		
+////		if ( x1 <  y1 ) return -1;
+////		if ( x1 == y1 ) return  0;
+////		if ( x1  > y1 ) return  1;
+////	}
+
+
+// For future reference::
+int BitStrCompOp(const std::vector<bool>& x, const std::vector<bool>& y) {
+//int BitStrCompOp(const std::vector<bool>& x, const std::vector<bool>& y) {
+
+    std::vector<bool> xx = x;
+    std::vector<bool> yy = y;
+
+    // Zero-extend the shorter vector
+    size_t maxLen = std::max(xx.size(), yy.size());
+    xx.resize(maxLen, false);
+    yy.resize(maxLen, false);
+
+    // Compute bitwise ops
+    std::vector<bool> xorVec(maxLen);
+    std::vector<bool> andX(maxLen);
+    std::vector<bool> andY(maxLen);
+
+    for (size_t i = 0; i < maxLen; ++i) {
+        xorVec[i] = xx[i] ^ yy[i];
+        andX[i] = xorVec[i] & xx[i];
+        andY[i] = xorVec[i] & yy[i];
+    }
+
+    auto firstTrue = [](const std::vector<bool>& vec) -> int {
+        for (size_t i = 0; i < vec.size(); ++i) {
+            if (vec[i]) return static_cast<int>(i);
+        }
+        return -1;
+    };
+
+    int x1 = firstTrue(andX);
+    int y1 = firstTrue(andY);
+
+    if (x1 < y1) return -1;
+    if (x1 == y1) return 0;
+    return 1;
+}
 
 class Scope; // forward declaration
 
@@ -380,7 +419,7 @@ EnumerationType::add( AST * a )
 	{
 		EnumerationsType * x = (EnumerationsType *)ASTdown();
 		Long y     = ( a? a->getInteger() : 1 );
-		Long last  = ( x? x->_data->entries()-1 : 0 );
+		Long last  = ( x? x->_data->size()-1 : 0 );
 		Long first = 0;
 
 		if ( y > 0  &&  _pos < last ){
@@ -403,7 +442,7 @@ EnumerationType::succ( AST * a )
 
 		if ( x )
 		{
-			if ( pos < (x->_data->entries() - 1) ){
+			if ( pos < (x->_data->size() - 1) ){
 				return x->_data->at( pos+1 );
 			}else{
 				Error_Report( "Attempting Successor of last element ", this );
@@ -478,22 +517,18 @@ EnumerationsType::EnumerationsType(ASTList * list)
 astream&
 EnumerationsType::operator>>( astream& s )
 	{
-		ASTListIterator iterate(*_data);
-		
-		for( int i=0; iterate(); ++i )
-			s >> (*_data)[i];
-			
+		for( auto i=_data->begin(); i != _data->end(); ++i){
+			s >> (*i);
+		}
 		return s;
 	}
 
 astream&
 EnumerationsType::operator<<( astream& s )
-	{
-		ASTListIterator iterate(*_data);
-		
-		for( int i=0; iterate(); ++i )
-			s << (*_data)[i];
-			
+	{		
+		for( auto i=_data->begin(); i != _data->end(); ++i){
+			s << (*i);
+		}
 		return s;
 	}
 			
@@ -512,12 +547,10 @@ EnumerationsType::eval( AST * a )
 
 AST *
 EnumerationsType::init( AST * a )
-	{
-		ASTListIterator it(*_data);
-		
+	{		
 		if ( a ){
-			for ( int i=0; ++it; ++i ){
-				(*_data)[i]->init(a);
+		for( auto i=_data->begin(); i != _data->end(); ++i){
+				(*i)->init(a);
 			}
 		}
 		return this;
@@ -552,7 +585,7 @@ EnumerationsType::assign( AST * a )
 Long
 EnumerationsType::compare( AST * o ) const
 	{
-		cerr << " EnumerationsType::compare(AST*) [Don't call me yet !!] " << endl;
+		std::cerr << " EnumerationsType::compare(AST*) [Don't call me yet !!] " << std::endl;
 		assert(0);
 		return 0;
 	}
@@ -679,7 +712,7 @@ ConnectionsType::eval( AST * a )
 
 Long	ConnectionsType::compare( AST * o ) const
 	{
-		cerr<< " ConnectionsType::compare(AST*) [Don't call me yet !!] " << endl;
+		std::cerr<< " ConnectionsType::compare(AST*) [Don't call me yet !!] " << std::endl;
 		assert(0);
 		return 0;
 	}
@@ -687,13 +720,10 @@ Long	ConnectionsType::compare( AST * o ) const
 astream&
 ConnectionsType::operator>>( astream& s )
 	{
-		AST *			x;
-		SymbolDictionaryIterator	it( *_data );
-		RWCString			name;
-		
-		while ( it() ){
-		
-			x = (AST *)it.value();
+		// put the stream into the name.
+		for (const auto& pair: *_data){
+			std::string			name;
+			auto x = (AST *)pair.second;
 			s >> name;
 			x->setName( name );
 		}
@@ -703,27 +733,20 @@ ConnectionsType::operator>>( astream& s )
 astream&
 ConnectionsType::operator<<( astream& s )
 	{
-		AST *			x;
-		SymbolDictionaryIterator	it( *_data );
-		
-		while ( it() ){
-		
-			x = (AST *)it.value();
+		// put the name into stream.
+		for (const auto& pair: *_data){
+			auto x = (AST *)pair.second;
 			s << x->getName();
 		}
-			
 		return s;
 	}
 
 AST *
 ConnectionsType::init( AST * a )
 	{
-		AST * x;
-		SymbolDictionaryIterator it(*_data);
-
 		if ( a ){
-			for( int i=0; ++it ; ++i ){
-				x=(AST *)it.value();
+		for (const auto& pair: *_data){
+				auto x=(AST *)pair.second;
 				x->init(a);
 			}
 		}
@@ -784,12 +807,39 @@ TerminalType::operator<<( astream& s )
 AST *
 TerminalType::eval( AST * a ){return this;};
 
-Long
-TerminalType::compare( AST * o ) const
-	{
-		return this->_data->compareTo( *(RWCString *)((o->eval())->data()) );
-	}
-
+// Long
+// TerminalType::compare( AST * o ) const
+// 	{
+// 		return this->_data->compareTo( *(RWCString *)((o->eval())->data()) );
+// 	}
+	
+////Long
+////TerminalType::compare( AST * o ) const
+////	{
+///////		inline Long compareValues(AST* a, AST* b) {
+///////	   		if (!a || !b) return -1;
+///////	
+///////	    	void* d1 = a->data();
+///////	    	void* d2 = b->data();
+///////	    	// Attempt string comparison
+///////			RWCString* s1 = dynamic_cast<RWCString*>(static_cast<RWCollectable*>(d1));
+///////			RWCString* s2 = dynamic_cast<RWCString*>(static_cast<RWCollectable*>(d2));
+///////			if (s1 && s2) return s1->compareTo(*s2);
+///////	    	// Add more cases here if needed (numbers, bitvecs)
+///////	    	// fallback
+///////	   		return -1;
+///////	   	}
+////
+////	   	 auto compareValues = [](AST* a, AST* b) -> Long {
+////	        if (!a || !b) return -1;
+////	        RWCString* s1 = static_cast<RWCString*>(a->data());
+////	        RWCString* s2 = static_cast<RWCString*>(b->data());
+////	        return s1->compare(*s2);
+////	    };
+////
+////	   	return compareValues(this, o->eval());
+////}
+////
 AST *
 TerminalType::assign( AST * a )
 	{
@@ -804,8 +854,8 @@ CharType::CharType(ANTLRTokenPtr p):BasicTypeAST(p, CharTypeValue )
 			const char * c=p->getText();
 			if(strlen(c)>=2 && c[1]=='\'' ){
 				RWCString s = p->getText();
-				s.remove(0,2);			// remove leading "C'"
-				s.remove(s.length()-1,1);	// remove trailing "'"
+				s.erase(0,2);			// remove leading "C'"
+				s.erase(s.length()-1,1);	// remove trailing "'"
 				_data = new RWCString( s );
 				//setWriteProtect(1);
 			} else {
@@ -870,7 +920,7 @@ CharType::succ( AST * a )
 	{
 		readEvent();
 		int	 my_data   = (*_data)[0] + 1;
-		char	new_data[] = { my_data, 0 };
+		char	new_data[] = { static_cast<char>(my_data), 0 };
 
 		return new CharType( RWCString(new_data) );
 	}
@@ -880,7 +930,7 @@ CharType::pred( AST * a )
 	{
 		readEvent();
 		int	 my_data   = (*_data)[0] - 1;
-		char	new_data[] = { my_data, 0 };
+		char	new_data[] = { static_cast<char>(my_data), 0 };
 
 		return new CharType( RWCString(new_data) );
 	}
@@ -953,53 +1003,41 @@ CharClassType::eval( AST * a )
 Long
 CharClassType::compare( AST * o ) const
 	{
-		cerr<< " CharClassType::compare(AST*) [Don't call me yet !!] " << endl;
+		std::cerr<< " CharClassType::compare(AST*) [Don't call me yet !!] " << std::endl;
 		assert(0);return 0;
 	}
 
-void convertSpecial(RWCString & s){
-				s(RWCRegexp("\\NUL\\")	)= RWCString(char(0x00));
-				s(RWCRegexp("\\SOH\\")	)= RWCString(char(0x01));
-				s(RWCRegexp("\\STX\\")	)= RWCString(char(0x02));
-				s(RWCRegexp("\\ETX\\")	)= RWCString(char(0x03));
-				s(RWCRegexp("\\EOT\\")	)= RWCString(char(0x04));
-				s(RWCRegexp("\\ENQ\\")	)= RWCString(char(0x05));
-				s(RWCRegexp("\\ACQ\\")	)= RWCString(char(0x06));
-				s(RWCRegexp("\\BEL\\")	)= RWCString(char(0x07));
-				s(RWCRegexp("\\BS\\")	)= RWCString(char(0x08));
-				s(RWCRegexp("\\HT\\")	)= RWCString(char(0x09));
-				s(RWCRegexp("\\LF\\")	)= RWCString(char(0x0A));
-				s(RWCRegexp("\\VT\\")	)= RWCString(char(0x0B));
-				s(RWCRegexp("\\FF\\")	)= RWCString(char(0x0C));
-				s(RWCRegexp("\\CR\\")	)= RWCString(char(0x0D));
-				s(RWCRegexp("\\SO\\")	)= RWCString(char(0x0E));
-				s(RWCRegexp("\\SI\\")	)= RWCString(char(0x0F));
-				s(RWCRegexp("\\DLE\\")	)= RWCString(char(0x10));
-				s(RWCRegexp("\\DC1\\")	)= RWCString(char(0x11));
-				s(RWCRegexp("\\DC2\\")	)= RWCString(char(0x12));
-				s(RWCRegexp("\\DC3\\")	)= RWCString(char(0x13));
-				s(RWCRegexp("\\DC4\\")	)= RWCString(char(0x14));
-				s(RWCRegexp("\\NAK\\")	)= RWCString(char(0x15));
-				s(RWCRegexp("\\SYN\\")	)= RWCString(char(0x16));
-				s(RWCRegexp("\\ETB\\")	)= RWCString(char(0x17));
-				s(RWCRegexp("\\CAN\\")	)= RWCString(char(0x18));
-				s(RWCRegexp("\\EM\\")	)= RWCString(char(0x19));
-				s(RWCRegexp("\\SUB\\")	)= RWCString(char(0x1A));
-				s(RWCRegexp("\\ESC\\")	)= RWCString(char(0x1B));
-				s(RWCRegexp("\\FS\\")	)= RWCString(char(0x1C));
-				s(RWCRegexp("\\GS\\")	)= RWCString(char(0x1D));
-				s(RWCRegexp("\\RS\\")	)= RWCString(char(0x1E));
-				s(RWCRegexp("\\US\\")	)= RWCString(char(0x1F));
-				s(RWCRegexp("\\SP\\")	)= RWCString(char(0x20));
-				s(RWCRegexp("\\DEL\\")	)= RWCString(char(0x7F));
-				//return s;
-	}
+
+#include <string>
+#include <regex>
+#include <unordered_map>
+
+void convertSpecial(std::string& s) {
+    static const std::unordered_map<std::string, char> replacements = {
+        {"\\NUL\\", 0x00}, {"\\SOH\\", 0x01}, {"\\STX\\", 0x02}, {"\\ETX\\", 0x03},
+        {"\\EOT\\", 0x04}, {"\\ENQ\\", 0x05}, {"\\ACQ\\", 0x06}, {"\\BEL\\", 0x07},
+        {"\\BS\\",  0x08}, {"\\HT\\",  0x09}, {"\\LF\\",  0x0A}, {"\\VT\\",  0x0B},
+        {"\\FF\\",  0x0C}, {"\\CR\\",  0x0D}, {"\\SO\\",  0x0E}, {"\\SI\\",  0x0F},
+        {"\\DLE\\", 0x10}, {"\\DC1\\", 0x11}, {"\\DC2\\", 0x12}, {"\\DC3\\", 0x13},
+        {"\\DC4\\", 0x14}, {"\\NAK\\", 0x15}, {"\\SYN\\", 0x16}, {"\\ETB\\", 0x17},
+        {"\\CAN\\", 0x18}, {"\\EM\\",  0x19}, {"\\SUB\\", 0x1A}, {"\\ESC\\", 0x1B},
+        {"\\FS\\",  0x1C}, {"\\GS\\",  0x1D}, {"\\RS\\",  0x1E}, {"\\US\\",  0x1F},
+        {"\\SP\\",  0x20}, {"\\DEL\\", 0x7F}
+    };
+
+    for (const auto& [pattern, ch] : replacements) {
+        s = std::regex_replace(s, std::regex(pattern), std::string(1, ch));
+    }
+}
+
+
+
 
 
 //------------------------------------------------------------------------------------------//
 StringOfCharType::StringOfCharType(ANTLRTokenPtr p,int maxlen):BasicTypeAST(p, StringOfCharTypeValue )
 	{
-		RWCString  s;
+		std::string  s;
 		
 		_dyn_length = 0;
 		
@@ -1008,8 +1046,8 @@ StringOfCharType::StringOfCharType(ANTLRTokenPtr p,int maxlen):BasicTypeAST(p, S
 		}else{
 			if ( p != 0 ){
 				s = p->getText();
-				s.remove( 0,2 );		// remove leading "C'"
-				s.remove( s.length()-1, 1 );	// remove trailing "'"
+				s.erase( 0,2 );		// remove leading "C'"
+				s.erase( s.length()-1, 1 );	// remove trailing "'"
 				// now filter the rest according to
 				//	\NUL\	->	x00
 				//	\SOH\	->	x01
@@ -1054,7 +1092,7 @@ StringOfCharType::StringOfCharType(ANTLRTokenPtr p,int maxlen):BasicTypeAST(p, S
 		}
 		_data = new ArrayObject( _max_length );
 		_assign( &s );
-		_str = new RWCString;
+		_str = new std::string;
 	};
 
 StringOfCharType::StringOfCharType(const RWCString * str,int maxlen):BasicTypeAST(0, StringOfCharTypeValue )
@@ -1165,7 +1203,9 @@ StringOfCharType::assign( AST * a )
 Long
 StringOfCharType::compare( AST * o ) const
 	{
-		return str()->compareTo( *(o->eval()->str()) );
+		//return str()->compareTo( *(o->eval()->str()) );
+		return str()->compare( *(o->eval()->str()) );
+
 	}
 
 Long
@@ -1191,7 +1231,7 @@ StringOfCharType::index( AST * o ) const
 	{
 		const RWCString *	xstr = str();
 		const RWCString *	ystr = o->str();
-		Long			indx = ystr->index( *xstr );
+		Long			indx = ystr->find( *xstr );
 		
 		if ( indx != RW_NPOS ){
 			++indx;
@@ -1233,7 +1273,7 @@ StringOfCharType::_assign(const RWCString *s)
 		for( int i=0; i<_max_length; i++ ){
 		
 			if ( i<_dyn_length ){
-				(*_data)[i] = new CharType((*s)[i]);
+				(*_data)[i] = new CharType(std::string(1,(*s)[i]));
 			}else{
 				(*_data)[i] = new CharType("\0");
 			}
@@ -1244,7 +1284,7 @@ ArrayObject *
 StringOfCharType::array(AST * len)
 	{
 		if(len){
-			_data->reshape(len->getInteger());
+			//sik not needed: _data->reshape(len->getInteger());
 			_dyn_length=_max_length=len->getInteger();
 		}
 		return _data;
@@ -1272,7 +1312,7 @@ DigClassType::eval( AST * a )
 Long
 DigClassType::compare( AST * o ) const
 	{
-		cerr<< " DigClassType::compare(AST*) [Don't call me yet !!] " << endl;
+		std::cerr<< " DigClassType::compare(AST*) [Don't call me yet !!] " << std::endl;
 		assert(0);
 		return 0;
 	}
@@ -1347,7 +1387,7 @@ BooleanType::operator>>( astream& s )
 		
 		s >> temp;
 		
-		if ( !strcmp( temp, "TRUE" ) )
+		if ( !temp.compare( "TRUE" ) )
 
 			m_data = 1;
 		else
@@ -1464,6 +1504,7 @@ BitType ::clone( Scope * s ) const
 astream&
 BitType::operator>>( astream& s )
 	{
+	
 		s >> *_data;
 		return s;
 	}
@@ -1483,7 +1524,7 @@ AST * BitType::eval( AST * a )
 Long
 BitType::compare( AST * o ) const
 	{
-		return BitStrCompOp( this->_data, o->vec() );
+		return BitStrCompOp( *(this->vec()), *(o->vec()));
 	}
 
 Long
@@ -1532,10 +1573,10 @@ StringOfBitType::StringOfBitType(ANTLRTokenPtr p, int maxlen):BasicTypeAST(p, St
 				case 'X':
 					if ( binary_number[1] == '\'' ){
 						leading = 4;		// Default # of bits left digit.
-						binary_number.remove( 0, 2 );	// remove H'
+						binary_number.erase( 0, 2 );	// remove H'
 					}else{
 						leading = binary_number[1] - '0';
-						binary_number.remove( 0, 3 );	// remove H?'
+						binary_number.erase( 0, 3 );	// remove H?'
 					}
 					bits_per_digit = 4;		
 					break;
@@ -1543,22 +1584,22 @@ StringOfBitType::StringOfBitType(ANTLRTokenPtr p, int maxlen):BasicTypeAST(p, St
 				case 'O':
 					if ( binary_number[1] == '\'' ){
 						leading = 3;
-						binary_number.remove( 0, 2 );	// remove O'
+						binary_number.erase( 0, 2 );	// remove O'
 					}else{
 						leading = binary_number[1] - '0';
-						binary_number.remove( 0, 3 );	// remove O?'
+						binary_number.erase( 0, 3 );	// remove O?'
 					}
 					bits_per_digit = 3;		
 					break;
 
 				case 'B':
 					leading = 1;
-					binary_number.remove( 0, 2 );		// remove B'
+					binary_number.erase( 0, 2 );		// remove B'
 					bits_per_digit = 1;		
 					break;
 			}
 
-			binary_number.remove( binary_number.length()-1, 1 );	// remove the trailing '
+			binary_number.erase( binary_number.length()-1, 1 );	// remove the trailing '
 			
 			int digits     = binary_number.length();
 			int last_digit = digits - 1;
@@ -1598,7 +1639,7 @@ StringOfBitType::StringOfBitType(ANTLRTokenPtr p, int maxlen):BasicTypeAST(p, St
 StringOfBitType::StringOfBitType(const RWBitVec * str, int dynlen):BasicTypeAST(0, StringOfBitTypeValue )
 	{
 
-		_max_length = str->length();
+		_max_length = str->size();
 		_dyn_length = dynlen;
 
 		_data = new ArrayObject( _max_length );
@@ -1653,7 +1694,7 @@ StringOfBitType::eval( AST * a )
 Long
 StringOfBitType::compare( AST * o ) const{
 
-	return BitStrCompOp( vec(), o->vec() );
+	return BitStrCompOp( *(this->vec()), (*o->vec()) );
 }
 
 Long
@@ -1662,13 +1703,13 @@ StringOfBitType::index( AST * o ) const{
 	const RWBitVec *	xvec = vec();
 	const RWBitVec *	yvec = o->vec();
 	RWBoolean	match = FALSE;
-	int		length_diff = yvec->length() - xvec->length();
+	int		length_diff = yvec->size() - xvec->size();
 	int		pos = 0;
 
 	for ( pos = 0; (pos <= length_diff) && (match == FALSE); ++pos ){
 
 		match = TRUE;
-		for ( int bit = 0; bit < xvec->length(); ++bit ){
+		for ( int bit = 0; bit < xvec->size(); ++bit ){
 
 			if ( xvec->operator[](bit) != yvec->operator[](bit + pos) ){
 
@@ -1691,7 +1732,7 @@ Long	StringOfBitType::count( AST * o ) const{
 	const RWBitVec *	xbit  = o->vec();
 	Long			cnt = 0;
 
-	for ( int pos = 0; pos < yvec->length(); ++pos ){
+	for ( int pos = 0; pos < yvec->size(); ++pos ){
 
 		if ( yvec->operator[](pos) == xbit->operator[](0) ){
 
@@ -1763,9 +1804,10 @@ void  StringOfBitType::_assign( const RWBitVec *s )
 ArrayObject *
 StringOfBitType::array(AST * len)
 	{
-		if(len){
-			_data->reshape(len->getInteger());
-		}
+	// legacy RWTValOrderedVector or some such.
+// 		if(len){
+// 			_data->reshape(len->getInteger());
+// 		}
 		return _data;
 	}
 
@@ -1789,7 +1831,7 @@ AST * PreDeclaredEnumerationType::eval( AST * a )
 
 Long PreDeclaredEnumerationType::compare( AST * o ) const
 	{
-		cerr<< " PreDeclaredEnumerationType::compare(AST*) [Don't call me yet !!] " << endl;
+		std::cerr<< " PreDeclaredEnumerationType::compare(AST*) [Don't call me yet !!] " << std::endl;
 		assert(0);return 0;
 	}
 
@@ -1830,9 +1872,9 @@ ArrayType::ArrayType( RWTValOrderedVector<AST*> &l )
 
 		:BasicTypeAST( 0, ArrayTypeValue ),
 		_lo(1),
-		_hi( l.length() )
+		_hi( l.size() )
 	{
-		_data = new ArrayObject( l.length() );
+		_data = new ArrayObject( l.size() );
 		
 		for ( Long i = 0; i <= (_hi-_lo); i++ )  (*_data)[i] = l[i];
 	};
@@ -1842,7 +1884,7 @@ AST *	ArrayType::assign( AST * a )
 	{
 		ArrayObject & from_data = *(((ArrayType *)a)->_data);
 
-		if ( from_data.length() == _data->length() ) {
+		if ( from_data.size() == _data->size() ) {
 			for ( int element = 0;  element <= (_hi-_lo);  ++element ){
 				if(!(*_data)[element] ->assign( from_data[element] )){
 					return 0;
@@ -1912,14 +1954,14 @@ AST *	ArrayType::insert( AST * a )
 
 Long	ArrayType::compare( AST * o ) const
 	{
-		cerr << " ArrayType::compare(AST*) [Don't call me yet !!] " << endl;
+		std::cerr << " ArrayType::compare(AST*) [Don't call me yet !!] " << std::endl;
 		assert( 0 );
 		return 0;
 	}
 
 Long	ArrayType::length( int indx ) const
 	{
-		return _data->length();
+		return _data->size();
 	}
 AST *
 ArrayType::check( AST * a )
@@ -1927,7 +1969,7 @@ ArrayType::check( AST * a )
 		if(a&&verify(this,a)){
 			ArrayObject & from_data = *(((ArrayType *)a)->_data);
 
-			if ( from_data.length() == _data->length() ){
+			if ( from_data.size() == _data->size() ){
 				return (*_data)[0] ->check( from_data[0] );// note that we only flag if it is OK or not..
 			} else {
 				Error_Report( "Array Types are not assignment compatible (different lengths)", this );
@@ -2018,16 +2060,16 @@ ArrayElementsType::ArrayElementsType( RWTValOrderedVector<AST*> &l )
 
 		:BasicTypeAST( 0, ArrayElementsTypeValue )
 	{
-		_data = new ArrayObject( l.length() );
+		_data = new ArrayObject( l.size() );
 		
-		for ( Long i = 0; i < l.length(); i++ )  (*_data)[i] = l[i];
+		for ( Long i = 0; i < l.size(); i++ )  (*_data)[i] = l[i];
 	}
 
 astream&	ArrayElementsType::operator>>( astream& s )
 	{
 		AST *	element;
 				
-		for ( int i = 0; i < _data->length(); ++i ){
+		for ( int i = 0; i < _data->size(); ++i ){
 		
 			int pos = (*_data)[i] ->eval()->getInteger();
 			IntegerNumber tmp( pos );
@@ -2041,7 +2083,7 @@ astream&	ArrayElementsType::operator<<( astream& s )
 	{
 		AST *	element;
 				
-		for ( int i = 0; i < _data->length(); ++i ){
+		for ( int i = 0; i < _data->size(); ++i ){
 		
 			int pos = (*_data)[i] ->eval()->getInteger();
 			IntegerNumber tmp( pos );
@@ -2128,7 +2170,7 @@ FileType::getInteger( int indx ) const
 			{
 				if(_file){
 					long here =	_file->tellg();
-							_file->seekg(0,ios::end);
+							_file->seekg(0,std::ios::end);
 					long size =	_file->tellg();
 							_file->seekg(here);
 					return size;
@@ -2186,10 +2228,9 @@ AST *
 RecordType::init( AST * a )
 	{
 		ASTList * _list=getScope()->getASTList();
-		ASTListIterator	fields( *_list );
 		
-		for ( int i=0; ++fields; ++i )
-			(*_list)[i]->init(a);
+		for ( auto i=_list->begin(); i != _list->end(); ++i )
+			(*i)->init(a);
 			
 		return this;
 	}
@@ -2197,18 +2238,15 @@ RecordType::init( AST * a )
 AST *
 RecordType::clone( Scope * s ) const
 	{
-		AST *	element;
 		Scope *		new_scope = new RecordScope( (s ? s :getScope()->getPrev()) );
 		//ASTList *	new_list  = new ASTList;
-		ASTList *	new_list  = new_scope->getASTList();
+		//sik?? ASTList *	new_list  = new_scope->getASTList();
 		ASTList *	_list=m_scope->getASTList();
 
-		ASTListIterator	iterate( *(_list) );
+		//ASTListIterator	iterate( *(_list) );
 		
-		for ( int i=0;  iterate();  ++i ){
-		
-			element = (AST *)( (*_list)[i]->clone() );
-			//new_list->insert( element );
+		for ( auto i=_list->begin(); i != _list->end(); ++i ){
+			AST* element = (AST *)( (*i)->clone() );
 			new_scope->insertSymbolValue( element );
 		}
 		
@@ -2218,17 +2256,25 @@ RecordType::clone( Scope * s ) const
 AST *
 RecordType::assign( AST * a )
 	{
-		ASTList *	_list=m_scope->getASTList();
-		ASTListIterator	myiter( *_list );
-		
-		ASTList &	other = *(a->getScope()->getASTList());
-		ASTListIterator a_iter( other );
-		
-		for ( int i=0; (++myiter && ++a_iter); ++i )
-			(*_list)[i]->assign( other[i]->eval() );
-			
-		return this;
-	}
+	
+// 		ASTList *	_list=m_scope->getASTList();
+// 		ASTListIterator	myiter( *_list );
+// 		
+// 		ASTList &	other = *(a->getScope()->getASTList());
+// 		ASTListIterator a_iter( other );
+// 		
+// 		for ( int i=0; (++myiter && ++a_iter); ++i )
+// 			(*_list)[i]->assign( other[i]->eval() );
+// 			
+// 		return this;
+
+    	ASTList *	_list=m_scope->getASTList();
+    	ASTList &	other = *(a->getScope()->getASTList());
+    	for(auto myiter = _list->begin(), a_other = other.begin(); myiter!= _list->end(); ++myiter, ++a_other){
+    		(*myiter)->assign((*a_other));
+    	}
+    	return this;
+}
 
 Scope *
 RecordType::getScope() const
@@ -2253,16 +2299,22 @@ RecordType::check( AST * a )
 	{
 		if(a&&verify(this,a)){
 			ASTList *	_list=m_scope->getASTList();
-			ASTListIterator	myiter( *_list );
+//			ASTListIterator	myiter( *_list );
 		
 			ASTList &	other = *(a->getScope()->getASTList());
-			ASTListIterator a_iter( other );
-			if(_list->entries() != other.entries()){
+//			ASTListIterator a_iter( other );
+			if(_list->size() != other.size()){
 				Error_Report("Records have different # of elements",a);
 				return 0;
 			}
-			for ( int i=0; (++myiter && ++a_iter); ++i ){
-				if(!(*_list)[i]->check( other[i]->eval() )){
+			
+			for(auto myiter = _list->begin(), a_other = other.begin(); myiter!= _list->end(); ++myiter, ++a_other){
+    			//(*myiter)->assign((*a_other));
+    		//}
+
+			
+			//for ( int i=0; (++myiter && ++a_iter); ++i ){
+				if(!(*myiter)->check( (*a_other)->eval() )){
 					return 0;
 				}
 			}
@@ -2310,4 +2362,7 @@ StatementNumber::init( AST * a )
 		if ( a ) _target = a;
 		return this;
 	}
+
+
+
 

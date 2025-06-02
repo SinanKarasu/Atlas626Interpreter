@@ -326,7 +326,7 @@ class ForCompareAction : public ActionAST {
 
 class VarInitAction : public ActionAST {
 	public:
-		VarInitAction(ASTList * Label_List,InitList *Init_List);
+		VarInitAction(ASTList * Label_List,InitList *init_List);
 		virtual AST * eval(AST * a=0);
 	protected:
 		ASTList  * m_label_list;

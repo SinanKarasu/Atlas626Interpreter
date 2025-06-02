@@ -1066,8 +1066,8 @@
 #token	Fd			"\,"
 #token				"."				<<
 									popMode();
-									cerr	<< "ERROR, bad token at line " 
-										<< line() << endl;
+									std::cerr	<< "ERROR, bad token at line " 
+										<< line() << std::endl;
 								>>
 
 #lexclass VirtualMode
@@ -1094,8 +1094,8 @@
 #token				"\/\/(~[\n])*"			<<skip();>>
 #token				"."				<<
 									popMode();
-									cerr	<< "ERROR, bad token at line " 
-										<< line() << endl;
+									std::cerr	<< "ERROR, bad token at line " 
+										<< line() << std::endl;
 								>>
 
 

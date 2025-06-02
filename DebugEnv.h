@@ -22,7 +22,7 @@ public:
 
 };
 
-typedef	(*CallBack)(class DebugInfo *);
+typedef void (*CallBack)(class DebugInfo *);
 
 class	DebugInfo{
 public:
@@ -55,17 +55,18 @@ public:
 	DebugInfoDictionaryIterator(DebugInfoDictionary & d);
 };
 
+using LineInfoList = AppendableList<LineInfo*>;
+using LineInfoListIterator = LineInfoList::iterator;
+////class	LineInfoList:public RWTValSlist < LineInfo * >{
+////public:
+////	//LineInfoList();
+////	RWBoolean findValue(int lineNo, LineInfo *& );
+////};
 
-class	LineInfoList:public RWTValSlist < LineInfo * >{
-public:
-	//LineInfoList();
-	RWBoolean findValue(int lineNo, LineInfo *& );
-};
-
-class	LineInfoListIterator:public RWTValSlistIterator < LineInfo * >{
-public:
-	LineInfoListIterator(LineInfoList & d);
-};
+////class	LineInfoListIterator:public RWTValSlistIterator < LineInfo * >{
+////public:
+////	LineInfoListIterator(LineInfoList & d);
+////};
 
 extern LineInfoList lineInfoList;
 //const int sendDebugInfo(AST * ,StatusWord s);

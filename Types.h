@@ -186,7 +186,8 @@ using EntryDictionaryIterator = EntryDictionary::iterator;
 
 //#include	"Scope.h"
 
-#define LAZY_ARRAY
+// sik disabled until made to work..
+//#define LAZY_ARRAY
 
 //class Scope;
 

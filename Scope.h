@@ -5,6 +5,7 @@
 
 
 #include	"Dictionary.h"
+#include	"astream.h"
 
 class AtlasParser;
 
@@ -51,6 +52,8 @@ public:
 protected:
 	//virtual	ostream&        operator<<( ostream& s );
 	friend std::ostream & operator << ( std::ostream & output , Scope * );
+	friend astream& operator<<(astream& out, Scope* s);  // <== add this
+
 private:
 	Scope *			m_previous;
 };

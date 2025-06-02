@@ -1,5 +1,4 @@
-#ifndef TedlStd_h
-#define TedlStd_h
+#pragma once
 
 #include	"Std.h"
 
@@ -10,6 +9,4 @@
 #include	"AParser.h"
 #include	"DLexerBase.h"
 
-extern ofstream debugtrace;
-
-#endif
+extern std::ofstream debugtrace;

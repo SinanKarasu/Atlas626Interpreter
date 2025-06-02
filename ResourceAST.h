@@ -6,9 +6,10 @@ public:
 	ResourceAST(ANTLRTokenPtr p=0);
 protected:
 	TheType				m_storage;
-	RWCString			m_name;			// Label Name
+	std::string			m_name;			// Label Name
 	int checkSubsume(AST * subSet,AST * supSet);
 };
 
+using DeviceDictionary = AppendableMap<int, ResourceAST*>;
 
 #endif // ResourceAST_h

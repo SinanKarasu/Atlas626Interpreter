@@ -11,7 +11,7 @@ ArrayObject::ArrayObject(Long size)
 	}
 ArrayObject::~ArrayObject()
 	{
-		for(int i=0;i<length();i++){
+		for(int i=0;i<size();i++){
 			delete (*this)[i];
 		}
 	}
@@ -20,7 +20,7 @@ ArrayObject::~ArrayObject()
 ArrayObject *
 ArrayObject::clone( Scope * s ) const
 	{
-		ArrayObject *	array = new ArrayObject(this->length());
+		ArrayObject *	array = new ArrayObject(this->size());
 		
 		AST *	y = (*this)[0];
 		if(y){
@@ -59,9 +59,9 @@ ArrayObject::operator [](size_t i) const
 ArrayObject *
 ArrayObject::clone( Scope * s ) const
 	{
-		ArrayObject *	array = new ArrayObject(this->length());
+		ArrayObject *	array = new ArrayObject(this->size());
 		
-		for ( int i=0; i < this->length(); i++ )
+		for ( int i=0; i < this->size(); i++ )
 		{
 			AST *	y = ((*this)[i])->clone();
 			(*array)[i] = y;

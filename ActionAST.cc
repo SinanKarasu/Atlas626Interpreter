@@ -54,7 +54,7 @@ AST *	LineAction::eval( AST * a )
 					}
 				} catch ( TedlExecutionError eerr ) {
 					sout << eerr << " At statement: " ;
-					sout << m_scope << endl;
+					sout << m_scope << std::endl;
 				}
 			} 
 		}
@@ -83,7 +83,7 @@ void LineAction::trace(int level)
 		m_scope->setCurrentFstatno(m_fstatno);
 		if(execEnv.execTrace()){
 		
-			cerr << "@:" <<  m_scope << endl;
+			std::cerr << "@:" <<  m_scope << std::endl;
 		}
 		if((debug_statno==(m_fstatno->_testno*100+m_fstatno->_stepno))&&(m_delta==0)){
 			int ijk=m_delta;
@@ -102,7 +102,7 @@ AST *	BeginBlockAction::eval( AST * a )
 		//if(execEnv.execTrace()){
 			debugtrace	<<	"// BEGIN BLOCK: "
 					<<	getName()
-					<<	endl;
+					<<	std::endl;
 		//}
 		x=ASTright();	// Point to TargetAction
 		if(a==this){	// let TargetAction arbitrate
@@ -121,7 +121,7 @@ AST *	EndBlockAction::eval( AST * a )
 		//if(execEnv.execTrace()){
 			debugtrace	<<	"// END BLOCK: "
 					<<	getName()
-					<<	endl;
+					<<	std::endl;
 		//}
 				
 		return ASTright();	// sequential execution
@@ -384,7 +384,7 @@ AST *	FileDataOutputAction::eval( AST * a )
 		while ( x )
 			x = x->eval(where);
 
-		s << endl;
+		s << std::endl;
 		
 		return 0;
 	}
@@ -401,7 +401,7 @@ AST *	FileTextOutputAction::eval( AST * a )
 		while ( x )
 			x = x->eval(where);
 
-		s << endl;
+		s << std::endl;
 		
 		return 0;
 	}
@@ -419,7 +419,7 @@ AST *	FileDataInputAction::eval( AST * a )
 		while ( x )
 			x = x->eval(where);
 
-		////s << endl;
+		////s << std::endl;
 		
 		return 0;
 	}
@@ -436,7 +436,7 @@ AST *	FileTextInputAction::eval( AST * a )
 		while ( x )
 			x = x->eval(where);
 
-		////s << endl;
+		////s << std::endl;
 		
 		return 0;
 	}
@@ -450,7 +450,7 @@ AST *		HexFormatAction::eval( AST * a ) { return this; };
 
 astream&	HexFormatAction::operator>>( astream& s )
 	{
-		s >> hex;
+		s >> std::hex;
 		return s;
 	}
 	
@@ -460,7 +460,7 @@ astream&	HexFormatAction::operator<<( astream& s )
 			
 		s.width( field_width );
 		
-		s << hex;
+		s << std::hex;
 		return s;
 	}
 	
@@ -471,7 +471,7 @@ AST *		ExpFormatAction::eval( AST * a ) { return this; };
 
 astream&	ExpFormatAction::operator>>( astream& s )
 	{
-		s >> dec;
+		s >> std::dec;
 		return s;
 	}
 	
@@ -483,7 +483,7 @@ astream&	ExpFormatAction::operator<<( astream& s )
 		s.width( field_width );
 		s.precision( precision );
 		
-		s << dec;
+		s << std::dec;
 		return s;
 	}
 
@@ -514,7 +514,7 @@ AST *		OctFormatAction::eval( AST * a ) { return this; };
 
 astream&	OctFormatAction::operator>>( astream& s )
 	{
-		s >> oct;
+		s >> std::oct;
 		return s;
 	}
 	
@@ -524,7 +524,7 @@ astream&	OctFormatAction::operator<<( astream& s )
 			
 		s.width( field_width );
 		
-		s << oct;
+		s << std::oct;
 		return s;
 	}
 
@@ -576,22 +576,22 @@ AST *	EnableFileAction::eval( AST * a )
 		switch ( _mode )
 		{
 			case  1:	// read only
-				new_file = new astream( name->str()->data(), ios::in | ios::nocreate );
+				new_file = new astream( name->str()->data(), std::ios::in /*| ios::nocreate */);
 				break;
 				
 			case  2:	// write only
 				if ( _create )
-					new_file = new astream( name->str()->data(), ios::out );
+					new_file = new astream( name->str()->data(), std::ios::out );
 				else
-					new_file = new astream( name->str()->data(), ios::out | ios::nocreate );
+					new_file = new astream( name->str()->data(), std::ios::out /*| ios::nocreate */ );
 
 				break;
 		
 			case  3:	// read write
 				if ( _create )
-					new_file = new astream( name->str()->data(), ios::out | ios::in );
+					new_file = new astream( name->str()->data(), std::ios::out | std::ios::in );
 				else
-					new_file = new astream( name->str()->data(), ios::out | ios::in | ios::nocreate );
+					new_file = new astream( name->str()->data(), std::ios::out | std::ios::in /*| ios::nocreate */ );
 
 				break;
 		}
@@ -624,11 +624,11 @@ AST *	CreateFileAction::eval( AST * a )
 	{
 		const char *	filename = ASTdown()->eval()->str()->data();
 		
-		astream newfile( filename, ios::trunc );
+		astream newfile( filename, std::ios::trunc );
 		newfile.close();
 		
 		if ( ASTdown()->ASTright() != 0 )
-			ASTdown()->ASTright()->eval()->setInteger( 0, ios::failbit );
+			ASTdown()->ASTright()->eval()->setInteger( 0, std::ios::failbit );
 		
 		return ASTright();
 	}
@@ -641,7 +641,7 @@ AST *	DeleteFileAction::eval( AST * a )
 		const char *	filename = ASTdown()->eval()->str()->data();
 		
 		if ( ASTdown()->ASTright() != 0 )
-			ASTdown()->ASTright()->eval()->setInteger( 0, ios::failbit );
+			ASTdown()->ASTright()->eval()->setInteger( 0, std::ios::failbit );
 
 		return ASTright();
 	}
@@ -819,10 +819,10 @@ AST *	ForCompareAction::eval( AST * a )
 		return _result;					
 	}
 
-VarInitAction::VarInitAction(ASTList *Label_List,InitList *Init_List)
-		:ActionAST(0),m_label_list(Label_List),m_init_list(Init_List)
+VarInitAction::VarInitAction(ASTList *Label_List,InitList *init_List)
+		:ActionAST(0),m_label_list(Label_List),m_init_list(init_List)
 	{
-		m_init_list_iterator=new InitListIterator(*Init_List);
+		m_init_list_iterator=new InitListIterator(*init_List);
 	}
 
 	
@@ -833,9 +833,10 @@ AST *	VarInitAction::eval( AST * a )
 		if ( a==0 ){
 			reset();					// reset the "variables to initialize" iterator , and clear the stack
 			
-			ASTListIterator it( *m_label_list );		// now iterate over ALL the variables to be initialized.
-			while( ++it ){					// we call the variable and pass it US.
-				it.key()->init( this );			// and it will call us with non-zero
+			//ASTListIterator it( m_label_list->begin() );		// now iterate over ALL the variables to be initialized.
+			//while( ++it ){					// we call the variable and pass it US.
+			for(auto it = m_label_list->begin() ; it!= m_label_list->end(); ++it ){					// we call the variable and pass it US.
+				(*it)->init( this );			// and it will call us with non-zero
 			}
 			
 			
@@ -847,18 +848,30 @@ AST *	VarInitAction::eval( AST * a )
 
 		}else{
 			while(1){		// variable is calling us
-				if ( m_stack.isEmpty() ){
-					if ( ++(*m_init_list_iterator) ){ // get the next list entry
-						push( m_init_list_iterator->key() );
-						top()->reset();
+				if ( m_stack.empty() ){
+////					if ( ++(*m_init_list_iterator) ){ // get the next list entry
+////						push( m_init_list_iterator->key() );
+////						top()->reset();
+////					} else {
+////						_data=0 ; break;					// no more
+////					}
+// 					if (++(*m_init_list_iterator) != m_init_list->end())
+					if (++(*m_init_list_iterator) != m_init_list->end()) {
+					    push(*(*m_init_list_iterator));
+					    top()->reset();
 					} else {
-						_data=0 ; break;					// no more
+					    _data = nullptr;
+					    break;
 					}
+
 				
 				} else if (top()->_counter < (top()->_rep)->getInteger() ) {	
 					if ( (top())->_list ){					// we have a list
-						if ( ++(*(top()->_iterator)) ){			// more "_rep" _data or _list in the list.
-							push( (top()->_iterator->key()) );// defer decision
+//						if ( ++(*(top()->_iterator)) ){			// more "_rep" _data or _list in the list.
+//						if ( ++(*(top()->_iterator) != top()->_list->end() ){			// more "_rep" _data or _list in the list.
+						if ( ++(*top()->_iterator) != top()->_list->end()) {
+//							push( (top()->_iterator->key()) );// defer decision
+							push( **(top()->_iterator) );// defer decision
 							top()->reset();
 						} else {
 							top()->_counter++;			// this one is done . defer decision
@@ -887,20 +900,24 @@ VarInitAction::top()
 InitData *
 VarInitAction::push(InitData * x)
 	{
-		m_stack.push(x);return m_stack.top();
-	}
+		m_stack.push(x);return x;
+}
 
 InitData *
 VarInitAction::pop()
 	{
-		return m_stack.pop();
+		if (m_stack.empty()) return nullptr;
+		auto x = m_stack.top();
+		m_stack.pop();
+		return x;
 	}
+	
 void
 VarInitAction::reset()
 	{
 		m_init_list_iterator->reset();
-		m_stack.clear();
-	}
+		while (!m_stack.empty()) m_stack.pop();
+}
 
 HiAction::HiAction(AtlasParser * p):ActionAST(0),m_parser(p){}
 AST *	HiAction::eval( AST * a )

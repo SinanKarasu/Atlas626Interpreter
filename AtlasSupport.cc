@@ -5,8 +5,10 @@
 #include	"AtlasParser.h"
 #include	"Dictionary.h"
 #include	"Signal.h"
-
+#include	"ResourceAST.h"
 #include	"DebugEnv.h"
+#include <sstream>
+
 
 DeviceDictionary	VirtualDevices;
 
@@ -63,13 +65,12 @@ sane()
 	}
 
 
-RWCString
-unquoted(RWCString & string)
+std::string
+unquoted(std::string & string)
 	{
-		RWCString a( string );
-		RWCRegexp re( "'" );
-		
-		return (a(re) = "");
+		std::string a( string );
+		std::regex single_quote("'");
+		return std::regex_replace(string, single_quote, "");
 	}
 
 int
@@ -86,22 +87,22 @@ verify( AST * t, AST * s )	// t=target, s=source
 
 
 void
-Warning( RWCString E )
+Warning( std::string E )
 	{
-		cerr << "Warning: " << E << endl;
+		std::cerr << "Warning: " << E << std::endl;
 		set_warning_flag();
 	}
 
 
 void
-Warning( RWCString E, int l )
+Warning( std::string E, int l )
 	{
-		cerr << "Line:" << l << " ";
+		std::cerr << "Line:" << l << " ";
 		Warning( E );
 	}
 
 void
-Warning( RWCString E, ANTLRTokenPtr t )
+Warning( std::string E, ANTLRTokenPtr t )
 	{
 		if ( t == 0 ){
 		
@@ -112,7 +113,7 @@ Warning( RWCString E, ANTLRTokenPtr t )
 	}
 
 void
-Warning( RWCString E, AST * a )
+Warning( std::string E, AST * a )
 	{		
 		if ( a ){
 			if(a->getToken()==0){
@@ -127,37 +128,37 @@ Warning( RWCString E, AST * a )
 
 
 void
-TedlError( RWCString E )
+TedlError( std::string E )
 	{
-		cerr << "ERROR: " << E << endl;
+		std::cerr << "ERROR: " << E << std::endl;
 		set_error_flag(1);
 	}
 
 void
-TedlError( RWCString E, int l )
+TedlError( std::string E, int l )
 	{
-		cerr << "Line:" << l << " ";
+		std::cerr << "Line:" << l << " ";
 		TedlError( E );
 	}
 	
 void
-Error_Report( RWCString E )
+Error_Report( std::string E )
 	{
-		cerr << "ERROR: " << E << endl;
+		std::cerr << "ERROR: " << E << std::endl;
 		set_error_flag();
 	}
 
 
 
 void
-Error_Report( RWCString E, int l )
+Error_Report( std::string E, int l )
 	{
-		cerr << "Line:" << l << " ";
+		std::cerr << "Line:" << l << " ";
 		Error_Report( E );
 	}
 
 void
-Error_Report( RWCString E, ANTLRTokenPtr t )
+Error_Report( std::string E, ANTLRTokenPtr t )
 	{
 		if ( t == 0 ){
 		
@@ -168,7 +169,7 @@ Error_Report( RWCString E, ANTLRTokenPtr t )
 	}
 
 void
-Error_Report( RWCString E, AST * a )
+Error_Report( std::string E, AST * a )
 	{		
 		if ( a ){
 			if(a->getToken()==0){
@@ -193,7 +194,7 @@ AtlasParser::getScope( ANTLRTokenPtr t )
 		if ( x=scope->findSymbolValue( t->getText()) ){
 			return x->getScope();
 		}else{
-			Error_Report( RWCString( t->getText()) + " has no private Scope", t );
+			Error_Report( std::string( t->getText()) + " has no private Scope", t );
 			return 0;
 		}
 	}
@@ -219,7 +220,7 @@ AtlasParser::init()
 			char *trace_level_value = getenv( "ATLAS_TRACE_LEVEL" );
 		
 			if ( trace_level_value && (*trace_level_value >= '1') ){
-				trace_level = atoi(trace_level_value);
+				trace_level = std::stoi(trace_level_value);
 			} else {
 				trace_level = 0;
 			}
@@ -227,7 +228,7 @@ AtlasParser::init()
 			char *debug_statno_value = getenv( "ATLAS_DEBUG_STATNO" );
 		
 			if ( debug_statno_value && (*debug_statno_value >= '0') ){
-				debug_statno = atoi(debug_statno_value);
+				debug_statno = std::stoi(debug_statno_value);
 			} else {
 				debug_statno = -1;
 			}
@@ -242,7 +243,7 @@ AtlasParser::done()
 	}
 
 LabelType
-AtlasParser::getLabelType(const RWCString & name,Scope * s) const
+AtlasParser::getLabelType(const std::string & name,Scope * s) const
 	{
 		AST * x=0;
 		Scope * cscope;
@@ -264,7 +265,7 @@ AtlasParser::getLabelType(const RWCString & name,Scope * s) const
 	}
 
 LabelType
-AtlasParser::getLabelTypeGlobal(const RWCString & name,Scope * s) const
+AtlasParser::getLabelTypeGlobal(const std::string & name,Scope * s) const
 	{
 		AST * x=0;Scope * cscope;
 		if(s)cscope=s;else cscope=scope;
@@ -382,29 +383,29 @@ AtlasParser::insertFstatno( ANTLRTokenPtr t, Scope * s)
 		
 		clear_statement_error_flag();
 			
-		RWCString	str=t->getText();
+		std::string	str=t->getText();
 		Fstatno *	fstatno = 0;
 		
 		VerbLineNo = t->getLine(); // set the line number of verb in Parser
 		
 		if ( debug_flag ){
-			cout << t->getLine() << " " <<
-			RWCString( t->getText() ) << " " << guessing << endl;
+			std::cout << t->getLine() << " " <<
+			std::string( t->getText() ) << " " << guessing << std::endl;
 		}
 		switch ( str[0] ) { _eflag = 1; }
 		
 		if ( FlagStatement ) { _bflag=1; }
 		
-		if ( str(1,4) == "    " ){
+		if ( str.substr(1,4) == "    " ){
 			_test = -1;
 		}else{
-			_test = atoi( RWCString(str(1,4)) );		
+			_test = std::stoi( std::string(str.substr(1,4)) );		
 		}
 		
-		if ( str(5,2) == "  " ){
+		if ( str.substr(5,2) == "  " ){
 			_step = -1;
 		}else{
-			_step = atoi( RWCString(str(5,2)) );		
+			_step = std::stoi( std::string(str.substr(5,2)) );		
 		}
 		
 		if ( (_test ==-1) && (_step == -1) ){
@@ -475,11 +476,11 @@ Fstatno :: getLine() const
 			return _entry->getToken()->getLine();
 		}
 		
-ostream&
-operator << (ostream& output , Fstatno * n)
+std::ostream&
+operator << (std::ostream& output , Fstatno * n)
 	{
-		output	<< setw(4) << setfill('0') << n->_testno
-			<< setw(2) << setfill('0') << n->_stepno
+		output	<< std::setw(4) << std::setfill('0') << n->_testno
+			<< std::setw(2) << std::setfill('0') << n->_stepno
 			;
 		return output;
 	}
@@ -493,55 +494,107 @@ AtlasParser::insertTarget(RWInteger sno,AST * a)
 		// insert it. Guaranteed to be unique, since statno only increases.
 		GoToTargets.insertKeyAndValue(sno,ts);
 		if(UnresolvedTargets.findValue(sno,tsstack)){
-			while(!tsstack->isEmpty()){
+			while(!tsstack->empty()){
 				us=tsstack->pop();
 				verifyGoToTarget(us,ts);// verify and set error flag
 				us->_a->init(a);// do it anyway
 			}
 			delete tsstack; // future ones will see it from GoToTargets
-			UnresolvedTargets.remove(sno);
+			UnresolvedTargets.erase(sno);
 		} 
 	}
 
-RWCString
-stepNo(RWInteger s)
-	{
-		RWCString sn;
-		for(int i=0;i<6;i++){
-			sn=RWCString(char('0'+(s % 10)))+sn;
-			s=s/10;
-		}
-		return sn;
-	}
+std::string stepNo(RWInteger s) {
+    std::ostringstream oss;
+    oss << std::setw(6) << std::setfill('0') << s;
+    return oss.str();
+}
 
-void
-AtlasParser::ResolveTargets()
-	{
-		GoToStatementStack * tsstack=0;
-		GoToDictionaryIterator git(UnresolvedTargets);
-		TargetStatement * ts;// target from GoToTargets
-		TargetStatement * us;// unresolved from UnresolvedTargets
-		while(++git){
-			tsstack=git.value();
-			while(!tsstack->isEmpty()){
-				us=tsstack->pop();
-				if(GoToTargets.findValue(git.key(),ts)){
-					// actually, this clause should NEVER get executed.
-					// Since this routine is (usually) called at the end of
-					// parse, for a program with good statement numbers,
-					// insertTarget will resolve all the references by the
-					// time we get here.
-					verifyGoToTarget(us,ts); // verify and set error flag
-					us->_a->init(ts->_a); // do it anyway
-				} else {
-					Error_Report("Can not find GO TO target "+stepNo(git.key()));
-				}
-			}
-			delete tsstack;
-			UnresolvedTargets.remove(git.key());
-		}
-		GoToTargets.clear(); // Remove (maybe NOT if we need it for debug...).
-	}
+////void
+////tlasParser::ResolveTargets()
+////	{
+///////		GoToStatementStack * tsstack=0;
+///////		GoToDictionaryIterator git(UnresolvedTargets);
+///////		TargetStatement * ts;// target from GoToTargets
+///////		TargetStatement * us;// unresolved from UnresolvedTargets
+///////		while(++git){
+///////			tsstack=git.value();
+///////			while(!tsstack->empty()){
+///////				us=tsstack->pop();
+///////				if(GoToTargets.findValue(git.key(),ts)){
+///////					// actually, this clause should NEVER get executed.
+///////					// Since this routine is (usually) called at the end of
+///////					// parse, for a program with good statement numbers,
+///////					// insertTarget will resolve all the references by the
+///////					// time we get here.
+///////					verifyGoToTarget(us,ts); // verify and set error flag
+///////					us->_a->init(ts->_a); // do it anyway
+///////				} else {
+///////					Error_Report("Can not find GO TO target "+stepNo(git.key()));
+///////				}
+///////			}
+///////			delete tsstack;
+///////			UnresolvedTargets.remove(git.key());
+///////		}
+///////		GoToTargets.clear(); // Remove (maybe NOT if we need it for debug...).
+///////		
+////		GoToStatementStack * tsstack=0;
+////		//GoToDictionaryIterator git(UnresolvedTargets);
+////		TargetStatement * ts;// target from GoToTargets
+////		TargetStatement * us;// unresolved from UnresolvedTargets
+////		//auto git = UnresolvedTargets.begin();
+////		//while(++git!=UnresolvedTargets.end()){
+////		for(const auto& pair: UnresolvedTargets ){
+////			tsstack=pair.second;
+////			while(!tsstack->empty()){
+////				us=tsstack->pop();
+////				if(GoToTargets.findValue(pair.first,ts)){
+////					// actually, this clause should NEVER get executed.
+////					// Since this routine is (usually) called at the end of
+////					// parse, for a program with good statement numbers,
+////					// insertTarget will resolve all the references by the
+////					// time we get here.
+////					verifyGoToTarget(us,ts); // verify and set error flag
+////					us->_a->init(ts->_a); // do it anyway
+////				} else {
+////					Error_Report("Can not find GO TO target "+stepNo(git.key()));
+////				}
+////			}
+////			delete tsstack;
+////			UnresolvedTargets.remove(git.key());
+////		}
+////		
+////		
+////	}
+////	
+	
+void AtlasParser::ResolveTargets() {
+    GoToStatementStack* tsstack = nullptr;
+    TargetStatement* ts = nullptr; // target from GoToTargets
+    TargetStatement* us = nullptr; // unresolved from UnresolvedTargets
+
+    for (const auto& pair : UnresolvedTargets) {
+        tsstack = pair.second;
+        while (!tsstack->empty()) {
+            us = tsstack->pop();
+            if (GoToTargets.findValue(pair.first, ts)) {
+                // actually, this clause should NEVER get executed.
+                // Since this routine is (usually) called at the end of
+                // parse, for a program with good statement numbers,
+                // insertTarget will resolve all the references by the
+                // time we get here.
+                verifyGoToTarget(us, ts); // verify and set error flag
+                us->_a->init(ts->_a);     // do it anyway
+            } else {
+                Error_Report("Can not find GO TO target " + stepNo(pair.first));
+            }
+        }
+        delete tsstack;
+        UnresolvedTargets.erase(pair.first);
+    }
+// Do not clear GoToTargets — used during runtime for verification or execution
+// GoToTargets.clear();
+}
 
 
 
@@ -560,23 +613,42 @@ AtlasParser::insertUnresolved(RWInteger sno,AST * a)
 		}
 	}
 
-void
-AtlasParser::incrementContextDepth(AST * a, EntryType et)
-	{
-		ContextDepth++;
-		if(ContextDepth>=MaxContextDepth){
-			MaxContextDepth=ContextDepth;
-			ContextLevel.reshape(ContextDepth+1);
-			LevelEntry.reshape(ContextDepth+1);
-			LevelType.reshape(ContextDepth+1);
-			LevelSnum.reshape(ContextDepth+1);
-		}
-		ContextLevel[ContextDepth]=ContextLevel[ContextDepth]+1;
-		LevelEntry[ContextDepth]=a;
-		LevelType[ContextDepth]=et;
-		LevelSnum[ContextDepth]=VerbStatNo;
-	}		
-	
+////void
+////AtlasParser::incrementContextDepth(AST * a, EntryType et)
+////	{
+////		ContextDepth++;
+////		if(ContextDepth>=MaxContextDepth){
+////			MaxContextDepth=ContextDepth;
+////			ContextLevel.reshape(ContextDepth+1);
+////			LevelEntry.reshape(ContextDepth+1);
+////			LevelType.reshape(ContextDepth+1);
+////			LevelSnum.reshape(ContextDepth+1);
+////		}
+////		ContextLevel[ContextDepth]=ContextLevel[ContextDepth]+1;
+////		LevelEntry[ContextDepth]=a;
+////		LevelType[ContextDepth]=et;
+////		LevelSnum[ContextDepth]=VerbStatNo;
+////	}		
+////	
+////
+
+void AtlasParser::incrementContextDepth(AST * a, EntryType et)
+{
+    ContextDepth++;
+    if (ContextDepth >= MaxContextDepth) {
+        MaxContextDepth = ContextDepth;
+        ContextLevel.resize(ContextDepth + 1);
+        LevelEntry.resize(ContextDepth + 1);
+        LevelType.resize(ContextDepth + 1);
+        LevelSnum.resize(ContextDepth + 1);
+    }
+    ContextLevel[ContextDepth] = ContextLevel[ContextDepth] + 1;
+    LevelEntry[ContextDepth] = a;
+    LevelType[ContextDepth] = et;
+    LevelSnum[ContextDepth] = VerbStatNo;
+}
+
+
 void
 AtlasParser::decrementContextDepth()
 	{
@@ -666,7 +738,7 @@ ArgCheck( int curArg, AST * target, AST * source, int line_no )
 			}else if( (tt==StringOfBitTypeValue)&&(st==BitTypeValue) ){
 			}else{
 				Error_Report( "Argument is not compatible.", line_no );
-				cerr << "Argument Number : " << curArg << endl;
+				std::cerr << "Argument Number : " << curArg << std::endl;
 			}
 		}
 	}
@@ -696,7 +768,7 @@ ResCheck( int curRes, AST * target, AST * source, int line_no )
 			}else if ( (tt==DecimalNumberValue) && (st==IntegerNumberValue) ){
 			}else {
 				Error_Report( "RESULT  is not compatible. ", line_no );
-				cerr << "Result Number : " << curRes << endl;
+				std::cerr << "Result Number : " << curRes << std::endl;
 			}
 		}
 	}
@@ -745,36 +817,36 @@ AtlasParser::syn(
 
 		syntaxErrCount++;
 
-		cerr	<<	" line "	<< line 
+		std::cerr	<<	" line "	<< line 
 			<<	" col "	<< col
 			<<	" syntax error at " 
 			<<	LT(1)->getText();
 
 		if (!etok && !eset) {
-			cerr <<  endl;
+			std::cerr <<  std::endl;
 			return;
 		}
 		
 		if (k == 1) {
-			cerr <<  " missing ";
+			std::cerr <<  " missing ";
 		} else {
-			cerr	<< ";"
+			std::cerr	<< ";"
 				<<	LT(1)->getText()
 				<<   " not" ;
 			if (set_deg(eset) > 1){
-				cerr << " in";
+				std::cerr << " in";
 			}
 		}
 		if (set_deg(eset) > 0) {
 			edecode(eset);
 		} else {
-			cerr <<  token_tbl[etok];
+			std::cerr <<  token_tbl[etok];
 		}
 
 		if (strlen(egroup) > 0){
-			cerr << " in " <<  egroup;
+			std::cerr << " in " <<  egroup;
 		}
-		cerr << endl ;
+		std::cerr << std::endl ;
 		set_error_flag();
 	}
 
@@ -786,20 +858,20 @@ AtlasParser::edecode(SetWordType *a)
 	unsigned e = 0;
 
 	if ( set_deg(a)>1 ){
-		cerr << " {";
+		std::cerr << " {";
 	}
 	do {
 		SetWordType t = *p;
 		SetWordType *b = &(bitmask[0]);
 		do {
 			if ( t & *b ){
-				cerr << " " << token_tbl[e];
+				std::cerr << " " << token_tbl[e];
 			}
 			e++;
 		} while (++b < &(bitmask[sizeof(SetWordType)*8]));
 	} while (++p < endp);
 	if ( set_deg(a)>1 ){
-		 cerr <<  " }";
+		 std::cerr <<  " }";
 	}
 }
 
@@ -847,7 +919,7 @@ ArgsCheck(AST * E1,AST * E2)
 				AST            *sd = E2->data(&idx);
 				if (!(td->check(sd))) {
 					Error_Report("Argument is not compatible.", E1);
-					cerr << "Argument Number : " << i << endl;
+					std::cerr << "Argument Number : " << i << std::endl;
 					result=0;
 				}
 			}
@@ -869,7 +941,7 @@ ArgsCheck(AST * E1,AST * E2)
 				AST            *sd = E2->data(&idx);
 				if (!(td->check(sd))) {
 					Error_Report("Result is not compatible.", E1);
-					cerr << "Result Number : " << i << endl;
+					std::cerr << "Result Number : " << i << std::endl;
 					result=0;
 				}
 			}
@@ -930,6 +1002,25 @@ AtlasParser::insertEscape(AST * ei,AST * ep)
 			return;
 		}
 
+////void
+////AtlasParser::removeEscape(AST * ei)
+////		{
+////			if(!allEscapes){
+////			} else if(ei) {
+////				if(allEscapes->contains(ei)){
+////					allEscapes->remove(ei);
+////					ei->remove(0);
+////				}
+////			} else {
+////				ASTListIterator aeit(*allEscapes);
+////				while(++aeit){
+////					aeit.key()->remove(0);
+////				}
+////				allEscapes->clear();
+////			}
+////			return;
+////		}
+////
 void
 AtlasParser::removeEscape(AST * ei)
 		{
@@ -940,63 +1031,64 @@ AtlasParser::removeEscape(AST * ei)
 					ei->remove(0);
 				}
 			} else {
-				ASTListIterator aeit(*allEscapes);
-				while(++aeit){
-					aeit.key()->remove(0);
+				for(auto aeit = allEscapes->begin(); aeit!= allEscapes->end(); ++aeit ){
+				//while(++aeit){
+					(*aeit)->remove(0);
 				}
 				allEscapes->clear();
 			}
 			return;
 		}
 
+
 void 
 AtlasParser::tracein(const char *r)
 	{
-		tracefile << "enter rule " << r << endl;
+		tracefile << "enter rule " << r << std::endl;
 	}
 
 void
 AtlasParser::traceout(const char *r)
 	{
-		tracefile << "exit rule " << r << endl;
+		tracefile << "exit rule " << r << std::endl;
 	}
 
 int
-AtlasParser::isType(ANTLRTokenPtr ,ModifierEntry * m,const RWCString  a)
+AtlasParser::isType(ANTLRTokenPtr ,ModifierEntry * m,const std::string  a)
 	{
 		return (m->typeCode==a);
 	}
 
 int
-AtlasParser::isType(ModifierEntry * m,const RWCString  a)
+AtlasParser::isType(ModifierEntry * m,const std::string  a)
 	{
 		return (m->typeCode==a);
 	}
 
 int
-AtlasParser::isType(ModifierEntry * m,const RWCString a,const RWCString  b)
+AtlasParser::isType(ModifierEntry * m,const std::string a,const std::string  b)
 	{
 		return (m->typeCode==a||m->typeCode==b);
 	}
 
 int 
-AtlasParser::isType(ModifierEntry * m,const RWCString a,const RWCString  b,const RWCString c)
+AtlasParser::isType(ModifierEntry * m,const std::string a,const std::string  b,const std::string c)
 	{
 		return (m->typeCode==a||m->typeCode==b||m->typeCode==c);
 	}
 
 ModifierEntry *
-AtlasParser::insertQuotedModifier(const RWCString quoted,NounEntry * nounEntry)
+AtlasParser::insertQuotedModifier(const std::string quoted,NounEntry * nounEntry)
 	{
 		ModifierEntry * modifierEntry=new ModifierEntry(nounEntry);
-		RWCString modifier=quoted;
-		RWCRegexp re("'");
-		modifier(re)="";
+		std::string modifier=quoted;
+		std::regex single_quote("'");
+		modifier = std::regex_replace(modifier, single_quote, "");
 			
 		modifierEntry->modifier=modifier;
 		nounEntry->modifierDictionary.insertKeyAndValue(modifier,modifierEntry);
 		QuantityList * quantityList=new QuantityList;
-		quantityList->insert(new Quantity(quoted));
+		quantityList->append(new Quantity(quoted));
 		modifierEntry->insertQuantityList(quantityList);
 		return modifierEntry;
 	}
@@ -1062,7 +1154,7 @@ AtlasParser::getGlobalScope() const
 	}
 
 ModifierEntry *
-AtlasParser::theModifierEntry(const RWCString modifier,NounEntry * nounEntry,RWCString & left)
+AtlasParser::theModifierEntry(const std::string modifier,NounEntry * nounEntry,std::string & left)
 	{
 		return mnemonicsDB->theModifierEntry(modifier,nounEntry,left);
 	}
@@ -1072,7 +1164,7 @@ NounEntry *
 AtlasParser::theNounEntry(const ANTLRTokenPtr  nid,int & howmany)
 {
 	NounEntry * nounEntry=0;int j;
-	RWCString noun=nid->getText();
+	std::string noun=nid->getText();
 	howmany=1;
 	while(1){
 		if(nounEntry=mnemonicsDB->theNounEntry(noun)){
@@ -1080,7 +1172,7 @@ AtlasParser::theNounEntry(const ANTLRTokenPtr  nid,int & howmany)
 		} else if(howmany>=8){	// arbitrary
 			break;
 		}
-		noun+= RWCString(" ") + LT(++howmany)->getText();
+		noun+= std::string(" ") + LT(++howmany)->getText();
 	}
 	
 	if(nounEntry){

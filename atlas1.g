@@ -106,7 +106,7 @@ public:
 	ModifierEntry * theModifierEntry(const RWCString modifier,NounEntry * nounEntry,RWCString & left);
 
 protected:
-	ofstream	tracefile;
+	std::ofstream	tracefile;
 	
 	virtual void tracein(const char *r);
 	virtual void traceout(const char *r);

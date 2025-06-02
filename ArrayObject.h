@@ -1,7 +1,7 @@
 #ifndef ArrayObject_H
 #define ArrayObject_H
 
-class ArrayObject:public RWTValVector<AST *> {
+class ArrayObject:public std::vector<AST *> {
 public:
 	ArrayObject( Long size=1 );
 	ArrayObject * clone( class Scope * s=0 ) const ;
