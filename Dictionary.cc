@@ -1,4 +1,6 @@
 // Dictionary.cc
+#include "AST.h"           // or wherever AST is defined
+//#include "ASTList.h"       // if ASTList is a distinct type
 #include "Dictionary.h"
 
 // All template methods should remain in the header.

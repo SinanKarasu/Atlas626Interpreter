@@ -160,28 +160,33 @@ AST *	PREDFunction::eval( AST * a )	{ return ASTdown()->eval()->pred(); }
 
 TheType	PREDFunction::getType	( AST * a ) const { return ASTdown()->getType(); };
 
-//--------------------------------------------------------------------
-DATEFunction::DATEFunction():BuiltinFunctionAST(){ ast = 0; }
+#include <chrono>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 
-AST *	DATEFunction::eval( AST * a ){
+AST* DATEFunction::eval(AST* ast) {
+    using namespace std::chrono;
 
-		struct timeval	ts;
-		const long *	tp = &(long)ts.tv_sec;
-		void *		dum = 0;
-		char		buf[16];
-		RWCString	s;
-	
-		gettimeofday( &ts, dum );
-		cftime( buf, "%y%m%d08/06/97M%S", tp );
-		sprintf( &buf[12], "%.3d", ts.tv_usec / 1000 );
+    // Get current time
+    auto now = system_clock::now();
+    auto secs = system_clock::to_time_t(now);
+    auto ms = duration_cast<milliseconds>(now.time_since_epoch()) % 1000;
 
-		s = RWCString( buf );
-	
-		if ( ast != 0 ) delete ast;
-		ast = new StringOfCharType( &s );
+    // Format time
+    std::ostringstream oss;
+    oss << std::put_time(std::localtime(&secs), "%y%m%d08/06/97M%S")
+        << std::setw(3) << std::setfill('0') << ms.count();
 
-		return ast;
-	}
+    std::string result = oss.str();
+
+    delete ast;
+    // is it safe to pass address of stack object here? It is not saved, only contents are copied.
+    ast = new StringOfCharType(&result);
+
+    return ast;
+}
+
 
 TheType	DATEFunction::getType	( AST * a ) const { return StringOfCharTypeValue; };
 
@@ -218,7 +223,7 @@ AST *	COPYstocFunction::eval( AST * a )
 		if(z>len_x-y+1){
 			z=len_x-y+1;
 		}
-		RWCString copy=(*x->str())(y-1,z);
+		RWCString copy=x->str()->substr(y-1,z);
 		ast=new StringOfCharType(&copy,z);
 		return ast;
 	}
@@ -528,7 +533,7 @@ AST *	DELETEstocFunction::eval( AST * a )
 		} else {
 			p=len_s;	w=0;	// my interpretation. sik.
 		}			
-		copy.remove(p-1,w);
+		copy.erase(p-1,w);
 		return ast = new StringOfCharType(&copy,len_s-w);
 
 	}

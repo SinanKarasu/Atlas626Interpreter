@@ -66,7 +66,7 @@ sane()
 
 
 std::string
-unquoted(std::string & string)
+unquoted(const std::string & string)
 	{
 		std::string a( string );
 		std::regex single_quote("'");
@@ -510,63 +510,7 @@ std::string stepNo(RWInteger s) {
     return oss.str();
 }
 
-////void
-////tlasParser::ResolveTargets()
-////	{
-///////		GoToStatementStack * tsstack=0;
-///////		GoToDictionaryIterator git(UnresolvedTargets);
-///////		TargetStatement * ts;// target from GoToTargets
-///////		TargetStatement * us;// unresolved from UnresolvedTargets
-///////		while(++git){
-///////			tsstack=git.value();
-///////			while(!tsstack->empty()){
-///////				us=tsstack->pop();
-///////				if(GoToTargets.findValue(git.key(),ts)){
-///////					// actually, this clause should NEVER get executed.
-///////					// Since this routine is (usually) called at the end of
-///////					// parse, for a program with good statement numbers,
-///////					// insertTarget will resolve all the references by the
-///////					// time we get here.
-///////					verifyGoToTarget(us,ts); // verify and set error flag
-///////					us->_a->init(ts->_a); // do it anyway
-///////				} else {
-///////					Error_Report("Can not find GO TO target "+stepNo(git.key()));
-///////				}
-///////			}
-///////			delete tsstack;
-///////			UnresolvedTargets.remove(git.key());
-///////		}
-///////		GoToTargets.clear(); // Remove (maybe NOT if we need it for debug...).
-///////		
-////		GoToStatementStack * tsstack=0;
-////		//GoToDictionaryIterator git(UnresolvedTargets);
-////		TargetStatement * ts;// target from GoToTargets
-////		TargetStatement * us;// unresolved from UnresolvedTargets
-////		//auto git = UnresolvedTargets.begin();
-////		//while(++git!=UnresolvedTargets.end()){
-////		for(const auto& pair: UnresolvedTargets ){
-////			tsstack=pair.second;
-////			while(!tsstack->empty()){
-////				us=tsstack->pop();
-////				if(GoToTargets.findValue(pair.first,ts)){
-////					// actually, this clause should NEVER get executed.
-////					// Since this routine is (usually) called at the end of
-////					// parse, for a program with good statement numbers,
-////					// insertTarget will resolve all the references by the
-////					// time we get here.
-////					verifyGoToTarget(us,ts); // verify and set error flag
-////					us->_a->init(ts->_a); // do it anyway
-////				} else {
-////					Error_Report("Can not find GO TO target "+stepNo(git.key()));
-////				}
-////			}
-////			delete tsstack;
-////			UnresolvedTargets.remove(git.key());
-////		}
-////		
-////		
-////	}
-////	
+
 	
 void AtlasParser::ResolveTargets() {
     GoToStatementStack* tsstack = nullptr;
@@ -612,25 +556,6 @@ AtlasParser::insertUnresolved(RWInteger sno,AST * a)
 			UnresolvedTargets.insertKeyAndValue(sno,tsstack);
 		}
 	}
-
-////void
-////AtlasParser::incrementContextDepth(AST * a, EntryType et)
-////	{
-////		ContextDepth++;
-////		if(ContextDepth>=MaxContextDepth){
-////			MaxContextDepth=ContextDepth;
-////			ContextLevel.reshape(ContextDepth+1);
-////			LevelEntry.reshape(ContextDepth+1);
-////			LevelType.reshape(ContextDepth+1);
-////			LevelSnum.reshape(ContextDepth+1);
-////		}
-////		ContextLevel[ContextDepth]=ContextLevel[ContextDepth]+1;
-////		LevelEntry[ContextDepth]=a;
-////		LevelType[ContextDepth]=et;
-////		LevelSnum[ContextDepth]=VerbStatNo;
-////	}		
-////	
-////
 
 void AtlasParser::incrementContextDepth(AST * a, EntryType et)
 {

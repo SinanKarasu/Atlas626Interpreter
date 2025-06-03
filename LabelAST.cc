@@ -48,7 +48,7 @@ LabelAST::ArgsCheck(AST * E1,AST * E2)
 				AST            *sd = E2->data(&idx);
 				if (!(td->check(sd))) {
 					Error_Report("Argument is not compatible.", E1);
-					cerr << "Argument Number : " << i << endl;
+					std::cerr << "Argument Number : " << i << std::endl;
 					result=0;
 				}
 			}
@@ -70,7 +70,7 @@ LabelAST::ArgsCheck(AST * E1,AST * E2)
 				AST            *sd = E2->data(&idx);
 				if (!(td->check(sd))) {
 					Error_Report("Result is not compatible.", E1);
-					cerr << "Result Number : " << i << endl;
+					std::cerr << "Result Number : " << i << std::endl;
 					result=0;
 				}
 			}

@@ -30,7 +30,7 @@ class TedlParser;
 void ArgCheck(int curc,AST * target, AST * source,int line_no);
 void ResCheck(int curc,AST * target, AST * source,int line_no);
 
-RWCString unquoted(RWCString & name);
+std::string unquoted(const std::string & name);
 
 #include	"TedlDefinitions.h"
 #include	"DevicePath.h"

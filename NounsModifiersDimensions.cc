@@ -2,7 +2,7 @@
 #include	"NounsModifiersDimensions.h"
 #include	"AtlasStd.h"
 
-ifstream  database;
+std::ifstream  database;
 int LineNo;
 
 	
@@ -85,12 +85,12 @@ Long	ModifierEntry::compare( ModifierEntry * o ) const
 
 void	ModifierEntry::insertQuantityList( QuantityList * ql )
 	{
-		quantitiesList.insert(ql);
+		quantitiesList.append(ql);
 	}
 
 int ModifierEntry::isUsage(const RWCString c)
 	{
-		return (usage.index(c)!=RW_NPOS);
+		return (usage.find(c)!=RW_NPOS);
 	}
 
 SuffixEntry::SuffixEntry(){};

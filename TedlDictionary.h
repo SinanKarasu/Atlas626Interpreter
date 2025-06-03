@@ -1,6 +1,7 @@
 #pragma once
 //                       symbol table support                        //
 
+#include "Dictionary.h"
 #include <string>
 
 class DeviceEquivalence{
@@ -18,14 +19,14 @@ protected:
 	
 };
 
-
-class TedlSymbolDictionary : public RWTValHashDictionary<RWCString,DeviceEquivalence * > {
-public:
-	TedlSymbolDictionary();
-	
-private:
-   enum { NbrBuckets = RWDEFAULT_CAPACITY };
-};
+using TedlSymbolDictionary = AppendableMap<std::string, DeviceEquivalence*>;
+// class TedlSymbolDictionary : public RWTValHashDictionary<RWCString,DeviceEquivalence * > {
+// public:
+// 	TedlSymbolDictionary();
+// 	
+// private:
+//    enum { NbrBuckets = RWDEFAULT_CAPACITY };
+//};
 
 class Resource;
 

@@ -34,23 +34,47 @@ public:
    int binary = 0;
    int field_width = 0;
    
-//     friend astream& operator<<(astream& s, const RWBitVec& x);
-//     friend astream& operator>>(astream& s, RWBitVec& x);
-//     friend astream& operator<<(astream& s, AST* a);
-//     friend astream& operator>>(astream& s, AST* a);
-//     
-//         // Accept manipulators like std::endl, std::hex, etc.
-//     astream& operator<<(std::ostream& (*manip)(std::ostream&)) {
-//         manip(*this); return *this;
-//     }
-// 
-//     astream& operator<<(std::ios& (*manip)(std::ios&)) {
-//         manip(*this); return *this;
-//     }
-// 
-//     astream& operator<<(std::ios_base& (*manip)(std::ios_base&)) {
-//         manip(*this); return *this;
-//     }
+void attach(int fd) {
+	switch (fd) {
+		case 0: this->std::ios::rdbuf(std::cin.rdbuf()); break;
+		case 1: this->std::ios::rdbuf(std::cout.rdbuf()); break;
+		case 2: this->std::ios::rdbuf(std::cerr.rdbuf()); break;
+		default:
+			throw std::runtime_error("astream::attach only supports 0, 1, 2 for stdin/stdout/stderr");
+	}
+}
+
+// using std::fstream::operator<<;
+// using std::fstream::operator>>;
+// using std::ostream::operator<<;
+
+
+    // Handle const char* unambiguously
+    astream& operator<<(const char* s) {
+        (*static_cast<std::ostream*>(this)) << s;
+        return *this;
+    }
+    
+    
+    // Handle stream manipulators like std::endl
+	astream& operator<<(std::ostream& (*manip)(std::ostream&)) {
+	    (*static_cast<std::ostream*>(this)) << manip;
+	    return *this;
+	}
+
+        // Templated forwarding operators
+    template <typename T>
+    astream& operator<<(const T& val) {
+        (*static_cast<std::ostream*>(this)) << val;
+        return *this;
+    }
+
+    template <typename T>
+    astream& operator>>(T& val) {
+        (*static_cast<std::istream*>(this)) >> val;
+        return *this;
+    }
+
 
 };
 
@@ -61,80 +85,5 @@ astream& operator<<(astream& s, AST* a);
 astream& operator<<(astream& s, const RWBitVec& vec);
 astream& operator>>(astream& s, RWBitVec& vec);
 
-
-
-#include <vector>
-#include <iostream>
-
-// Forward declare AST
-////class AST;
-////
-////using RWBitVec = std::vector<bool>;
-////
-////class astream {
-////public:
-////    std::ostream& out;
-////    std::istream& in;
-////
-////    astream(std::ostream& o = std::cout, std::istream& i = std::cin)
-////        : out(o), in(i) {}
-////
-////    template <typename T>
-////    astream& operator<<(const T& value) {
-////        out << value;
-////        return *this;
-////    }
-////
-////    template <typename T>
-////    astream& operator>>(T& value) {
-////        in >> value;
-////        return *this;
-////    }
-////};
-////
-
-////#include <fstream>
-////#include <string>
-////#include <vector>
-////
-////using RWBitVec = std::vector<bool>; // legacy alias
-////
-////class AST; // forward declaration to avoid circular include
-////
-////class astream : public std::fstream {
-////public:
-////    using std::fstream::fstream; // inherit all constructors
-////
-////    // Overload for writing AST*
-////    astream& operator<<(AST* a);
-////    astream& operator>>(AST*& a);
-////
-////    // Overload for writing bit vectors
-////    astream& operator<<(const RWBitVec& vec);
-////    astream& operator>>(RWBitVec& vec);
-////};
-////
-////// Explicit overloads
-////astream& operator<<(astream& s, AST* a);
-////astream& operator>>(astream& s, AST* a);
-////
-////astream& operator<<(astream& s, const RWBitVec& vec);
-////astream& operator>>(astream& s, RWBitVec& vec);
-////
-
-// class astream : public std::fstream {
-// public:
-//     using std::fstream::operator<<;
-//     using std::fstream::operator>>;
-// 
-//     using std::fstream::fstream; // inherit constructors
-// 
-//     // Your custom overloads
-//     astream& operator<<(AST* a);
-//     astream& operator>>(AST*& a);
-// 
-//     astream& operator<<(const RWBitVec& vec);
-//     astream& operator>>(RWBitVec& vec);
-//};
 
 
