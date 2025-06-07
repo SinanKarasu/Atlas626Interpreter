@@ -18,5 +18,9 @@ private:
 	Resource * m_Resource;
 };
 
+// inline RWCString operator+(const RWCString& lhs, const NodeName& rhs) {
+//     return lhs + static_cast<const RWCString>(rhs);
+// }
+
 
 #endif // NodeName_H

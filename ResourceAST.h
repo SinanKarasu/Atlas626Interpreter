@@ -10,6 +10,6 @@ protected:
 	int checkSubsume(AST * subSet,AST * supSet);
 };
 
-using DeviceDictionary = AppendableMap<int, ResourceAST*>;
+using DeviceDictionary = AppendableMap<std::string, ResourceAST*>;
 
 #endif // ResourceAST_h

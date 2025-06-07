@@ -386,7 +386,7 @@ InnerScope::removeSymbolValue(const RWCString sym)
 			AST * x=0;
 			m_symbol->findValue(sym,x);
 			if(x){
-				m_symbol->remove(sym);
+				m_symbol->erase(sym);
 			}
 			return x;
 		}
@@ -434,7 +434,7 @@ InnerScope::removeEventIndicator(const RWCString sym)
 			AST * x=0;
 			m_eventindicators->findValue(sym,x);
 			if(x){
-				m_eventindicators->remove(sym);
+				m_eventindicators->erase(sym);
 			}
 			return x;
 		}
@@ -751,7 +751,7 @@ InnerScope::get_label(AST * E)
 //	}
 
 //	friend 
-ostream &	operator << (ostream & output,Scope * s)
+std::ostream &	operator << (std::ostream & output,Scope * s)
 		{
 			if(s->getCurrentFstatno()){
 				if(s->pursuePrint()){

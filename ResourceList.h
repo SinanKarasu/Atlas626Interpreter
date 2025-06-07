@@ -2,13 +2,14 @@
 #define ResourceList_H
 
 
-class ResourceList : public RWTValSlist<Resource *>{
-public:
-	ResourceList();
-	RWBoolean findValue(RWCString key,Resource *& value);
-	
-};
+// class ResourceList : public RWTValSlist<Resource *>{
+// public:
+// 	ResourceList();
+// 	RWBoolean findValue(RWCString key,Resource *& value);
+// 	
+// };
 
+using ResourceList = AppendableList<Resource *>;
 class ResourceListIterator : public RWTValSlistIterator<Resource *>{
 public:
 	ResourceListIterator( ResourceList &d );

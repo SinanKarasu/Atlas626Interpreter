@@ -44,7 +44,7 @@ astream&
 GateConnEventAST::operator<<	( astream& s )
 	{
 		if(ASTdown()){
-			s << endl;
+			s << std::endl;
 			s << "\tCNX:";
 			s << ASTdown();
 		}

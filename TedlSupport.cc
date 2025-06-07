@@ -55,7 +55,7 @@ Resource *	TedlParser::getDevice( AST * nodeName )
 		}
 	}
 		
-Resource *	TedlParser::getDevice( RWCString nodeName )
+Resource *	TedlParser::getDevice( const std::string& nodeName )
 	{
 		Resource * x = 0;
 		
@@ -101,37 +101,37 @@ TedlParser::syn(
 
 		syntaxErrCount++;
 
-		cerr	<<	"(" 		<< m_modelfile << ")"
+		std::cerr	<<	"(" 		<< m_modelfile << ")"
 			<<	"line "	<< line 
 			<<	" col "	<< col
 			<<	" syntax error at " 
 			<<	LT(1)->getText();
 
 		if (!etok && !eset) {
-			cerr <<  endl;
+			std::cerr <<  std::endl;
 			return;
 		}
 		
 		if (k == 1) {
-			cerr <<  " missing ";
+			std::cerr <<  " missing ";
 		} else {
-			cerr	<< ";"
+			std::cerr	<< ";"
 				<<	LT(1)->getText()
 				<<   " not" ;
 			if (set_deg(eset) > 1){
-				cerr << " in";
+				std::cerr << " in";
 			}
 		}
 		if (set_deg(eset) > 0) {
 			edecode(eset);
 		} else {
-			cerr <<  token_tbl[etok];
+			std::cerr <<  token_tbl[etok];
 		}
 
 		if (strlen(egroup) > 0){
-			cerr << " in " <<  egroup;
+			std::cerr << " in " <<  egroup;
 		}
-		cerr << endl ;
+		std::cerr << std::endl ;
 		set_error_flag();
 	}
 
@@ -143,20 +143,20 @@ TedlParser::edecode(SetWordType *a)
 	unsigned e = 0;
 
 	if ( set_deg(a)>1 ){
-		cerr << " {";
+		std::cerr << " {";
 	}
 	do {
 		SetWordType t = *p;
 		SetWordType *b = &(bitmask[0]);
 		do {
 			if ( t & *b ){
-				cerr << " " << token_tbl[e];
+				std::cerr << " " << token_tbl[e];
 			}
 			e++;
 		} while (++b < &(bitmask[sizeof(SetWordType)*8]));
 	} while (++p < endp);
 	if ( set_deg(a)>1 ){
-		 cerr <<  " }";
+		 std::cerr <<  " }";
 	}
 }
 
@@ -180,8 +180,8 @@ int TedlParser::_error_()
 void    TedlParser::Error_Report( RWCString E )
         {
 		m_last_error=E;
-                cerr 	<< "ERROR(" << m_modelfile << "):"
-                	<< E << endl;
+                std::cerr 	<< "ERROR(" << m_modelfile << "):"
+                	<< E << std::endl;
                 set_error_flag();
         };
 
@@ -192,7 +192,7 @@ const RWCString& TedlParser::getLastError()const
 
 void    TedlParser::Error_Report( RWCString E, int l )
         {
-                cerr << "Line:" << l << " ";
+                std::cerr << "Line:" << l << " ";
                 Error_Report( E );
         };
 

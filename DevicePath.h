@@ -17,15 +17,15 @@ private:
 	AST * m_path_characteristics;
 };
 
+using DevicePathList = AppendableList<DevicePath *>;
+// class DevicePathList : public RWTValSlist<DevicePath *> {
+// public:
+// 	DevicePathList();
+//};
 
-class DevicePathList : public RWTValSlist<DevicePath *> {
-public:
-	DevicePathList();
-};
-
-class DevicePathListIterator : public RWTValSlistIterator<DevicePath *>{
-	public: DevicePathListIterator( DevicePathList &d );
-};
+// class DevicePathListIterator : public RWTValSlistIterator<DevicePath *>{
+// 	public: DevicePathListIterator( DevicePathList &d );
+//};
 
 using DevicePathDictionary = AppendableMap< std::string, DevicePath*>;
 using DevicePathDictionaryIterator = DevicePathDictionary::iterator;

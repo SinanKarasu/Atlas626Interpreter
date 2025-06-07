@@ -34,7 +34,7 @@ RWCString
 VirtualResourceAST::realDevice(AST * label)
 	{
 		extern TedlSymbolDictionary deviceEquivalence;
-		RWCString unquoted(RWCString & string);
+		//RWCString unquoted(RWCString & string);
 		RWCString name,equiv_name;
 		DeviceEquivalence * equiv_dev=0;
 		if(label){
@@ -63,7 +63,7 @@ AST *
 VirtualResourceAST::initialize()
 	{
 		AST * sigChar;
-		toFSM(AnalogResourceContext::Select);
+		toFSM(&AnalogResourceContext::Select);
 		if(m_resource){
 			AnalogResourceContext * save=m_resource->m_currentAnalogFSM;
 			if(sigChar=m_resource->RequirementsCheck(this)){

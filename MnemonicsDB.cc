@@ -1,5 +1,6 @@
-#include        "NounsModifiersDimensions.h"
+#include	"NounsModifiersDimensions.h"
 #include	"MnemonicsDB.h"
+#include	<iostream>
 
 
 MnemonicsDB::MnemonicsDB(const RWCString & nounDB,const RWCString & dimensionDB)
@@ -27,34 +28,67 @@ MnemonicsDB::theNounEntry(const RWCString noun)
 	}
 }
 
-ModifierEntry * 
-MnemonicsDB::theModifierEntry(const RWCString text,NounEntry * nounEntry,RWCString & last)
-{
-	ModifierEntry * modifierEntry;int pos;
-	if(nounEntry){
-		if(nounEntry->modifierDictionary.findValue(text,modifierEntry)){			
-			return modifierEntry;
-		} else {	// trim from the end and try again if possible
-			if((pos=text.last('-'))!=RW_NPOS){
-				last = text(pos,text.length()-pos)+last;
-				return theModifierEntry(text(0,pos),nounEntry,last);
-			} else {
-				return 0;
-			}
-		}
-	} else {
-		if( m_ModifierDictionary->findValue(text,modifierEntry)){
-			return modifierEntry;
-		} else {
-			if((pos=text.last('-'))!=RW_NPOS){
-				last = text(pos,text.length()-pos)+last;
-				return theModifierEntry(text(0,pos),nounEntry,last);
-			} else {
-				return 0;
-			}
-			return 0;
-		}
-	}
+////ModifierEntry * 
+////MnemonicsDB::theModifierEntry(const RWCString text,NounEntry * nounEntry,RWCString & last)
+////{
+////	ModifierEntry * modifierEntry;int pos;
+////	if(nounEntry){
+////		if(nounEntry->modifierDictionary.findValue(text,modifierEntry)){			
+////			return modifierEntry;
+////		} else {	// trim from the end and try again if possible
+////			
+////			if((pos=text.last('-'))!=RW_NPOS){
+////			if(!text.empty() && text.back() == '-')
+////				last = text(pos,text.length()-pos)+last;
+////				return theModifierEntry(text(0,pos),nounEntry,last);
+////			} else {
+////				return 0;
+////			}
+////		}
+////	} else {
+////		if( m_ModifierDictionary->findValue(text,modifierEntry)){
+////			return modifierEntry;
+////		} else {
+////			if((pos=text.last('-'))!=RW_NPOS){
+////				last = text(pos,text.length()-pos)+last;
+////				return theModifierEntry(text(0,pos),nounEntry,last);
+////			} else {
+////				return 0;
+////			}
+////			return 0;
+////		}
+////	}
+////}
+
+ModifierEntry* MnemonicsDB::theModifierEntry(const std::string& text, NounEntry* nounEntry, std::string& last) {
+    ModifierEntry* modifierEntry = nullptr;
+
+    if (nounEntry) {
+        if (nounEntry->modifierDictionary.findValue(text, modifierEntry)) {
+            return modifierEntry;
+        } else {
+            // Try stripping from the last '-' and recurse
+            auto pos = text.rfind('-');
+            if (pos != std::string::npos) {
+                last = text.substr(pos) + last;
+                return theModifierEntry(text.substr(0, pos), nounEntry, last);
+            } else {
+                return nullptr;
+            }
+        }
+    } else {
+        if (m_ModifierDictionary->findValue(text, modifierEntry)) {
+            return modifierEntry;
+        } else {
+            auto pos = text.rfind('-');
+            if (pos != std::string::npos) {
+                last = text.substr(pos) + last;
+                return theModifierEntry(text.substr(0, pos), nounEntry, last);
+            } else {
+                return nullptr;
+            }
+        }
+    }
 }
 
 
@@ -73,7 +107,7 @@ MnemonicsDB::theDimensionDictionary(const RWCString did,ModifierEntry * modifier
 	QuantityList *ql=0;Quantity * q=0;
 	RWCString key;
 	if(modifierEntry){
-		for(int i=0;i<modifierEntry->quantitiesList.length();i++){
+		for(int i=0;i<modifierEntry->quantitiesList.size();i++){
 			ql=modifierEntry->quantitiesList[i];
 			q=(*ql)[0];
 			key=q->quantity;
@@ -120,7 +154,7 @@ MnemonicsDB::theDimensionEntry(const RWCString did,ModifierEntry * modifierEntry
 	RWCString key;
 	QuantityList *ql=0;Quantity * q=0;
 	if(modifierEntry){
-		for(int i=0;i<modifierEntry->quantitiesList.length();i++){
+		for(int i=0;i<modifierEntry->quantitiesList.size();i++){
 			ql=modifierEntry->quantitiesList[i];
 			q=(*ql)[0];
 			key=q->quantity;
@@ -171,12 +205,12 @@ MnemonicsDB::getDBToken()
 			case ']':
 			case ',':
 				if(ret.length()==0){
-					return ch;
+					return std::string(1,ch);
 				} else {
 					m_database.putback(ch);
 					return ret;
 				}
-				return ch;
+				return std::string(1,ch);
 			default:
 				ret+=ch;
 			}
@@ -197,7 +231,7 @@ MnemonicsDB::insertModifierQuantity(ModifierEntry *modifierEntry)
 		RWCString token="";
 		do{
 			token=getDBToken();
-			switch (ch=token(0)){
+			switch (ch=token[0]){
 			case '/':numerator=FALSE;break;
 			case ',':  case ')':
 				{
@@ -214,7 +248,7 @@ MnemonicsDB::insertModifierQuantity(ModifierEntry *modifierEntry)
 				if(ql==0){
 					ql=new QuantityList;
 				}
-				ql->insert(term);
+				ql->append(term);
 			}
 			
 		} while(1);
@@ -261,23 +295,23 @@ MnemonicsDB::insertModifiers(NounEntry * nounEntry,ModifierDictionary * modifier
 					getDBToken();		// skip ','
 		modifierEntry->usage   =getDBToken();// Type of Entry ---,--M,-R-,-RM,S--,S-M,SR-,SRM
 		nounEntry->modifierDictionary.insertKeyAndValue(modifierEntry->modifier,modifierEntry);
-		if(getDBToken()=='('){
+		if(getDBToken()== "("){
 			insertModifierQuantity(modifierEntry);
 		} else {
-			cerr << " Opening Parenthesis for Quantity field is missing " << endl;
+			std::cerr << " Opening Parenthesis for Quantity field is missing " << std::endl;
 			assert(0);
 		}
 		insertAllModifiers(modifierEntry,modifierDictionary);
-		if(getDBToken()==')'){
-			if(getDBToken()=='('){
+		if(getDBToken()== ")"){
+			if(getDBToken()== "("){
 				insertSuffixes(modifierEntry);
 			} else {
-				cerr << " Opening Parenthesis for Suffixes field is missing " << endl;
+				std::cerr << " Opening Parenthesis for Suffixes field is missing " << std::endl;
 				assert(0);
 			}
 			return;
 		} else {
-			cerr << " Closing Parenthesis for Suffix field is missing " << endl;
+			std::cerr << " Closing Parenthesis for Suffix field is missing " << std::endl;
 			assert(0);
 		}
 	}
@@ -291,7 +325,7 @@ MnemonicsDB::insertNoun(NounDictionary * nounDictionary,ModifierDictionary * mod
 		NounEntry * nounEntry=new NounEntry;
 		do {
 			token=getDBToken();
-			switch (ch=token(0)){
+			switch (ch=token[0]){
 			case '(':
 				{
 					nounEntry->noun=noun;
@@ -333,12 +367,12 @@ MnemonicsDB::LoadAnalogNounDB(const RWCString filename,ModifierDictionary *& all
 	do{
 		token=getDBToken();
 		if(token.length()==0)break;
-		switch (ch=token(0)){
+		switch (ch=token[0]){
 			case '(':insertNoun(m_NounDictionary,m_ModifierDictionary);break;
 			case ')':
 			{
-				cerr	<< "LoadAnalogNounDB: Unmatched parenthesis.Line:"
-					<< m_LineNo <<endl;
+				std::cerr	<< "LoadAnalogNounDB: Unmatched parenthesis.Line:"
+					<< m_LineNo <<std::endl;
 			}break;
 			assert(0);
 			default:;
@@ -375,7 +409,7 @@ MnemonicsDB::insertDimension(const RWCString quantity,DimensionDictionary * dime
 		RWCString token="";
 		do{
 			token=getDBToken();
-			switch (ch=token(0)){
+			switch (ch=token[0]){
 			case '|':
 				{
 					scale=0.0;
@@ -387,19 +421,19 @@ MnemonicsDB::insertDimension(const RWCString quantity,DimensionDictionary * dime
 			case '[':
 				{
 					token=getDBToken();
-					scale=atof(token);
+					scale=std::stod(token);
 					token=getDBToken();
 					dimensionEntry->scale=scale;
 					if(token!="]"){
-						cerr	<< "LoadDimensionDB:BAD scale field .Line: "
-							<< m_LineNo <<endl;
+						std::cerr	<< "LoadDimensionDB:BAD scale field .Line: "
+							<< m_LineNo <<std::endl;
 					} 
 				}break;
 				assert(0);
 			case ']':
 				{
-						cerr	<< "LoadDimensionDB:Unexpected ] .Line: "
-							<< m_LineNo <<endl;
+						std::cerr	<< "LoadDimensionDB:Unexpected ] .Line: "
+							<< m_LineNo <<std::endl;
 				
 				} break;
 			default:
@@ -424,7 +458,7 @@ MnemonicsDB::insertDimensionQuantity(QuantityDictionary * quantityDictionary,Dim
 		DimensionDictionary * dimensionDictionary = new DimensionDictionary;
 		do {
 			token=getDBToken();
-			switch (ch=token(0)){
+			switch (ch=token[0]){
 			case '(':
 				{
 					insertDimension(quantity, dimensionDictionary,allDimensions );break;
@@ -459,12 +493,12 @@ MnemonicsDB::LoadDimensionDB(const RWCString filename,DimensionDictionary * &all
 	do{
 		token=getDBToken();
 		if(token.length()==0)break;
-		switch (ch=token(0)){
+		switch (ch=token[0]){
 			case '(':	insertDimensionQuantity(m_QuantityDictionary,m_allDimensions);break;
 			case ')':
 				{
-					cerr	<< "LoadDimensionDB:Unmatched parenthesis.Line: "
-						<< m_LineNo <<endl;
+					std::cerr	<< "LoadDimensionDB:Unmatched parenthesis.Line: "
+						<< m_LineNo <<std::endl;
 				}break;
 				assert(0);
 			default:;

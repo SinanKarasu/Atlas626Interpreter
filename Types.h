@@ -8,7 +8,7 @@
 //#include	"PBlackBox.h"
 
 //typedef RWCString String;
-
+#include "AppendCompat.h"
 #include "Dictionary.h"
 
 const	int c_Und=-1;
@@ -210,42 +210,53 @@ extern int trace_level;
 extern int debug_statno;
 
 
-// --- Modern Dictionary Template ---
-template <typename Key, typename Value>
-class Dictionary : public std::unordered_map<Key, Value> {
-public:
-    using std::unordered_map<Key, Value>::unordered_map;
 
-    void insertKeyAndValue(const Key& k, const Value& v) {
-        this->operator[](k) = v;
-    }
+template<typename Key, typename Value>
+using Dictionary = AppendableMap<Key, Value>;
 
-    bool insertIfAbsent(const Key& k, const Value& v) {
-        return this->emplace(k, v).second;
-    }
-};
+template<typename Key, typename Value>
+using DictionaryIterator = typename Dictionary<Key, Value>::iterator;
 
-template <typename Key, typename Value>
-class DictionaryIterator {
-public:
-    using iterator = typename std::unordered_map<Key, Value>::iterator;
+template<typename Key, typename Value>
+using ConstDictionaryIterator = typename Dictionary<Key, Value>::const_iterator;
 
-    DictionaryIterator(std::unordered_map<Key, Value>& dict)
-        : it(dict.begin()), end(dict.end()) {}
 
-    bool operator()() {
-        if (it == end) return false;
-        ++it;
-        return it != end;
-    }
-
-    Key key() const { return it->first; }
-    Value value() const { return it->second; }
-
-private:
-    iterator it;
-    iterator end;
-};
+////// --- Modern Dictionary Template ---
+////template <typename Key, typename Value>
+////class Dictionary : public std::unordered_map<Key, Value> {
+////public:
+////    using std::unordered_map<Key, Value>::unordered_map;
+////
+////    void insertKeyAndValue(const Key& k, const Value& v) {
+////        this->operator[](k) = v;
+////    }
+////
+////    bool insertIfAbsent(const Key& k, const Value& v) {
+////        return this->emplace(k, v).second;
+////    }
+////};
+////
+////template <typename Key, typename Value>
+////class DictionaryIterator {
+////public:
+////    using iterator = typename std::unordered_map<Key, Value>::iterator;
+////
+////    DictionaryIterator(std::unordered_map<Key, Value>& dict)
+////        : it(dict.begin()), end(dict.end()) {}
+////
+////    bool operator()() {
+////        if (it == end) return false;
+////        ++it;
+////        return it != end;
+////    }
+////
+////    Key key() const { return it->first; }
+////    Value value() const { return it->second; }
+////
+////private:
+////    iterator it;
+////    iterator end;
+////};
 
 
 #endif

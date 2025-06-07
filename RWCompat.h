@@ -32,7 +32,7 @@ class RWFile {};
 // --- Legacy Rogue Wave compatibility shims ---
 
 typedef long long Long;
-using RWBitVec = std::vector<bool>;
+//using RWBitVec = std::vector<bool>;
 
 template<typename T>
 using RWTValVector = std::vector<T>;
@@ -68,6 +68,138 @@ inline bool ends_with(const std::string& str, const std::string& suffix) {
     return str.size() >= suffix.size() &&
            str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
+
+
+
+std::vector<bool> bitwise_not(const std::vector<bool>& bits) {
+    std::vector<bool> result(bits.size());
+    for (size_t i = 0; i < bits.size(); ++i) {
+        result[i] = !bits[i];
+    }
+    return result;
+}
+
+#pragma once
+#include <vector>
+#include <algorithm>
+
+class BitVec {
+public:
+    using Storage = std::vector<bool>;
+
+    BitVec() = default;
+    explicit BitVec(size_t n, bool val = false) : data(n, val) {}
+    BitVec(const Storage& vec) : data(vec) {}
+    BitVec(Storage&& vec) noexcept : data(std::move(vec)) {}
+
+    size_t size() const { return data.size(); }
+    void resize(size_t n, bool val = false) { data.resize(n, val); }
+
+    bool operator[](size_t i) const { return data[i]; }
+    //bool& operator[](size_t i) { return data[i]; }
+    Storage::reference operator[](size_t i) { return data[i]; }
+
+
+    const Storage& vec() const { return data; }
+    Storage& vec() { return data; }
+
+    // Unary NOT
+    BitVec operator!() const {
+        BitVec result(size());
+        for (size_t i = 0; i < size(); ++i)
+            result[i] = !data[i];
+        return result;
+    }
+
+    // Bitwise AND
+    BitVec operator&(const BitVec& other) const {
+        size_t n = std::min(size(), other.size());
+        BitVec result(n);
+        for (size_t i = 0; i < n; ++i)
+            result[i] = data[i] & other.data[i];
+        return result;
+    }
+
+    BitVec& operator&=(const BitVec& other) {
+        size_t n = std::min(size(), other.size());
+        resize(n); // optional; ensures no out-of-bounds
+        for (size_t i = 0; i < n; ++i)
+            data[i] = data[i] & other.data[i];
+        return *this;
+    }
+
+    // Bitwise OR
+    BitVec operator|(const BitVec& other) const {
+        size_t n = std::min(size(), other.size());
+        BitVec result(n);
+        for (size_t i = 0; i < n; ++i)
+            result[i] = data[i] | other.data[i];
+        return result;
+    }
+
+    BitVec& operator|=(const BitVec& other) {
+        size_t n = std::min(size(), other.size());
+        resize(n);
+        for (size_t i = 0; i < n; ++i)
+            data[i] = data[i] | other.data[i];
+        return *this;
+    }
+
+    // Bitwise XOR
+    BitVec operator^(const BitVec& other) const {
+        size_t n = std::min(size(), other.size());
+        BitVec result(n);
+        for (size_t i = 0; i < n; ++i)
+            result[i] = data[i] ^ other.data[i];
+        return result;
+    }
+
+    BitVec& operator^=(const BitVec& other) {
+        size_t n = std::min(size(), other.size());
+        resize(n);
+        for (size_t i = 0; i < n; ++i)
+            data[i] = data[i] ^ other.data[i];
+        return *this;
+    }
+
+private:
+    Storage data;
+};
+
+
+// inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
+//     for (int i = 0; i < bv.size(); ++i)
+//         os << (bv[i] ? '1' : '0');
+//     return os;
+// }
+
+// inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
+//     for (int i = 0; i < bv.size(); ++i)
+//         os << (bv[i] ? '1' : '0');  // change to:
+//         // os << ((bv[i]) ? '1' : '0');  <-- safer
+//     return os;
+// }
+
+
+// inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
+//     for (int i = 0; i < bv.size(); ++i) {
+// //         char ch = bv[i] ? '1' : '0';
+// //         os << ch;
+// 		os << static_cast<char>(bv[i]);
+//     }
+//     return os;
+// }
+
+
+// inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
+//     for (int i = 0; i < bv.size(); ++i) {
+//         os << (static_cast<bool>(bv[i]) ? '1' : '0');
+//     }
+//     return os;
+// }
+
+
+using RWBitVec = BitVec;
 
 
 

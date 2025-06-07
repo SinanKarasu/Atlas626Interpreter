@@ -41,11 +41,46 @@
 
 
 // For future reference::
-int BitStrCompOp(const std::vector<bool>& x, const std::vector<bool>& y) {
-//int BitStrCompOp(const std::vector<bool>& x, const std::vector<bool>& y) {
+////int BitStrCompOp(const std::vector<bool>& x, const std::vector<bool>& y) {
+//////int BitStrCompOp(const std::vector<bool>& x, const std::vector<bool>& y) {
+////
+////    std::vector<bool> xx = x;
+////    std::vector<bool> yy = y;
+////
+////    // Zero-extend the shorter vector
+////    size_t maxLen = std::max(xx.size(), yy.size());
+////    xx.resize(maxLen, false);
+////    yy.resize(maxLen, false);
+////
+////    // Compute bitwise ops
+////    std::vector<bool> xorVec(maxLen);
+////    std::vector<bool> andX(maxLen);
+////    std::vector<bool> andY(maxLen);
+////
+////    for (size_t i = 0; i < maxLen; ++i) {
+////        xorVec[i] = xx[i] ^ yy[i];
+////        andX[i] = xorVec[i] & xx[i];
+////        andY[i] = xorVec[i] & yy[i];
+////    }
+////
+////    auto firstTrue = [](const std::vector<bool>& vec) -> int {
+////        for (size_t i = 0; i < vec.size(); ++i) {
+////            if (vec[i]) return static_cast<int>(i);
+////        }
+////        return -1;
+////    };
+////
+////    int x1 = firstTrue(andX);
+////    int y1 = firstTrue(andY);
+////
+////    if (x1 < y1) return -1;
+////    if (x1 == y1) return 0;
+////    return 1;
+////}
 
-    std::vector<bool> xx = x;
-    std::vector<bool> yy = y;
+int BitStrCompOp(const BitVec& x, const BitVec& y) {
+    BitVec xx = x;
+    BitVec yy = y;
 
     // Zero-extend the shorter vector
     size_t maxLen = std::max(xx.size(), yy.size());
@@ -53,9 +88,9 @@ int BitStrCompOp(const std::vector<bool>& x, const std::vector<bool>& y) {
     yy.resize(maxLen, false);
 
     // Compute bitwise ops
-    std::vector<bool> xorVec(maxLen);
-    std::vector<bool> andX(maxLen);
-    std::vector<bool> andY(maxLen);
+    BitVec xorVec(maxLen);
+    BitVec andX(maxLen);
+    BitVec andY(maxLen);
 
     for (size_t i = 0; i < maxLen; ++i) {
         xorVec[i] = xx[i] ^ yy[i];
@@ -63,7 +98,7 @@ int BitStrCompOp(const std::vector<bool>& x, const std::vector<bool>& y) {
         andY[i] = xorVec[i] & yy[i];
     }
 
-    auto firstTrue = [](const std::vector<bool>& vec) -> int {
+    auto firstTrue = [](const BitVec& vec) -> int {
         for (size_t i = 0; i < vec.size(); ++i) {
             if (vec[i]) return static_cast<int>(i);
         }

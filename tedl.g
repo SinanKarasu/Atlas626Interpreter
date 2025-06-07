@@ -26,7 +26,7 @@ public:
 	Resource *	insertDeviceModel(Resource *);
 	Resource *	getDeviceModel(AST *);
 	Resource *	getDevice(AST *);		// called from ATLAS
-	Resource *	getDevice(RWCString);		// called from ATLAS
+	Resource *	getDevice(const std::string&);		// called from ATLAS
 		
 	Resource *	CurrentModel;
 	Resource *	CurrentResource;

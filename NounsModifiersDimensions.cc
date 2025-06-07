@@ -110,38 +110,4 @@ DataBusEntry::DataBusEntry(class NounEntry * nounEntry)
 	{
 	}
 
-unsigned NounHash(const RWCString& str) { return str.hash(); }
-unsigned ModifierHash(const RWCString& str) { return str.hash(); }
-unsigned QuantityHash(const RWCString& str) { return str.hash(); }
-unsigned DimensionHash(const RWCString& str) { return str.hash(); }
-unsigned SuffixHash(const RWCString& str) { return str.hash(); }
-
-
-
-ModifierDictionary::ModifierDictionary():RWTValHashDictionary<RWCString,ModifierEntry *>(ModifierHash)
-        {resize(NbrBuckets);}
-
-ModifierDictionaryIterator::ModifierDictionaryIterator( ModifierDictionary &d )
-	:RWTValHashDictionaryIterator<RWCString,ModifierEntry *> (d)
-	{
-	}
-
-SuffixDictionary::SuffixDictionary():RWTValHashDictionary<RWCString,SuffixEntry *>(SuffixHash)
-        {resize(NbrBuckets);}
-
-
-NounDictionary::NounDictionary():RWTValHashDictionary<RWCString,NounEntry *>(NounHash)
-        {resize(NbrBuckets);}
-
-DimensionDictionary::DimensionDictionary():RWTValHashDictionary<RWCString,DimensionEntry *>(DimensionHash)
-        {resize(NbrBuckets);}
-
-QuantityDictionary::QuantityDictionary():RWTValHashDictionary<RWCString,DimensionDictionary *>(QuantityHash)
-        {resize(NbrBuckets);}
-
-	
-StringListIterator::StringListIterator(StringList &d)
-	:RWTValSlistIterator<RWCString> (d)
-	{
-	}
 

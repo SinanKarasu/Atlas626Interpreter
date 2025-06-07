@@ -111,25 +111,27 @@ ResourceContextBASE::find_path(Vertex * uutv, Vertex * portv)
 		
 		
 		{// First set all the bits in the feasible union
-			EdgeListIterator P(edgeList);
-			while (++P){
-				Edge * e=P.key();
+			//EdgeListIterator P(edgeList);
+			for(const auto P: edgeList) {
+			//while (++P){
+				Edge * e=P;
 				Resource * r=e->getResource();
 				r->m_predict=1;
 				if(execEnv.relayFeasible()){
-					debugtrace << e->theName() << r->m_predict << endl ;
+					debugtrace << e->theName() << r->m_predict << std::endl ;
 				}
 			}
 		}
 
 		{// Next AND the edge states with the feasible union
-			EdgeListIterator P(edgeList);
-			while (++P){
-				Edge * e=P.key();
+			//EdgeListIterator P(edgeList);
+			for(const auto P: edgeList) {
+			//while (++P){
+				Edge * e=P;
 				Resource * r=e->getResource();
 				r->m_predict &= e->theSet();
 				if(execEnv.relayFeasible()){
-					debugtrace << e->theName() << r->m_predict << endl ;
+					debugtrace << e->theName() << r->m_predict << std::endl ;
 				}
 			}
 		}
@@ -142,9 +144,10 @@ ResourceContextBASE::find_path(Vertex * uutv, Vertex * portv)
 			// and ensures that any path found is feasible, this
 			// becomes just a redundant confirmation.
 			Association * cr = m_ConnectRequests.getOne(portv)->getOne(uutv);
-			EdgeListIterator P(edgeList);
-			while (++P){
-				Edge * e=P.key();
+			//EdgeListIterator P(edgeList);
+			for(const auto P: edgeList) {
+			//while (++P){
+				Edge * e=P;
 				Resource * r=e->getResource();
 				if(e->Sorc->equivalenceClass()==e->Dest->equivalenceClass()){
 					if		(e->Sorc->equivalenceClass()==uutv->equivalenceClass()){
@@ -165,11 +168,11 @@ ResourceContextBASE::find_path(Vertex * uutv, Vertex * portv)
 						if((p=r->m_predict.firstTrue())!=RW_NPOS){
 							// So there is way to close it.Just do it then.
 							if(execEnv.deviceTrace()){
-								debugtrace << " calling DEVICE " << r->theName() << endl;
+								debugtrace << " calling DEVICE " << r->theName() << std::endl;
 							}
 							r->connectToState(p,cr,edgeList);
 						} else {
-							cerr << "No feasible set for relay:" << r->theName() << endl;
+							std::cerr << "No feasible set for relay:" << r->theName() << std::endl;
 							assert(0);
 						}
 					}
@@ -177,9 +180,9 @@ ResourceContextBASE::find_path(Vertex * uutv, Vertex * portv)
 					m_ConnectRequests.insertEdge(portv,uutv,e);
 					if(e->committed(cr)) {
 						if((!e->onlycommitted(cr))){
-							cerr 	<< "//--"	<< theName()
+							std::cerr 	<< "//--"	<< theName()
 								<< ":Contact "	<< e->theName()
-								<<" also belongs to :" << endl;
+								<<" also belongs to :" << std::endl;
 							e->listCommitted(cr);
 						}
 					}
@@ -207,8 +210,8 @@ ResourceContextBASE::find_path(const RWCString & uutpin, Vertex * portv)
 		} else if ( (TEDL->InterfaceConnectors).findValue( uutpin, uutv ) ){
 			return find_path(uutv,portv);
 		} else {
-			cerr	<< " CNX PIN " << uutpin 
-				<< " Does not exist " << endl;
+			std::cerr	<< " CNX PIN " << uutpin 
+				<< " Does not exist " << std::endl;
 			return 0;
 		}
 	
@@ -220,9 +223,9 @@ ResourceContextBASE::find_path(const RWCString & uutpin,const RWCString & port)
 		Vertex			* portv = 0;
 		
 		if(!( portv=m_Resource->node(port) )){
-			cerr 	<< " DEVICE "	<< m_Resource->getName() 
+			std::cerr 	<< " DEVICE "	<< m_Resource->getName() 
 				<< " PORT "	<< port
-				<< " Does not exist " << endl;
+				<< " Does not exist " << std::endl;
 			return 0;
 		} else {
 			return find_path(uutpin,portv);
@@ -267,26 +270,26 @@ ResourceContextBASE::findPathState(const RWCString & uutpin, const RWCString por
 		if(finalState==expect){
 		} else if(finalState==-1){
 			if(execEnv.pathFeasible()){
-				cerr 	<< " Pin: " << uutpin
+				std::cerr 	<< " Pin: " << uutpin
 					<< " and: " << getResource()->getName()
 					<< " pin: " << port
 					<< " are hard wired. No connect/disconnect possible."
-					<< endl ;
+					<< std::endl ;
 				}
 		} else if(finalState==1){
-			cerr 	<< " Pin: " << uutpin
+			std::cerr 	<< " Pin: " << uutpin
 				<< " and: " << getResource()->getName()
 				<< " pin: " << port
 				<< " could not be disconnected."
-				<< endl ;
+				<< std::endl ;
 		} else if(finalState==0){
-			cerr 	<< " Pin: " << uutpin
+			std::cerr 	<< " Pin: " << uutpin
 				<< " and: " << getResource()->getName()
 				<< " pin: " << port
 				<< " could not be connected."
-				<< endl ;
+				<< std::endl ;
 		} else {
-			cerr << " Internal error " << endl;
+			std::cerr << " Internal error " << std::endl;
 			assert(0);
 		}
 			
@@ -296,19 +299,22 @@ ConnectRequest *
 ResourceContextBASE::undoConnectRequest(Vertex * portv, Vertex * uutv)
 	{
 		//ConnectRequest * portC=m_ConnectRequests.getOne(portv);
-		ConnectRequestsIterator portA (m_ConnectRequests);
-		while(++portA){
-			ConnectRequestIterator uutA (*portA.key());
-			while( ++uutA ){
-				AssociationIterator ait(*uutA.key());
-				while(++ait){
-					Edge * e=ait.key();
+		//ConnectRequestsIterator portA (m_ConnectRequests);
+		for(const auto portA: m_ConnectRequests){ 
+		//while(++portA){
+			//ConnectRequestIterator uutA (*portA.key());
+			for(const auto uutA:*portA){ 
+			//while( ++uutA ){
+				//AssociationIterator ait(*uutA.key());
+				for(const auto ait:*uutA){ 
+				//while(++ait){
+					Edge * e=ait;
 					Resource * r=e->getResource();
 					if(e->Sorc->equivalenceClass()==e->Dest->equivalenceClass()){
 						// a wire.. 
-						e->uncommit(uutA.key());
+						e->uncommit(uutA);
 					} else {
-						r->disconnToState(uutA.key(),*(uutA.key()));
+						r->disconnToState(uutA,*(uutA));
 					}
 				}
 			}
@@ -329,15 +335,16 @@ int
 ResourceContextBASE::disconnect_path(Vertex * uutv, Vertex * portv)
 	{
 		if(execEnv.showPath()){
-			debugtrace << "// Disconnecting " << uutv->theName() << "..." <<  portv->theName() << endl;
+			debugtrace << "// Disconnecting " << uutv->theName() << "..." <<  portv->theName() << std::endl;
 		}
 		ConnectRequest * portC=m_ConnectRequests.getOne(portv);
 		if(portC){
 			Association * uutA=portC->getOne(uutv);
 			if(uutA){
-				AssociationIterator uit(*uutA);
-				while( ++uit ){
-					Edge * e=uit.key();
+				//AssociationIterator uit(*uutA);
+				for(const auto uit: *uutA){
+				//while( ++uit ){
+					Edge * e=uit;
 					Resource * r=e->getResource();
 					if(e->Sorc->equivalenceClass()==e->Dest->equivalenceClass()){
 						// a wire.. 
@@ -345,22 +352,22 @@ ResourceContextBASE::disconnect_path(Vertex * uutv, Vertex * portv)
 					} else {
 						if(r->disconnToState(uutA,*uutA)) {
 							if(execEnv.pathFeasible()){
-								debugtrace << "Disconnected all :" <<  r->getName() << endl;
+								debugtrace << "Disconnected all :" <<  r->getName() << std::endl;
 							}
 						} else {
 							if(execEnv.pathFeasible()){
-								debugtrace << "Some were not Disconnected :" << r->getName() << endl;
+								debugtrace << "Some were not Disconnected :" << r->getName() << std::endl;
 							}
 						}
 					}
 				}
 				portC->clean(uutA);
 			} else {
-				cerr << " PANIC , No such Association !!! " << endl;
+				std::cerr << " PANIC , No such Association !!! " << std::endl;
 				assert(0);
 			}
 		} else {
-			cerr << " PANIC , No such ConnectRequest !!! " << endl;
+			std::cerr << " PANIC , No such ConnectRequest !!! " << std::endl;
 			assert(0);
 		}
 		
@@ -382,8 +389,8 @@ ResourceContextBASE::disconnect_path(const RWCString & uutpin, Vertex * portv)
 		} else if ( (TEDL->AdapterConnectors).findValue( uutpin, uutv ) ){
 			return disconnect_path(uutv,portv);
 		} else {
-			cerr	<< " CNX PIN " << uutpin 
-				<< " Does not exist " << endl;
+			std::cerr	<< " CNX PIN " << uutpin 
+				<< " Does not exist " << std::endl;
 			return 0;
 		}
 	
@@ -395,9 +402,9 @@ ResourceContextBASE::disconnect_path(const RWCString & uutpin,const RWCString & 
 		Vertex			* portv = 0;
 		
 		if(!( portv=m_Resource->node(port) )){
-			cerr 	<< " DEVICE "	<< m_Resource->getName() 
+			std::cerr 	<< " DEVICE "	<< m_Resource->getName() 
 				<< " PORT "	<< port
-				<< " Does not exist " << endl;
+				<< " Does not exist " << std::endl;
 			return 0;
 		} else {
 			return disconnect_path(uutpin,portv);
@@ -446,6 +453,7 @@ ResourceContextBASE::doPrepCapability(const RWCString & todo)
 	
 	}
 
+int
 ResourceContextBASE::allocateResource()
 	{
 		extern TedlParser	*	TEDL;
@@ -461,6 +469,7 @@ ResourceContextBASE::allocateResource()
 		}
 	}
 	
+int
 ResourceContextBASE::unallocateResource()
 	{
 		extern TedlParser	*	TEDL;
@@ -484,7 +493,7 @@ void
 ResourceContextBASE::sayhi(const char * s)
 	{
 		if(execEnv.deviceTrace()){
-			debugtrace << "In " << s << "Device : " << m_Resource->getName() << endl;
+			debugtrace << "In " << s << "Device : " << m_Resource->getName() << std::endl;
 		}
 	}
 
@@ -511,9 +520,9 @@ ResourceContextBASE::SimulateCircuit(const RWCString & port)
 		Vertex			* portv = 0;
 		
 		if(!( portv=m_Resource->node(port) )){
-			cerr 	<< " DEVICE "	<< m_Resource->getName() 
+			std::cerr 	<< " DEVICE "	<< m_Resource->getName() 
 				<< " PORT "	<< port
-				<< " Does not exist " << endl;
+				<< " Does not exist " << std::endl;
 			return 0;
 		} else {
 			return m_Resource->SimulateCircuit(portv );

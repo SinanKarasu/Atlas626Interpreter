@@ -168,7 +168,7 @@ CompareVerb::eval(AST * a)
 			sout << "COMPARE";
 			sout << ",";
 			sout << ASTdown() ;
-			sout << endl;
+			sout << std::endl;
 
 			//throw PrintEvaluationRequest("COMPARE",ASTdown());
 			return 0;
@@ -190,9 +190,10 @@ AST *	ReadTimerVerb::eval(AST * a)
 AST *	ResetTimerVerb::eval(AST * a)
 		{
 			if(m_timers){
-				ASTListIterator timit(*m_timers);
-				while(++timit){
-					timit.key()->init();
+				//ASTListIterator timit(*m_timers);
+				for (const auto &timit : *m_timers) {
+				//while(++timit){
+					timit->init();
 				}
 			} else {
 				AST * t=ASTdown();

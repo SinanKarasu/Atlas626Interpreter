@@ -314,11 +314,11 @@ Vertex::checkSourceLoop(Vertex * o,DFSContext & c)
 				} else if(w==o){
 					// nothing to do, this is how we got here..
 				} else if(w->getEquivalence()==getEquivalence()){
-					cerr	<<	" Oh oh ! trouble at"
+					std::cerr	<<	" Oh oh ! trouble at"
 						<<	w->theName()
 						<<	" seen from "
 						<<	theName()
-						<<	endl;
+						<<	std::endl;
 				}
 			}
 		}

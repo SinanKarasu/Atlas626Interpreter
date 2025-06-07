@@ -76,7 +76,7 @@ AST *
 DoExchangeVerb::eval(AST * a)
 	{
 		ASTdown()->init();
-		toFSM(DataBusResourceContext::DO_EXCHANGE);
+		toFSM(&DataBusResourceContext::DO_EXCHANGE);
 		return 0;
 	}
 
@@ -89,7 +89,7 @@ AST *
 UpdateExchangeVerb::eval(AST * a)
 	{
 		ASTdown()->init();
-		toFSM(DataBusResourceContext::UPDATE_EXCHANGE);
+		toFSM(&DataBusResourceContext::UPDATE_EXCHANGE);
 		return 0;
 	}
 
@@ -102,7 +102,7 @@ AST *
 EnableExchangeConfigurationVerb::eval(AST * a)
 	{
 		ASTdown()->init();
-		toFSM(DataBusResourceContext::ENABLE_EXCHANGE);
+		toFSM(&DataBusResourceContext::ENABLE_EXCHANGE);
 		return 0;
 	}
 
@@ -115,7 +115,7 @@ AST *
 DisableExchangeConfigurationVerb::eval(AST * a)
 	{
 		ASTdown()->init();
-		toFSM(DataBusResourceContext::DISABLE_EXCHANGE);
+		toFSM(&DataBusResourceContext::DISABLE_EXCHANGE);
 		return 0;
 	}
 
@@ -127,6 +127,6 @@ AST *
 FetchExchangeVerb::eval(AST * a)
 		{
 		ASTdown()->init();
-		toFSM(DataBusResourceContext::FETCH_EXCHANGE);
+		toFSM(&DataBusResourceContext::FETCH_EXCHANGE);
 		return 0;
 		}

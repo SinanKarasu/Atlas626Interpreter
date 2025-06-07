@@ -31,8 +31,8 @@ Device::checkLoopThruConnections(Vertex * v,DFSContext & c)
 			if(c.v==0){
 				c.init(w,w);
 			} else {
-				cout << "Checking Resource:" << theName();
-				cout << " Vertex " << vit.value()->theName() << endl;
+				std::cout << "Checking Resource:" << theName();
+				std::cout << " Vertex " << vit.value()->theName() << std::endl;
 			}
 			if(!(w->DFSvisited())){
 				if(w->getEquivalence()->getSourceCount()>0){
@@ -42,9 +42,9 @@ Device::checkLoopThruConnections(Vertex * v,DFSContext & c)
 				}
 			}
 			if(c.v->getResource()==this){
-				cerr << " Yes " << endl;
+				std::cerr << " Yes " << std::endl;
 			} else {
-				cerr << " and No " << endl;
+				std::cerr << " and No " << std::endl;
 			}
 		}
 		return 0;

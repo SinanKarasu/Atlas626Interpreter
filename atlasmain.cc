@@ -26,11 +26,11 @@ atlasmain( RWCString atlas ,const RWCString & dbd,int mode )
 	
 	if(atlas_p==0){
 		try{
-			atlas_p = new AtlasBox(atlas);
+			atlas_p = new AtlasBox(atlas.c_str());
 			debugEnv=new DebugEnv(atlas_p);
 		}
 		catch ( FileNotFound fnf) {
-			cerr << " Atlas TPS File " << fnf << " Not found" << endl;
+			std::cerr << " Atlas TPS File " << fnf << " Not found" << std::endl;
 			return 0;
 		} 
 		//atlas_p->getLexer()->debugLexer(1);
@@ -38,10 +38,10 @@ atlasmain( RWCString atlas ,const RWCString & dbd,int mode )
 		if(ATLASroot)assert(0);
 	} else {
 		try{
-			atlas_p->ResetFile(atlas);
+			atlas_p->ResetFile(atlas.c_str());
 		}
 		catch ( FileNotFound fnf) {
-			cerr << " Atlas File " << fnf << "Not found" << endl;
+			std::cerr << " Atlas File " << fnf << "Not found" << std::endl;
 			return 0;
 		} 
 	}

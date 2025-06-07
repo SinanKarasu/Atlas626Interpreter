@@ -286,6 +286,7 @@ AST * NOTOperator::eval( AST * a ){
 		case  StringOfBitTypeValue :
 		
 			if ( ast != 0 ) delete ast;
+			//auto tmp = bitwise_not(*x->vec());
 			RWBitVec tmp = ( ! *x->vec() );
 			ast = new StringOfBitType( &tmp );
 			break;
@@ -317,18 +318,18 @@ AST * ANDOperator::eval( AST * a ){
 		const RWBitVec *	yy = x->vec();
 		RWBitVec		z;
 		
-		int	diff = xx->length() - yy->length();
+		int	diff = xx->size() - yy->size();
 		
 		if ( diff < 0 ){
 		
 			z = *xx;
-			z.resize( yy->length() );
+			z.resize( yy->size() );
 			z &= *yy;
 			
 		}else if ( diff > 0 ){
 
 			z = *yy;
-			z.resize( xx->length() );
+			z.resize( xx->size() );
 			z &= *xx;
 			
 		}else{
@@ -368,18 +369,18 @@ AST * OROperator::eval( AST * a ){
 		const RWBitVec *	yy = x->vec();
 		RWBitVec		z;
 		
-		int	diff = xx->length() - yy->length();
+		int	diff = xx->size() - yy->size();
 		
 		if ( diff < 0 ){
 		
 			z = *xx;
-			z.resize( yy->length() );
+			z.resize( yy->size() );
 			z |= *yy;
 			
 		}else if ( diff > 0 ){
 
 			z = *yy;
-			z.resize( xx->length() );
+			z.resize( xx->size() );
 			z |= *xx;
 			
 		}else{
@@ -419,18 +420,18 @@ AST * XOROperator::eval( AST * a ){
 		const RWBitVec *	yy = x->vec();
 		RWBitVec		z;
 		
-		int	diff = xx->length() - yy->length();
+		int	diff = xx->size() - yy->size();
 		
 		if ( diff < 0 ){
 		
 			z = *xx;
-			z.resize( yy->length() );
+			z.resize( yy->size() );
 			z ^= *yy;
 			
 		}else if ( diff > 0 ){
 
 			z = *yy;
-			z.resize( xx->length() );
+			z.resize( xx->size() );
 			z ^= *xx;
 			
 		}else{

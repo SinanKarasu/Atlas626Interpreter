@@ -1,6 +1,7 @@
 #ifndef ArrayObject_H
 #define ArrayObject_H
 
+
 class ArrayObject:public std::vector<AST *> {
 public:
 	ArrayObject( Long size=1 );

@@ -55,7 +55,7 @@ EventTypeAST::eval(AST * a)
 void
 EventTypeAST::print(AST * a) const
 	{
-		cout << " EventTypeAST >>" << getName() << endl;
+		std::cout << " EventTypeAST >>" << getName() << std::endl;
 	}
 
 
@@ -100,12 +100,12 @@ void
 EventTypeAST::broadcast(AST * a)
 	{
 		if(m_clients){
-			ASTListIterator	clit(*m_clients);
-			while(++clit){
-				if(a==clit.key()){
+			//ASTListIterator	clit(*m_clients);
+		for (const auto &clit : *m_clients) {
+				if(a==clit){
 					assert(0);
 				}
-				clit.key()->eval(clit.key());
+				clit->eval(clit);
 			}
 		}
 	}
@@ -147,7 +147,7 @@ AnalogEventType::getResource()
 void
 AnalogEventType::print(AST * a) const
 	{
-		cout << " AnalogEventType >>" << getName() << endl;
+		std::cout << " AnalogEventType >>" << getName() << std::endl;
 	}
 
 EventIntervalType::EventIntervalType( AST * server1,AST * server2 )
@@ -183,7 +183,7 @@ EventIntervalType::eval(AST * a)
 void
 EventIntervalType::print(AST * a) const
 	{
-		cout << " EventIntervalType >>" << getName() << endl;
+		std::cout << " EventIntervalType >>" << getName() << std::endl;
 	}
 
 EventIndicatorType::EventIndicatorType( AST * server , AST * label)
@@ -217,7 +217,7 @@ EventIndicatorType::eval(AST * a)
 void
 EventIndicatorType::print(AST * a) const
 	{
-		cout << " EventIndicatorType >>" << ASTdown()->getName() << endl;
+		std::cout << " EventIndicatorType >>" << ASTdown()->getName() << std::endl;
 	}
 
 
@@ -250,7 +250,7 @@ TimeBasedEventType::eval(AST * a)
 void
 TimeBasedEventType::print(AST * a) const
 	{
-		cout << " TimeBasedEventType >>" << getName() << endl;
+		std::cout << " TimeBasedEventType >>" << getName() << std::endl;
 	}
 
 
@@ -285,7 +285,7 @@ OneShotTimerType::eval(AST * a)
 void
 OneShotTimerType::print(AST * a) const
 	{
-		cout << " OneShotTimerType >>" << getName() << endl;
+		std::cout << " OneShotTimerType >>" << getName() << std::endl;
 	}
 
 
@@ -320,7 +320,7 @@ PeriodicTimerType::eval(AST * a)
 void
 PeriodicTimerType::print(AST * a) const
 	{
-		cout << " PeriodicTimerType >>" << getName() << endl;
+		std::cout << " PeriodicTimerType >>" << getName() << std::endl;
 	}
 
 

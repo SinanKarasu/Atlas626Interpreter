@@ -11,7 +11,7 @@ public:
 
 	NounEntry * theNounEntry(const RWCString noun);
 
-	ModifierEntry * theModifierEntry(const RWCString text,NounEntry * nounEntry,RWCString & last);
+	ModifierEntry * theModifierEntry(const std::string& text, NounEntry* nounEntry, std::string& last);
 
 	ModifierEntry * theModifierEntry(const RWCString text,const RWCString noun,RWCString & left);
 

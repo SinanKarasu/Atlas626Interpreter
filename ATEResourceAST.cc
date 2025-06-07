@@ -84,16 +84,15 @@ ATEDeviceFunction::check	( AST * a )
 		AST			*subset =a  ,
 					*supset ;
 		AST			*result = this;
-		ASTListIterator		it( *m_SigCharsList );
+		//ASTListIterator		it( *m_SigCharsList );
 		
 		// for each SIG_CHAR in the m_SigCharsList,
 		// find the first coverage
 		
-		while ( ++it ){
-			if(  a->check( supset=it.key() ) ){
-					return it.key();	// found one
+		for (const auto &it : *m_SigCharsList) {
+			if(  a->check( supset=it ) ){
+					return it;	// found one
 			}
-			
 		}
 		Error_Report(" UNABLE to satisfy requirement for :", a);
 		return 0;

@@ -18,17 +18,18 @@ DeviceEquivalence::operator RWCString	()	const
 		return getName();
 	}
 
-RWCString
-DeviceEquivalence::getCapabilityName()	const
-	{
-		return m_CapabilityName;
-	}
 
-RWCString
-DeviceEquivalence::getName()	const
-	{
-		return m_Name;
-	}
+// RWCString
+// DeviceEquivalence::getCapabilityName()	const
+// 	{
+// 		return m_CapabilityName;
+// 	}
+// 
+// RWCString
+// DeviceEquivalence::getName()	const
+// 	{
+// 		return m_Name;
+// 	}
 
 TedlSymbolDictionary::TedlSymbolDictionary()
 	:RWTValHashDictionary<RWCString ,DeviceEquivalence * >(TedlLabelHash)

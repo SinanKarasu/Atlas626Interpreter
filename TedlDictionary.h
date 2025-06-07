@@ -9,9 +9,12 @@ public:
 	DeviceEquivalence(std::string name, std::string capability="-");
 	operator RWCString()	const;
 	
-	std::string getCapabilityName()	const;
-	std::string getName()		const;
+////	std::string getCapabilityName()	const;
+////	std::string getName()		const;
 	
+	const std::string& getCapabilityName() const { return m_CapabilityName; }
+    const std::string& getName() const { return m_Name; }
+
 	
 protected:	
 	std::string	m_Name;

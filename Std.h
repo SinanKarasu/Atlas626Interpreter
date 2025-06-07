@@ -13,6 +13,10 @@
 #include <string>
 #include <algorithm>
 
+//sik experiment, delete this
+//#include "AtlasAST.h"
+//endsik
+
 #include	"RWCompat.h"
 
 // disabled #include	<rw/cstring.h>

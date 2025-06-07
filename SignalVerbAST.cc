@@ -88,7 +88,7 @@ AST *
 SetupVerb::eval( AST *a )
 	{
 		ASTdown()->init();
-		toFSM(AnalogResourceContext::SETUP);
+		toFSM(&AnalogResourceContext::SETUP);
 		return 0;
 	};
 
@@ -101,7 +101,7 @@ ConnectVerb::ConnectVerb( ANTLRTokenPtr p )
 AST *
 ConnectVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::CONNECT);
+		toFSM(&AnalogResourceContext::CONNECT);
 		return 0;
 	};
 
@@ -113,9 +113,9 @@ FetchVerb::FetchVerb( ANTLRTokenPtr p )
 AST *
 FetchVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::SkipState);
-		toFSM(AnalogResourceContext::SkipState);
-		toFSM(AnalogResourceContext::FETCH);
+		toFSM(&AnalogResourceContext::SkipState);
+		toFSM(&AnalogResourceContext::SkipState);
+		toFSM(&AnalogResourceContext::FETCH);
 		return 0;
 	};
 
@@ -127,7 +127,7 @@ InitiateVerb::InitiateVerb( ANTLRTokenPtr p )
 AST *
 InitiateVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::INITIATE);
+		toFSM(&AnalogResourceContext::INITIATE);
 		return 0;
 	};
 
@@ -138,7 +138,7 @@ ReadVerb::ReadVerb( ANTLRTokenPtr p )
 AST *
 ReadVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::READ);
+		toFSM(&AnalogResourceContext::READ);
 		return 0;
 	};
 
@@ -149,7 +149,7 @@ ChangeVerb::ChangeVerb( ANTLRTokenPtr p )
 AST *
 ChangeVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::CHANGE);
+		toFSM(&AnalogResourceContext::CHANGE);
 		return 0;
 	};
 
@@ -161,7 +161,7 @@ DisconnectVerb::DisconnectVerb( ANTLRTokenPtr p )
 AST *
 DisconnectVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::DISCONNECT);
+		toFSM(&AnalogResourceContext::DISCONNECT);
 		return 0;
 	};
 
@@ -172,7 +172,7 @@ RemoveVerb::RemoveVerb( ANTLRTokenPtr p )
 AST *
 RemoveVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::REMOVE);
+		toFSM(&AnalogResourceContext::REMOVE);
 		return 0;
 	};
 
@@ -184,7 +184,7 @@ ArmVerb::ArmVerb( ANTLRTokenPtr p )
 AST *
 ArmVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::ARM);
+		toFSM(&AnalogResourceContext::ARM);
 		return 0;
 	};
 
@@ -196,7 +196,7 @@ EnableEventVerb::EnableEventVerb( ANTLRTokenPtr p )
 AST *
 EnableEventVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::ENABLE_EVENT,1);
+		toFSM(&AnalogResourceContext::ENABLE_EVENT,1);
 		return 0;
 	};
 
@@ -208,7 +208,7 @@ DisableEventVerb::DisableEventVerb( ANTLRTokenPtr p )
 AST *
 DisableEventVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::DISABLE_EVENT,1);
+		toFSM(&AnalogResourceContext::DISABLE_EVENT,1);
 		return 0;
 	};
 
@@ -221,7 +221,7 @@ AST *
 ApplyVerb::eval( AST *a )
 	{	
 		initialize();
-		toFSM(AnalogResourceContext::APPLY);
+		toFSM(&AnalogResourceContext::APPLY);
 		return 0;
 	};
 
@@ -233,7 +233,7 @@ ResetVerb::ResetVerb( ANTLRTokenPtr p )
 AST *
 ResetVerb::eval( AST *a )
 	{	
-		toFSM(AnalogResourceContext::RESET);
+		toFSM(&AnalogResourceContext::RESET);
 		return 0;
 	};
 
@@ -246,7 +246,7 @@ AST *
 MeasureVerb::eval( AST *a )
 	{	
 		initialize();
-		toFSM(AnalogResourceContext::MEASURE);
+		toFSM(&AnalogResourceContext::MEASURE);
 		return 0;
 	};
 
@@ -259,7 +259,7 @@ AST *
 MonitorVerb::eval( AST *a )
 	{	
 		initialize();
-		toFSM(AnalogResourceContext::MONITOR);
+		toFSM(&AnalogResourceContext::MONITOR);
 		return 0;
 	};
 
@@ -272,7 +272,7 @@ VerifyVerb::eval( AST *a )
 	{	
 		extern astream sout;
 		initialize();
-		toFSM(AnalogResourceContext::VERIFY);
+		toFSM(&AnalogResourceContext::VERIFY);
 		return 0;
 	};
 
@@ -293,7 +293,7 @@ VerifyVerb::printEvaluation(AST * a)
 		if(c){
 			sout << c;
 		}
-		sout << endl;
+		sout << std::endl;
 		return this;
 	}
 

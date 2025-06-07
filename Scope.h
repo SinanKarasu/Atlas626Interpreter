@@ -3,6 +3,7 @@
 
 // Scope routines... (Not Oscilloscope. Scope like in ATLAS/Pascal).
 
+#include	"Types.h"
 
 #include	"Dictionary.h"
 #include	"astream.h"

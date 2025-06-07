@@ -16,7 +16,7 @@ TedlSymbolDictionary	monitorEquivalence;
 
 ExecEnv execEnv;
 
-ofstream debugtrace;
+std::ofstream debugtrace;
 astream sout;
 class TedlParser;
 TedlParser *	TEDL=0;
@@ -37,7 +37,7 @@ public:
 };
 
 
-RWCString getConfStr(ifstream & conf){
+RWCString getConfStr(std::ifstream & conf){
 	RWCString x;
 	if(!conf.eof()){
 		conf >> x;
@@ -48,7 +48,7 @@ RWCString getConfStr(ifstream & conf){
 }
 
 
-RWCString getQuotedConfStr(ifstream & conf){
+RWCString getQuotedConfStr(std::ifstream & conf){
 	RWCString x;
 	char ch;
 	
@@ -68,7 +68,7 @@ RWCString getQuotedConfStr(ifstream & conf){
 	
 }
 
-int skipStr(ifstream & conf,const RWCString & skip){
+int skipStr(std::ifstream & conf,const RWCString & skip){
 	RWCString x;
 	if(!conf.eof()){
 		if(getConfStr(conf)==skip){
@@ -83,10 +83,10 @@ int skipStr(ifstream & conf,const RWCString & skip){
 
 int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 {
-	ifstream conf(contextFile);
+	std::ifstream conf(contextFile);
 
 	if(!conf){
-		cerr << "File:" << contextFile << " Not found " << endl;
+		std::cerr << "File:" << contextFile << " Not found " << std::endl;
 		exit(1);
 	}
 	
@@ -99,7 +99,7 @@ int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 				skipStr(conf,":");
 				tpsContext.AteConfiguration=getConfStr(conf);
 			} else {
-				cerr << "ATE CONFIGURATION expected" << endl;
+				std::cerr << "ATE CONFIGURATION expected" << std::endl;
 				exit(1);
 			}
 		} else if(token=="ADAPTER"){
@@ -107,7 +107,7 @@ int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 				skipStr(conf,":");
 				tpsContext.AdapterConfiguration.push_back(getConfStr(conf));
 			} else {
-				cerr << "ADAPTER CONFIGURATION expected" << endl;
+				std::cerr << "ADAPTER CONFIGURATION expected" << std::endl;
 				exit(1);
 			}
 		} else if(token=="DRIVER"){
@@ -115,7 +115,7 @@ int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 				skipStr(conf,":");
 				tpsContext.DeviceDriver=getConfStr(conf);
 			} else {
-				cerr << "DRIVER LIBRARY expected" << endl;
+				std::cerr << "DRIVER LIBRARY expected" << std::endl;
 				exit(1);
 			}
 		} else if(token=="UUT"){
@@ -123,7 +123,7 @@ int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 				skipStr(conf,":");
 				tpsContext.UutPartNo=getConfStr(conf);
 			} else {
-				cerr << "UUT P/N expected" << endl;
+				std::cerr << "UUT P/N expected" << std::endl;
 				exit(1);
 			}
 		} else if(token=="ATLAS"){
@@ -135,7 +135,7 @@ int ParseTpsContext(RWCString contextFile,TpsContext & tpsContext)
 				skipStr(conf,":");
 				tpsContext.AtlasModules.push_back(getConfStr(conf));
 			} else {
-				cerr << "ATLAS TPS or MODULE expected" << endl;
+				std::cerr << "ATLAS TPS or MODULE expected" << std::endl;
 				exit(1);
 			}
 		} else if(token=="DEVICE"){
@@ -178,13 +178,13 @@ int main( int argc, char* argv[] )
 	}
 	execEnv.ProcessArgs(argc-1, &(argv[1]));
 	
-	string dbd;
+	std::string dbd;
 
 	if(execEnv.dbDirectory()){
 		dbd=RWCString(execEnv.dbDirectory());
 		dbd=dbd+"/";
 	} else {
-		string pathcopy(argv[0]);
+		std::string pathcopy(argv[0]);
 		//dbd=RWCString(dirname(pathcopy));
 		dbd = pathcopy.substr(pathcopy.find_last_of("/\\") + 1);
 
@@ -206,7 +206,7 @@ int main( int argc, char* argv[] )
 	if(tpsContext.DeviceDriver !=""){
 		deviceDriverLibraryHandle=dlopen(tpsContext.DeviceDriver.c_str(), RTLD_LAZY );
 		if(deviceDriverLibraryHandle==0){
-			cerr << "Device Library Error " << dlerror() << endl;
+			std::cerr << "Device Library Error " << dlerror() << std::endl;
 		}
 	}
 	
@@ -253,7 +253,7 @@ int main( int argc, char* argv[] )
 		// report:cerr << "Equivalences:" << G_Equivalence_insantiated << endl;
 		return 0;
 	} else {
-		cerr << " ***************aborting due to errors*****" << endl;
+		std::cerr << " ***************aborting due to errors*****" << std::endl;
 		return 1;
 	}
 	

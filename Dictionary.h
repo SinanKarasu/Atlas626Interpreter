@@ -1,12 +1,13 @@
 // Dictionary.h — Legacy name retained for compatibility
 #pragma once
 
+#include "ATokPtr.h"
 #include "RWCompat.h"
 #include "AppendCompat.h"
 
 // using ASTList = AppendableList<AST*>;
 // using ASTListIterator = ASTList::iterator;
-
+class AST;
 using ASTVector = AppendableVector<AST*>;
 using ASTVectorIterator = ASTVector::iterator;
 
@@ -39,5 +40,9 @@ public:
     }
     
 };
+
+using SymbolDictionary = AppendableMap<std::string, AST*>;
+using SymbolDictionaryIterator = SymbolDictionary::iterator;
+
 using ASTListIterator = ASTList::iterator;
 	

@@ -82,12 +82,10 @@ ATECapability::ATECapability( ASTList * r )
 AST *	ATECapability::check( AST * nounAST )
 	{
 		AST *		func = 0;
-		ASTListIterator	SignalFunction_it( *m_resourceList );
+		//ASTListIterator	SignalFunction_it( *m_resourceList );
 		
-		while ( ++SignalFunction_it  &&  !func )
-		
-			func = SignalFunction_it.key() ->check( nounAST );
-		
+		for (auto it = m_resourceList->begin(); it!= m_resourceList->begin() && !func; ++it)		
+			func = (*it)->check( nounAST );
 		return  func;
 	}
 	

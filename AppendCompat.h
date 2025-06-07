@@ -77,23 +77,29 @@ struct AppendableSet : public std::set<T> {
     }
 };
 
-// --- Appendable Map (formerly Dictionary) ---
+// --- Unified AppendableMap Template (Modern Dictionary Replacement) ---
+
 template<typename Key, typename Value>
-struct AppendableMap : public std::unordered_map<Key, Value> {
+class AppendableMap : public std::unordered_map<Key, Value> {
+public:
     using std::unordered_map<Key, Value>::unordered_map;
 
+    // Insert or overwrite
     void insertKeyAndValue(const Key& k, const Value& v) {
         (*this)[k] = v;
     }
 
+    // Insert only if key is not present
     bool insertIfAbsent(const Key& k, const Value& v) {
         return this->emplace(k, v).second;
     }
 
+    // Check if key exists
     bool contains(const Key& k) const {
         return this->find(k) != this->end();
     }
 
+    // Try to get the value associated with a key
     bool findValue(const Key& k, Value& result) const {
         auto it = this->find(k);
         if (it != this->end()) {
@@ -103,17 +109,20 @@ struct AppendableMap : public std::unordered_map<Key, Value> {
         return false;
     }
 
+    // Check if map is empty
     bool isEmpty() const {
         return this->empty();
     }
 };
 
+
 // --- Convenience Aliases ---
 using StringSet = AppendableSet<std::string>;
 using StringVector = AppendableVector<std::string>;
-
-using SymbolDictionary = AppendableMap<std::string, AST*>;
-using SymbolDictionaryIterator = SymbolDictionary::iterator;
+//sik move it to AST
+// using SymbolDictionary = AppendableMap<std::string, AST*>;
+// using SymbolDictionaryIterator = SymbolDictionary::iterator;
+//
 
 
 ////using FstatnoDictionary = AppendableMap<int, Fstatno*>;

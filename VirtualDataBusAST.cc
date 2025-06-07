@@ -20,7 +20,7 @@ RWCString
 VirtualDataBusAST::realDevice(AST * label)
 	{
 		extern TedlSymbolDictionary deviceEquivalence;
-		RWCString unquoted(RWCString & string);
+		//RWCString unquoted(RWCString & string);
 		RWCString name,equiv_name;
 		DeviceEquivalence * equiv_dev=0;
 		if(label){

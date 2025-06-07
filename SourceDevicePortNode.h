@@ -10,7 +10,7 @@ public:
 	virtual	int		isSource		(Vertex * w=0);
 	virtual NodeType	theType(void);
 private:
-	static const NodeType m_NodeType;
+	const NodeType m_NodeType = SourceDevicePortNodeType;
 };
 
 #endif // SourceDevicePortNode_H

@@ -1,4 +1,6 @@
+#include	"Types.h"
 #include	"Std.h"
+#include	"AtlasStd.h"
 #include	"Resource.h"
 #include	"BasicTypeAST.h"
 #include	"SignalTypeAST.h"
@@ -14,6 +16,41 @@
 #include	"Circuit.h"
 
 extern AssociationListStack theAssociationListStack;
+
+// Capability
+Capability::Capability(AST * a):m_ast(0)
+	{
+		m_required	= FALSE;
+		m_min		= 0;
+		m_max		= 0;
+		m_by		= 0;
+		m_limit		= 0;
+	}
+
+int	Capability::compare( const Capability & c )
+	{
+		if (	(m_nounModifier == c.m_nounModifier)	&&
+			(m_max >= c.m_max)			&&
+			(m_min <= c.m_min)		){
+			//(m_errorLimit.compare( c.m_errorLimit ) == -1) ){
+			
+			return -1;
+		}else{
+			return  1;
+		}
+	}
+
+void		Capability::require	()		{ m_required = TRUE; }
+RWBoolean	Capability::required()			{ return m_required; }
+void		Capability::setMax	( double d )	{ m_max = d; }
+void		Capability::setMin	( double d )	{ m_min = d; }
+void		Capability::setNoun	( RWCString c )	{ m_noun = c; }
+void		Capability::setModifier	( RWCString c )	{ m_nounModifier = c; }
+void		Capability::setAST	( AST * a)	{ m_ast=a;}
+AST	*	Capability::getAST	()		{ return m_ast;}
+
+
+//
 
 AST *
 makeTypedData ( RWCString & type)
@@ -100,9 +137,9 @@ Resource::Resource( Resource * previous, const RWCString & newName, Resource * s
 	,m_usingAssociationList(0)
 	,d_printFlag(0)
 	{
-		ResourceListIterator	rlit( source->m_ResourceList );
+		//ResourceListIterator	rlit( source->m_ResourceList );
 		Resource *		turtle; // it is turtles all the way down
-		CapabilityListIterator	clit( *(source->getCapabilities()) );
+		//CapabilityListIterator	clit( *(source->getCapabilities()) );
 
 
 		m_DfsNum	= 0;
@@ -116,9 +153,13 @@ Resource::Resource( Resource * previous, const RWCString & newName, Resource * s
 
 		}
 		
-		SymbolDictionaryIterator sit(*(source->m_callArgEntries));
-		while(++sit){
-			m_callArgEntries->insertKeyAndValue(sit.key(),sit.value()->clone());
+// 		SymbolDictionaryIterator sit(*(source->m_callArgEntries));
+// 		while(++sit){
+// 			m_callArgEntries->insertKeyAndValue(sit.key(),sit.value()->clone());
+// 		}
+		
+		for(const auto sit: *(source->m_callArgEntries)){
+					m_callArgEntries->insertKeyAndValue(sit.first,sit.second->clone());
 		}
 		
 		if( newName != "" ){	// we are renaming
@@ -131,15 +172,16 @@ Resource::Resource( Resource * previous, const RWCString & newName, Resource * s
 		m_states  = c_Und;
 		m_Circuit = new Circuit(Impedance(c_Inf,c_Inf));
 		
-		while( ++rlit ){
-			turtle = rlit.key();
-			turtle = turtle->clone( this, turtle->m_name );
+		for(const auto rlit: source->m_ResourceList) {
+		//while( ++rlit ){
+			//turtle = rlit;
+			turtle = rlit->clone( this, rlit->m_name );
 			AddResource( turtle );
 		}
 		
-		
-		while( ++clit ){
-			insertCapability( clit.key() );
+		for(const auto clit: *(source->getCapabilities())){
+		//while( ++clit ){
+			insertCapability( clit );
 		}
 		
 		m_currentAnalogFSM		= 0;
@@ -159,7 +201,7 @@ Resource::~Resource()
 	}
 
 Resource *
-Resource::clone	( Resource * previous, RWCString & newName )
+Resource::clone	( Resource * previous, const RWCString & newName )
 	{
 		assert(0);return new Resource( previous, newName, this );
 	}
@@ -208,7 +250,7 @@ Resource *
 Resource::AddResource(Resource * resource)
 	{
 		if(resource){
-			m_ResourceList.insert(resource);
+			m_ResourceList.append(resource);
 			return resource;
 		} else {
 			return 0;
@@ -233,7 +275,7 @@ Resource::TellMe(Set & energizer)
 	}
 
 Resource *
-Resource::getDevice(RWCString & dev)
+Resource::getDevice(const std::string & dev)
 	{
 		return 0;
 	}
@@ -252,7 +294,7 @@ Resource::renamePort( RWCString & from, RWCString & to )
 		
 		if( nodes()->findValue( from, x ) ){
 		
-			nodes()->remove( from );
+			nodes()->erase( from );
 			nodes()->insertKeyAndValue( to, x );
 			return this;
 		}else{
@@ -286,14 +328,15 @@ Resource::printRequested()
 void
 Resource::printCommitted(RWCString pre)
 	{
-			cerr << "printCommitted " << pre << endl;
+			std::cerr << "printCommitted " << pre << std::endl;
 			if(!m_usingAssociationList){
-				cerr << theName() << "Not committed" << endl;
+				std::cerr << theName() << "Not committed" << std::endl;
 			} else {
-				cerr << theName() << "is committed to:" << endl ;
-				AssociationListIterator alit(*m_usingAssociationList);
-				while(++alit){
-					cerr << "//-->>>>>>>"+alit.key()->theName() << endl;
+				std::cerr << theName() << "is committed to:" << std::endl ;
+				//AssociationListIterator alit(*m_usingAssociationList);
+				for(const auto alit: *m_usingAssociationList){
+				//while(++alit){
+					std::cerr << "//-->>>>>>>"+alit->theName() << std::endl;
 				}
 			}
 	}
@@ -308,7 +351,7 @@ Resource::committed(Association * r)
 		if(!m_usingAssociationList){
 			return 0;
 		} else if(r==0){
-			return ( m_usingAssociationList->entries() > 0 );
+			return ( m_usingAssociationList->size() > 0 );
 		} else if(m_usingAssociationList->contains(r)){
 			return 1;
 		} else {
@@ -373,14 +416,16 @@ Resource::aliasPort( RWCString & port,Vertex * v)
 void
 DebugDumpNodeDictionary(Resource * turtle )
 	{
-		VertexDictionaryIterator ndit( *( turtle->nodes() ) );
+		//VertexDictionaryIterator ndit( *( turtle->nodes() ) );
 		
-		cout << "Dumping:" << turtle->getName() << endl;
-		while( ++ndit ){
+		std::cout << "Dumping:" << turtle->getName() << std::endl;
+		
+		for(const auto ndit: *( turtle->nodes() )  ) {
+		//while( ++ndit ){
 
-			cout	<< " Node :" 
-				<< ndit.key() 
-				<< endl;
+			std::cout	<< " Node :" 
+				<< ndit.first 
+				<< std::endl;
 		}
 	}
 
@@ -399,14 +444,15 @@ Resource::node(const RWCString & name)
 	}
 
 Resource *
-Resource::RenamePreface( RWCString & preface )
+Resource::RenamePreface( const RWCString & preface )
 	{
-		VertexDictionaryIterator ndit( *(nodes()) );
+		//VertexDictionaryIterator ndit( *(nodes()) );
 		
-		while( ++ndit ){
-			Vertex * v= ndit.value();
-			nodes()->remove( ndit.key() );
-			nodes()->insertKeyAndValue( preface+ndit.key(), v );
+		for(const auto ndit: *(nodes())) {
+		//while( ++ndit ){
+			Vertex * v= ndit.second;
+			nodes()->erase( ndit.first );
+			nodes()->insertKeyAndValue( preface+ndit.first, v );
 		}
 		return this;
 	}
@@ -417,9 +463,9 @@ Resource::LinkControl( Resource * r, AST * model, AST * parameter, AST * value)
 		AST * label=0;
 		m_callArgEntries->findValue(parameter->getName(),label);
 		if(label){
-			//cerr << label->getName()<< " WAS " << label->getDecimal() << endl;
+			//std::cerr << label->getName()<< " WAS " << label->getDecimal() << std::endl;
 			label->assign(value);
-			//cerr << label->getName()<< " NOW " << label->getDecimal() << endl;
+			//std::cerr << label->getName()<< " NOW " << label->getDecimal() << std::endl;
 			return this;
 		} else {
 			Error_Report(parameter->getName() + " is not a known PARAMETER ",parameter);
@@ -428,28 +474,21 @@ Resource::LinkControl( Resource * r, AST * model, AST * parameter, AST * value)
 			
 	}
 
-RWCString
-Resource::getName() const
-	{
-		return m_name;
-	}
+// RWCString
+// Resource::getName() const
+// 	{
+// 		return m_name;
+// 	}
 
 Capability *
-Resource::findCapability( Capability * c )
-	{
- 		int	cap = 0;
- 		CapabilityListIterator	ATECapability_it( m_capabilityList );
-		
-		while( cap != -1 ){
-		
-			if ( ++ATECapability_it ){
-				cap = ATECapability_it.key() ->compare( *c );
-			}else{
-				return 0;
-			}
-		}
-		return ATECapability_it.key();
-	}
+Resource::findCapability(Capability *c) {
+    for (auto it = m_capabilityList.begin(); it != m_capabilityList.end(); ++it) {
+        if ((*it)->compare(*c) == -1) {
+            return *it;
+        }
+        return 0;
+    }
+}
 
 #include	"NodeName.h"
 #include	"Vertex.h"
@@ -475,7 +514,8 @@ Resource::AddNode(const NodeName & node , const NodeType nodeType )
 			if(v->getNodeType()==nodeType){
 				return v;
 			} else {
-				Error_Report("Attempt to redefine the node type for:"+node);
+				Error_Report("Attempt to redefine the node type for:"+node.getName());
+
 				return 0;
 			}
 			//assert(v->getNodeType()==nodeType);	// consistency check
@@ -584,10 +624,11 @@ Resource::RequirementsCheck( AST * a ){
 	
 	if(!matchNoun){
 		if(m_ResourceDictionary){	// see if any subdevices cover..
-			ResourceDictionaryIterator rdit(*m_ResourceDictionary);
-			while(++rdit){
+			//ResourceDictionaryIterator rdit(*m_ResourceDictionary);
+			for(const auto rdit: *m_ResourceDictionary) {
+			//while(++rdit){
 				AST * x;
-				if(x=rdit.value()->RequirementsCheck(a)){
+				if(x=rdit.second->RequirementsCheck(a)){
 					return x;
 				}
 			}	
@@ -675,7 +716,7 @@ Resource::insertContacts(int state,int pos,Edge * edge1,Edge * edge2)
 void
 Resource::AddEdge(const RWCString & from,const RWCString & to,Edge * edge)
 	{
-		cout << " Say eh!!! what path is this ?? " << endl;
+		std::cout << " Say eh!!! what path is this ?? " << std::endl;
 		assert(0);
 	}
 
@@ -786,9 +827,10 @@ int
 Resource::resetResources(int softOrHard)
 	{
 		resetResource(softOrHard);
-		ResourceListIterator	rlit( m_ResourceList );
-		while( ++rlit ){
-			Resource * turtle = rlit.key();
+		//ResourceListIterator	rlit( m_ResourceList );
+		for(const auto rlit: m_ResourceList) {
+		//while( ++rlit ){
+			Resource * turtle = rlit;
 			turtle->resetResources(softOrHard);
 		}
 		return 0;
@@ -804,7 +846,7 @@ Resource::getCapabilities	()
 void
 Resource::insertCapability( Capability * c )
 	{
-		m_capabilityList.insert(c);
+		m_capabilityList.append(c);
 	}
 
 void
@@ -923,9 +965,10 @@ Resource::checkLoopThruConnections(Vertex * v,DFSContext & c)
 
 void
 Resource::createReverseMap(ReverseMap * rm){
-		ResourceListIterator	rlit( m_ResourceList );
-		while( ++rlit ){
-			Resource * turtle = rlit.key();
+		//ResourceListIterator	rlit( m_ResourceList );
+		//while( ++rlit ){
+		for(const auto rlit: m_ResourceList) {
+			Resource * turtle = rlit;
 			turtle->createReverseMap(rm);
 		}	
 }
@@ -945,11 +988,11 @@ Resource::setNounParameterValue(RWCString n,AST * d){
 	// first day of this code.
 	
 	if(n=="VOLTAGE"){
-		cout << " setting voltage (was) " << m_Voltage << endl ;
+		std::cout << " setting voltage (was) " << m_Voltage << std::endl ;
 		m_Voltage = d->getDecimal();
-		cout << " set voltage = " << m_Voltage  << endl ;
+		std::cout << " set voltage = " << m_Voltage  << std::endl ;
 	} else {
-		cout << " Not setting value: " << n << endl;
+		std::cout << " Not setting value: " << n << std::endl;
 	}
 	return 0;
 }

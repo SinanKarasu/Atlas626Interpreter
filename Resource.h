@@ -20,33 +20,53 @@
 // --------------------------- Resource ---------------------------------//
 
 class Capability {
-public:
-    Capability(AST* a = nullptr);
-    virtual int compare(Capability&);
+  public:
+    Capability(AST *a = nullptr);
+    virtual int  compare(const Capability &);
     virtual void require();
     virtual bool required();
     virtual void setMax(double);
     virtual void setMin(double);
     virtual void setNoun(std::string);
     virtual void setModifier(std::string);
-    virtual void setAST(AST* a);
-    virtual AST* getAST();
+    virtual void setAST(AST *a);
+    virtual AST *getAST();
 
     friend Capability;
 
-private:
-    bool m_required;
+  private:
+  
+	// These are helper methods suggested by ChatGPT
+    bool matches(const Capability &other) const {
+        return this->m_noun == other.m_noun &&
+               this->m_min <= other.m_min &&
+               this->m_max >= other.m_max;
+        // Optional: recursively match modifiers
+    }
+    
+    bool mutualMatch(const Capability& other) const {
+    	return this->matches(other) && other.matches(*this);
+	}
+	
+	bool subsumes(const Capability& other) const {
+		return (m_nounModifier == other.m_nounModifier) &&
+           (m_max >= other.m_max) &&
+           (m_min <= other.m_min);
+	}
+	// End of suggestions.
+
+    bool        m_required;
     std::string m_noun;
     std::string m_nounModifier;
     std::string m_command;
-    double m_min;
-    double m_max;
-    double m_by;
-    bool m_limit;
-    AST* m_ast;
+    double      m_min;
+    double      m_max;
+    double      m_by;
+    bool        m_limit;
+    AST        *m_ast;
 };
 
-class CapabilityList : public std::list<Capability*> {
+class CapabilityList : public AppendableList<Capability*> {
 public:
     bool findValue(const std::string& key, AST*& result); // Stub
 };
@@ -76,7 +96,7 @@ public:
 	virtual ~Resource();
 	virtual Resource * getPrev	();
 	virtual Resource * AddResource	( Resource  * resource );
-	virtual Resource * clone	( Resource * previous, RWCString & newName );
+	virtual Resource * clone	( Resource * previous, const RWCString & newName );
 	virtual Resource * instantiate	( Resource * previous, const RWCString & newName );
 	
 	virtual Resource *	renamePort	( RWCString & from, RWCString & to );
@@ -86,8 +106,9 @@ public:
 	virtual Vertex *	node		( const RWCString & name );
 	virtual Resource *	LinkControl	( Resource *, AST *, AST *, AST * );
 	virtual void		setName		( RWCString n );
-	virtual RWCString	getName		() const;
-	
+	//virtual RWCString	getName		() const;
+	virtual const std::string& getName() const { return m_name; }
+
 	virtual Capability	*	findCapability	( Capability * );
 
 	virtual CapabilityList	*	getCapabilities	();
@@ -159,7 +180,7 @@ public:
 
 	
 	virtual ResourceDictionary * getResourceDictionary();
-	virtual Resource * getDevice(RWCString & dev);
+	virtual Resource * getDevice(const std::string & dev);
 
 	// Introduce methods (EVENT,CNX,GATE)
 		
@@ -257,6 +278,20 @@ private:
         Resource( const Resource & );
         const Resource & operator= ( const Resource & );
 };
+
+// This is a suggestion by ChatGPT that is not used anywhere yet.
+
+//class CapabilityMatcher {
+//    const Capability& a;
+//    const Capability& b;
+//
+//public:
+//    CapabilityMatcher(const Capability& a_, const Capability& b_) : a(a_), b(b_) {}
+//
+//    bool run() const {
+//        return a.subsumes(b) || b.subsumes(a);
+//    }
+//};
 
 
 #endif	// Resource_h

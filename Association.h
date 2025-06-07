@@ -38,7 +38,7 @@ public:
 	AssociationIterator( Association &d );
 };
 
-class AssociationList : public RWTValSlist<Association *>{
+class AssociationList : public AppendableList<Association *>{
 public:
 	AssociationList();
 	void print();
