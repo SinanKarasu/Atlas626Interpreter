@@ -24,7 +24,7 @@ class DataBusEM : public ResourceDataBus
 		virtual void InvalidatedResult();
 
 
-		virtual void FSMError(const char * t, const char * s);
+		virtual void FSMError(const std::string& t, const std::string& s);
 
 		// EVENTS for DataBus.
 		virtual void ENABLE_EXCHANGE	(AST * a=0);

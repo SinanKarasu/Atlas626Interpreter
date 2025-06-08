@@ -29,7 +29,7 @@ void	DataBusEM::ENABLE_EXCHANGEtoTedl()
 
 		doPrepControl("ENABLE_EXCHANGE");
 
-		toEVENTS(DataBusResourceContext::ENABLE_EXCHANGE);
+		toEVENTS(&DataBusResourceContext::ENABLE_EXCHANGE);
 	
 		doControlAction("ENABLE_EXCHANGE");
 
@@ -61,7 +61,7 @@ void	DataBusEM::CONNECT_EXCHANGEtoTedl()
 
 		doPrepControl("CONNECT_EXCHANGE");
 
-		toEVENTS(DataBusResourceContext::CONNECT_EXCHANGE);
+		toEVENTS(&DataBusResourceContext::CONNECT_EXCHANGE);
 
 		doControlAction("CONNECT_EXCHANGE");
 
@@ -76,7 +76,7 @@ void	DataBusEM::DISCONNECT_EXCHANGEtoTedl()
 
 		doPrepControl("DISCONNECT_EXCHANGE");
 
-		toEVENTS(DataBusResourceContext::DISCONNECT_EXCHANGE);	// Disconnect events first
+		toEVENTS(&DataBusResourceContext::DISCONNECT_EXCHANGE);	// Disconnect events first
 
 		AST * pin_desc	 = getResource()->getCnx();
 		while(pin_desc){
@@ -106,7 +106,7 @@ void	DataBusEM::DO_EXCHANGEtoTedl()
 
 		doPrepControl("DO_EXCHANGE");
 
-		toEVENTS(DataBusResourceContext::DO_EXCHANGE);
+		toEVENTS(&DataBusResourceContext::DO_EXCHANGE);
 
 		doControlAction("DO_EXCHANGE");
 	
@@ -121,7 +121,7 @@ void	DataBusEM::DISABLE_EXCHANGEtoTedl()
 
 		doPrepControl("DISABLE_EXCHANGE");
 
-		toEVENTS(DataBusResourceContext::DISABLE_EXCHANGE);
+		toEVENTS(&DataBusResourceContext::DISABLE_EXCHANGE);
 
 		doControlAction("DISABLE_EXCHANGE");
 	
@@ -136,7 +136,7 @@ void	DataBusEM::UPDATE_EXCHANGEtoTedl()
 
 		doPrepControl("UPDATE_EXCHANGE");
 
-		toEVENTS(DataBusResourceContext::UPDATE_EXCHANGE);
+		toEVENTS(&DataBusResourceContext::UPDATE_EXCHANGE);
 
 		doControlAction("UPDATE_EXCHANGE");
 	
@@ -151,7 +151,7 @@ void	DataBusEM::FETCH_EXCHANGEtoTedl()
 		
 		doPrepControl("FETCH_EXCHANGE");
 
-		toEVENTS(DataBusResourceContext::FETCH_EXCHANGE);
+		toEVENTS(&DataBusResourceContext::FETCH_EXCHANGE);
 		
 		if(!doControlAction("FETCH_EXCHANGE")){
 			// Error, do not know how to FETCH_EXCHANGE
@@ -195,7 +195,7 @@ void	DataBusEM::do_PROCEEDtoTedl()
 	}
 
 
-void	DataBusEM::FSMError(const char * t, const char * s)
+void	DataBusEM::FSMError(const std::string& t, const std::string& s)
 	{
 		RWCString err;
 		err	+=	" DATABUS:BAD State Transition attempt error: "+RWCString(t);

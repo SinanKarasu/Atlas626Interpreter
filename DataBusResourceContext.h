@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <string>
 
 class DataBusResourceContext;
 class Vertex;
@@ -32,7 +33,7 @@ class DataBusResourceContext: public ResourceContextBASE
 		virtual void InvalidatedResult()=0 ;
 		//virtual void SkipStatetoTedl()=0 ;
 	
-		virtual void FSMError(const char * t, const char * s)=0;
+		virtual void FSMError(const std::string& t, const std::string& s)=0;
 				
 		// Corresponding Events for Action Functions.
 		virtual void ENABLE_EXCHANGE(AST * a=0)=0;

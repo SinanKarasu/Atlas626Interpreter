@@ -33,7 +33,7 @@ class SensorEM : public ResourceSensor{
 		virtual void COMPAREtoTedl();
 		//virtual void SkipStatetoTedl();
 
-		virtual void FSMError(const char * t, const char * s);
+		virtual void FSMError(const std::string& t, const std::string& s);
 
 		// EVENTS for Sensor.
 		virtual void ARM		(AST * a=0);

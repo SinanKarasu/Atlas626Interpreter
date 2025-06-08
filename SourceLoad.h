@@ -33,7 +33,7 @@ class SourceLoadEM : public ResourceSourceLoad{
 		virtual void COMPAREtoTedl();
 		//virtual void SkipStatetoTedl();
 
-		virtual void FSMError(const char * t, const char * s);
+		virtual void FSMError(const std::string& t, const std::string& s);
 
 		// EVENTS for SourceLoad.
 		virtual void APPLY		(AST * a=0);

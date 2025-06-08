@@ -128,7 +128,7 @@ void	SensorEM::DISABLE_EVENTtoTedl()
 	}
 
 
-void	SensorEM::FSMError(const char * t, const char * s)
+void	SensorEM::FSMError(const std::string& t, const std::string& s)
 	{
 		RWCString err;
 		err	+=	" SENSOR:BAD State Transition attempt error: "+RWCString(t);

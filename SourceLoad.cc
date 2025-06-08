@@ -77,7 +77,7 @@ void SourceLoadEM::REMOVEtoTedl()
 		AnalogResourceContext::REMOVEtoTedl();
 	}
 
-void SourceLoadEM::FSMError(const char * t, const char * s)
+void	SourceLoadEM::FSMError(const std::string& t, const std::string& s)
 	{
 		RWCString err;
 		err	+=	" SOURCE/LOAD:BAD State Transition attempt error: "+RWCString(t);

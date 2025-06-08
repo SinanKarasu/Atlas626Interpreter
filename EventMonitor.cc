@@ -67,7 +67,7 @@ void	EventMonitorEM::FETCHtoTedl()
 
 		doPrepControl("FETCH");
 
-		toEVENTS(AnalogResourceContext::FETCH);
+		toEVENTS(&AnalogResourceContext::FETCH);
 
 		doControlAction("FETCH");
 	}
@@ -107,7 +107,7 @@ void	EventMonitorEM::ENABLE_EVENTtoTedl()
 		AnalogResourceContext::ENABLE_EVENTtoTedl();
 	}
 
-void	EventMonitorEM::FSMError(const char * t, const char * s)
+void	EventMonitorEM::FSMError(const std::string& t, const std::string& s)
 	{
 		RWCString err;
 		err	+=	" EVENT MONITOR:BAD State Transition attempt error: "+RWCString(t);

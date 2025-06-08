@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <string>
 
 
 #include	"ResourceContextBASE.h"
@@ -37,7 +38,7 @@ class AnalogResourceContext: public ResourceContextBASE {
 		virtual void AsyncResettoTedl();
 		virtual void ResourceResettoTedl();
 	
-		virtual void FSMError(const char * t, const char * s)=0;
+		virtual void FSMError(const std::string& t, const std::string& s)=0;
 				
 		// Corresponding Events for Action Functions.
 		virtual void APPLY		(AST * a=0)=0;
