@@ -76,7 +76,7 @@ void	SensorEM::FETCHtoTedl()
 		
 		doPrepControl("FETCH");
 
-		toEVENTS(AnalogResourceContext::FETCH);
+		toEVENTS(&AnalogResourceContext::FETCH);
 		
 		if(!doControlAction("FETCH")){
 			// Error, do not know how to FETCH

@@ -14,14 +14,14 @@ DataBusResourceContext::toEVENTS(void (DataBusResourceContext::*c)(AST *))
 	{
 		AST *fr,*to;
 		if(fr=m_Resource->getFromEvent()){
-			if(c==DataBusResourceContext::ENABLE_EXCHANGE){
+			if(c==&DataBusResourceContext::ENABLE_EXCHANGE){
 				fr->init();
 			}
 			Resource * r=fr->getResource();
 			(r->m_currentDataBusFSM->*c)(fr);
 		}
 		if(to=m_Resource->getToEvent()){
-			if(c==DataBusResourceContext::ENABLE_EXCHANGE){
+			if(c==&DataBusResourceContext::ENABLE_EXCHANGE){
 				to->init();
 			}
 			Resource * r=to->getResource();

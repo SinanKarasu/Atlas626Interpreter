@@ -20,6 +20,7 @@
 #include <unordered_set>
 #include <forward_list>
 #include <memory>
+#include <ostream>
 
 typedef std::string RWCString;
 typedef std::regex RWCRegexp;
@@ -167,39 +168,16 @@ private:
 };
 
 
-// inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
-//     for (int i = 0; i < bv.size(); ++i)
-//         os << (bv[i] ? '1' : '0');
-//     return os;
-// }
-
-// inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
-//     for (int i = 0; i < bv.size(); ++i)
-//         os << (bv[i] ? '1' : '0');  // change to:
-//         // os << ((bv[i]) ? '1' : '0');  <-- safer
-//     return os;
-// }
-
-
-// inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
-//     for (int i = 0; i < bv.size(); ++i) {
-// //         char ch = bv[i] ? '1' : '0';
-// //         os << ch;
-// 		os << static_cast<char>(bv[i]);
-//     }
-//     return os;
-// }
-
-
-// inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
-//     for (int i = 0; i < bv.size(); ++i) {
-//         os << (static_cast<bool>(bv[i]) ? '1' : '0');
-//     }
-//     return os;
-// }
-
-
 using RWBitVec = BitVec;
+
+// std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
+//     for (size_t i = 0; i < bv.size(); ++i) {
+//         os.put(bv[i] ? '1' : '0');
+//     }
+//     return os;
+// }
+
+
 
 
 

@@ -20,14 +20,14 @@ AnalogResourceContext::toEVENTS(void (AnalogResourceContext::*c)(AST *))
 	{
 		AST *fr,*to;
 		if(fr=m_Resource->getFromEvent()){
-			if(c==AnalogResourceContext::SETUP){
+			if(c==&AnalogResourceContext::SETUP){
 				fr->init();
 			}
 			Resource * r=fr->getResource();
 			(r->m_currentAnalogFSM->*c)(fr);
 		}
 		if(to=m_Resource->getToEvent()){
-			if(c==AnalogResourceContext::SETUP){
+			if(c==&AnalogResourceContext::SETUP){
 				to->init();
 			}
 			Resource * r=to->getResource();
@@ -85,7 +85,7 @@ AnalogResourceContext::SETUPtoTedl()
 
 		doPrepControl("SETUP");
 
-		toEVENTS(AnalogResourceContext::SETUP);
+		toEVENTS(&AnalogResourceContext::SETUP);
 
 		doControlAction("SETUP");
 
@@ -141,24 +141,25 @@ AnalogResourceContext::CONNECTtoTedl()
 			pin_desc = pin_desc->ASTright();
 		}
 
-		StringListIterator frlit( devPortList );
-		StringListIterator tolit( devPortList );
-		
-		while(++frlit ){
-			while(++tolit){
-				if(frlit.key().index("REF_")==0){
+// 		StringListIterator frlit( devPortList );
+// 		StringListIterator tolit( devPortList );
+		for(const auto frlit: devPortList) {
+		//while(++frlit ){
+			for(const auto tolit: devPortList) {
+			//while(++tolit){
+				if(frlit.find("REF_")==0){
 					// don't consider "REF_..." for now
-				} else if(frlit.key().index("REF_")==0){
+				} else if(tolit.find("REF_")==0){
 					// don't consider "REF_..." for now
-				} else if(frlit.key() != tolit.key() ){
-					Vertex	* portv1=m_Resource->node(frlit.key());
-					Vertex	* portv2=m_Resource->node(tolit.key());
+				} else if(frlit != tolit ){
+					Vertex	* portv1=m_Resource->node(frlit);
+					Vertex	* portv2=m_Resource->node(tolit);
 					if(findPathState(portv1, portv2)!=0){
-						cerr	<<	" PATH is SHORTED.FROM:"
+						std::cerr	<<	" PATH is SHORTED.FROM:"
 							<<	portv1->getName()
 							<<	"  TO:"
 							<<	portv2->getName()
-							<<	endl;
+							<<	std::endl;
 					}
 				}
 			}
@@ -166,7 +167,7 @@ AnalogResourceContext::CONNECTtoTedl()
 		
 		doPrepControl("CONNECT");
 
-		toEVENTS(AnalogResourceContext::CONNECT);
+		toEVENTS(&AnalogResourceContext::CONNECT);
 
 		doControlAction("CONNECT");
 
@@ -181,7 +182,7 @@ AnalogResourceContext::DISCONNECTtoTedl()
 
 		doPrepControl("DISCONNECT");
 
-		toEVENTS(AnalogResourceContext::DISCONNECT);
+		toEVENTS(&AnalogResourceContext::DISCONNECT);
 
 		AST * pin_desc;
 		pin_desc	= getResource()->getCnx();
@@ -214,12 +215,12 @@ AnalogResourceContext::DISCONNECTtoTedl()
 
 		if(m_ConnectRequests.cleanAll()){
 			if(execEnv.deviceTrace()){
-				cerr << "Device " << theName() << " Disconnected " << endl;
+				std::cerr << "Device " << theName() << " Disconnected " << std::endl;
 			}
 			_DISCONNECT();
 		} else {
 			if(execEnv.deviceTrace()){
-				cerr << "Device " << theName() << endl;
+				std::cerr << "Device " << theName() << std::endl;
 				m_ConnectRequests.print();
 			}
 		}
@@ -234,7 +235,7 @@ AnalogResourceContext::DISABLE_EVENTtoTedl()
 
 		doPrepControl("DISABLE");
 
-		toEVENTS(AnalogResourceContext::DISABLE_EVENT);
+		toEVENTS(&AnalogResourceContext::DISABLE_EVENT);
 
 		doControlAction("DISABLE");
 	}
@@ -248,7 +249,7 @@ AnalogResourceContext::ENABLE_EVENTtoTedl()
 
 		doPrepControl("ENABLE");
 
-		toEVENTS(AnalogResourceContext::ENABLE_EVENT);
+		toEVENTS(&AnalogResourceContext::ENABLE_EVENT);
 
 		doControlAction("ENABLE");
 	}
@@ -263,7 +264,7 @@ AnalogResourceContext::CHANGEtoTedl()
 
 		doPrepControl("CHANGE");
 
-		toEVENTS(AnalogResourceContext::CHANGE);
+		toEVENTS(&AnalogResourceContext::CHANGE);
 
 		doControlAction("CHANGE");
 
@@ -278,7 +279,7 @@ AnalogResourceContext::RESETtoTedl()
 
 		doPrepControl("RESET");
 
-		toEVENTS(AnalogResourceContext::RESET);
+		toEVENTS(&AnalogResourceContext::RESET);
 
 		doControlAction("RESET");
 
@@ -289,7 +290,7 @@ void
 AnalogResourceContext::REMOVEtoTedl()
 	{
 		sayhi("REMOVEtoTedl");
-		toEVENTS(AnalogResourceContext::AsyncReset);	// drop them into a holding state
+		toEVENTS(&AnalogResourceContext::AsyncReset);	// drop them into a holding state
 		DISABLE_EVENT();
 		DISCONNECT();
 		//_DISCONNECT();
@@ -370,7 +371,7 @@ AnalogResourceContext::COMPAREtoTedl()
 					sout << c;
 				}
 				
-				sout << endl;
+				sout << std::endl;
 				//CodeGenVisitor codeGenVisitor(sout);
 				//codeGenVisitor.Execute(compAST);
 			}
@@ -388,7 +389,7 @@ AnalogResourceContext::ARMtoTedl()
 
 		doPrepControl("ARM");
 
-		toEVENTS(AnalogResourceContext::ARM);
+		toEVENTS(&AnalogResourceContext::ARM);
 
 		doControlAction("ARM");
 	
@@ -402,14 +403,14 @@ AnalogResourceContext::SkipStatetoTedl()
 	
 		preSetContext();
 	
-		toEVENTS(AnalogResourceContext::SkipState);
+		toEVENTS(&AnalogResourceContext::SkipState);
 	}
 
 void
 AnalogResourceContext::AsyncResettoTedl()
 	{
 		sayhi("AsyncResettoTedl");
-		toEVENTS(AnalogResourceContext::AsyncReset);	// drop them into a holding state
+		toEVENTS(&AnalogResourceContext::AsyncReset);	// drop them into a holding state
 	}
 
 void
@@ -420,6 +421,6 @@ AnalogResourceContext::ResourceResettoTedl()
 		resetFSM();
 		unallocateResource();
 
-		toEVENTS(AnalogResourceContext::ResourceReset);	// clear them up also
+		toEVENTS(&AnalogResourceContext::ResourceReset);	// clear them up also
 	}
 

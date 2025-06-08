@@ -12,7 +12,7 @@ public:
 
 	virtual Resource * clone(Resource * previous,const std::string & newName);
 
-	virtual void AddEdge(const const std::string & from,const const std::string & to,Edge * edge);
+	virtual void AddEdge(const std::string & from,const std::string & to,Edge * edge);
 	virtual int setState(int state, ReverseMap * rm=0);
 
 	virtual int getState();
@@ -46,7 +46,7 @@ private:
 
 	class ResourceContextAST * m_ResourceContextAST;
 	
-	void	addContact	( int, const const std::string &, const const std::string &, AST * control=0 );
+	void	addContact	( int, const std::string &, const std::string &, AST * control=0 );
 
 };
 

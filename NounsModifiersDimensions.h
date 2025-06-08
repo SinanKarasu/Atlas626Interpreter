@@ -107,12 +107,13 @@ public:
 	double scale;
 };
 
+using StringList = AppendableList<std::string>;
 
-class StringList : public RWTValSlist<RWCString>{};
-
-class StringListIterator : public RWTValSlistIterator<RWCString>{
-public:
-	StringListIterator(StringList &d);
-};
+// class StringList : public RWTValSlist<RWCString>{};
+// 
+// class StringListIterator : public RWTValSlistIterator<RWCString>{
+// public:
+// 	StringListIterator(StringList &d);
+// };
 
 #endif // NounsModifiersDimensions_h
