@@ -3,11 +3,11 @@
 
 class Edge;
 
-class EdgeList : public RWTValSlist<Edge *>
+class EdgeList : public AppendableList<Edge *>
 {
 public:
 	EdgeList();
-	int contains(Edge * e);
+	//int contains(Edge * e);// inherited
 	void print(class Association * r=0);
 };
 

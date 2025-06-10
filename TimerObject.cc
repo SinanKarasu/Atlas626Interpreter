@@ -28,7 +28,7 @@ TimeSpec::TimeSpec(const long _sec,const long _nsec){tv_sec=_sec;tv_nsec=_nsec;}
 TimeSpec  
 TimeSpec::operator +(const double  &rhs)
 	{
-		const           nanosecs = 1000000000L;
+		const	long	nanosecs = 1000000000L;
 		long            sec = rhs;
 		long            nsec = (rhs - sec) * 1e9;
 

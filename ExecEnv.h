@@ -40,7 +40,7 @@ public:
 	char *	dbDirectory();
 	char *	cfFile();
 	
-private:	
+public:	
 	friend struct Opt;
 	 void	pTNS (char *s, char *t);
 	int ProcessArgs (int argc, char **argv ,Opt * options);
@@ -63,7 +63,7 @@ private:
 	 void	pCGEN	(char *s, char *t);
 
 
-
+//private:
 	int	setter(int newLevel,int & oldLevel);
 	int		m_edgeTrace		;
 	int		m_nodeTrace		;

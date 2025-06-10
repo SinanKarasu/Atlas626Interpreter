@@ -9,7 +9,7 @@ public:
 	virtual	int		isSource		(Vertex * w=0);
 	virtual NodeType	theType(void);
 private:
-	const NodeType m_NodeType=UutConnectorNodeType; // some random number.
+	static const NodeType m_NodeType=UutConnectorNodeType; // some random number.
 };
 
 #endif // UutConnectorNode_H

@@ -61,7 +61,10 @@ void SignalWatcher::tickle()
 void SignalWatcher::kill()
 	{
 		m_active=0;
-		sigsend((idtype_t)P_MYID,0,m_SigNo);
+		// This line is Solaris specific.
+		// sigsend((idtype_t)P_MYID,0,m_SigNo);
+		// replace with this instead.
+		sem_post(&watcher_sem);  // safe and portable
 	}
 
 int SignalWatcher::active()

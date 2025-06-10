@@ -4,7 +4,7 @@
 #include	"Vertex.h"
 #include	"SwitchContactNode.h"
 
-const NodeType SwitchContactNode::m_NodeType=SwitchContactNodeType;
+// const NodeType SwitchContactNode::m_NodeType=SwitchContactNodeType;
 
 SwitchContactNode::SwitchContactNode (const NodeName & node )
 		:Vertex( node , SwitchContactNodeType )

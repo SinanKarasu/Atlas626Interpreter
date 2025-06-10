@@ -6,9 +6,9 @@
 class TPSHardware : public Resource{
 public:
 	TPSHardware( const RWCString & name, const RWCString & version );
-	TPSHardware( RWCString & newName, Resource * source   );
+	TPSHardware( const RWCString & newName, Resource * source   );
 	
-	virtual Resource * clone(Resource * previous,RWCString & newName);
+	virtual Resource * clone(Resource * previous,const RWCString & newName);
 private:
 	// Disable copy/assignment
         TPSHardware (const TPSHardware &);

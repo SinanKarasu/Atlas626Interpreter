@@ -3,40 +3,41 @@
 #include	"ResourceList.h"
 
 
-ResourceList::ResourceList()
-	:RWTValSlist<Resource *>()
-	{
-	}
+// ResourceList::ResourceList()
+// 	:RWTValSlist<Resource *>()
+// 	{
+// 	}
 
-RWBoolean
-ResourceList::findValue(RWCString key,Resource *& value)
-	{
-		ResourceListIterator rlit(*this);
-		while(++rlit){
-			if(rlit.key()->getName()==key){
-				value=rlit.key();
-				return TRUE;
-			}
-		}
-		return FALSE;
-	}
+// RWBoolean
+// ResourceList::findValue(RWCString key,Resource *& value)
+// 	{
+// 		ResourceListIterator rlit(*this);
+// 		while(++rlit){
+// 			if(rlit.key()->getName()==key){
+// 				value=rlit.key();
+// 				return TRUE;
+// 			}
+// 		}
+// 		return FALSE;
+// 	}
 
 
 
-ResourceListIterator::ResourceListIterator( ResourceList &d )
-        :RWTValSlistIterator<Resource *> (d)
-	{
-	}
+// ResourceListIterator::ResourceListIterator( ResourceList &d )
+//         :RWTValSlistIterator<Resource *> (d)
+// 	{
+// 	}
 
 ResourceListStack::ResourceListStack():m_instantiated(0){}
 
 ResourceList *
 ResourceListStack::getOne()
 	{
-		if(isEmpty()){
+		if(empty()){
 			m_instantiated++;
 			return new ResourceList;
 		} else {
-			return pop();
+			auto ret = top(); pop();
+			return ret;
 		}
 	}

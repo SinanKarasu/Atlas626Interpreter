@@ -5,10 +5,10 @@
 
 class Device : public Resource{
 public:
-	Device( RWCString & name,    RWCString & version );
-	Device( RWCString & newName, Resource * source   );
+	Device( const RWCString & name,    const RWCString & version );
+	Device( const RWCString & newName, Resource * source   );
 	
-	virtual Resource * clone(Resource * previous,RWCString & newName);
+	virtual Resource * clone(Resource * previous, const RWCString & newName);
 	virtual	Vertex *checkLoopThruConnections(Vertex * v,DFSContext & c);
 private:
 	// Disable copy/assignment

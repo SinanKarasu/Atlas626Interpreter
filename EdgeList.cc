@@ -4,39 +4,39 @@
 #include	"Impedance.h"
 #include	"Set.h"
 #include	"Edge.h"
-
+#include <iostream>
 
 EdgeList::EdgeList()
-	:RWTValSlist<Edge *>()
 	{
 	}
 
-int
-EdgeList::contains(Edge  * e)
-	{
-		Edge * x=e;
-		Edge *y=e->m_other;
-		
-		return  (RWTValSlist<Edge *>::contains(x) || RWTValSlist<Edge *>::contains(y));
-	}
+// int
+// EdgeList::contains(Edge  * e)
+// 	{
+// 		Edge * x=e;
+// 		Edge *y=e->m_other;
+// 		
+// 		return  (RWTValSlist<Edge *>::contains(x) || RWTValSlist<Edge *>::contains(y));
+// 	}
 void  
 EdgeList::print(Association * r)
 	{
-		EdgeListIterator elit(*this);
-		while(++elit){
- 			Edge * e=elit.key();
-			cout << "//-Edge " << e->theName() << endl;
+		//EdgeListIterator elit(*this);
+		//while(++elit){
+		for(const auto& elit: *this) {
+ 			Edge * e=elit;
+			std::cout << "//-Edge " << e->theName() << std::endl;
 			if(r){
-				cout << " in Use by " ;
+				std::cout << " in Use by " ;
 			} else {
-				cout << " is free? " ;
+				std::cout << " is free? " ;
 			}
 			e->listCommitted(r);
-			cout << endl;
+			std::cout << std::endl;
 		}
 	}
 
-EdgeListIterator::EdgeListIterator( EdgeList &d )
-        :RWTValSlistIterator<Edge *> (d)
-        {
-        }
+// EdgeListIterator::EdgeListIterator( EdgeList &d )
+//         :RWTValSlistIterator<Edge *> (d)
+//         {
+//         }

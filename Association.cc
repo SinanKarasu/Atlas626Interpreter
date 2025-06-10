@@ -66,23 +66,24 @@ Association::cleanAll()
 		// we will not delete pointers from the same EdgeList we are
 		// iterating over.
 		EdgeList l;
-		EdgeListIterator elit(*this);
-		while(++elit){
-			if(!elit.key()->committed(this)){
-				l.insert(elit.key());
+		//EdgeListIterator elit(*this);
+		for(const auto& elit: *this) {
+		//while(++elit){
+			if(!elit->committed(this)){
+				l.insert(elit);
 			} else {
 				//assert(0);
 			}
 		}
 			
-		EdgeListIterator lit(l);
-			
-		while(++lit){
-			Edge * e=lit.key();
+		//EdgeListIterator lit(l);
+		for(const auto& lit: l){
+		//while(++lit){
+			Edge * e=lit;
 			clean(e);
 		}
 
-		if(entries()==0){
+		if(size()==0){
 			return 1;
 		} else {
 			return 0;
@@ -99,40 +100,40 @@ Association::init( Vertex * uutv,ConnectRequest * cr )
 int 
 Association::isEmpty()
 	{
-		return (entries()==0);
+		return (size()==0);
 	}
 
-Edge * 
-Association::removeEdge(Edge * e)
-	{
-		
-		if (e == 0) {	// either remove any unspecified edge and return it
-			if (entries()) {
-				return removeFirst();
-			}
-		} else {	// or remove a specified edge and return it
-			if ( remove(e) ){
-				return e;
-			}
-		}
-		return 0;
-	}
+////Edge * 
+////Association::removeEdge(Edge * e)
+////	{
+////		
+////		if (e == 0) {	// either remove any unspecified edge and return it
+////			if (size()) {
+////				return removeFirst();
+////			}
+////		} else {	// or remove a specified edge and return it
+////			if ( remove(e) ){
+////				return e;
+////			}
+////		}
+////		return 0;
+////	}
 	
-Edge * 
-Association::getEdge(Edge * e)
-	{
-		if (e == 0) {
-			if (entries() == 0) {
-				return first();
-			}
-		} else {
-			if (contains(e)) {
-				return e;
-			}
-		}
-		return 0;
-	}
-
+////Edge * 
+////Association::getEdge(Edge * e)
+////	{
+////		if (e == 0) {
+////			if (size() == 0) {
+////				return first();
+////			}
+////		} else {
+////			if (contains(e)) {
+////				return e;
+////			}
+////		}
+////		return 0;
+////	}
+////
 
 void
 Association::print()
@@ -145,10 +146,10 @@ AssociationIterator::AssociationIterator( Association &d )
 	{
 	}
 
-AssociationList::AssociationList():RWTValSlist<Association *>()
-	{
-	}
-
+////AssociationList::AssociationList():RWTValSlist<Association *>()
+////	{
+////	}
+////
 //RWCString
 //AssociationList::theName()
 //	{
@@ -160,19 +161,19 @@ AssociationList::AssociationList():RWTValSlist<Association *>()
 void
 AssociationList::print()
 	{
-		AssociationListIterator alit(*this);
-		while(++alit){
- 			Association * a=alit.key();
-			cout << "//-Association " << a->theName() << endl;
+		//AssociationListIterator alit(*this);
+		for(const auto& alit: *this) {
+		//while(++alit){
+ 			Association * a=alit;
+			std::cout << "//-Association " << a->theName() << std::endl;
 			a->print();
-			cout <<"//----- end Association" <<  endl;
+			std::cout <<"//----- end Association" <<  std::endl;
 		}
 	}
 
-AssociationListIterator::AssociationListIterator( AssociationList &d )
-	:RWTValSlistIterator< Association *> (d)
-	{
-	}
+// AssociationListIterator::AssociationListIterator( AssociationList &d )
+// 	{
+// 	}
 
 // A ConnectRequest is a AssociationList
 // It associates to a Vertex *portv , and a Resource * r, a bunch of Associations
@@ -231,10 +232,10 @@ ConnectRequest::getOne(Vertex * uutv)
 			} else {
 				return insertEdge(uutv, 0);
 			}
-		} else if (entries() == 0) {
+		} else if (size() == 0) {
 			return 0;
 		} else {
-			return first();
+			return front();
 		}
 	}
 	
@@ -263,7 +264,7 @@ ConnectRequest::deleteOne(Association *& a)
 int 
 ConnectRequest::isEmpty()
 	{
-		return (entries() == 0);
+		return (size() == 0);
 	}
 		
 int
@@ -284,22 +285,22 @@ ConnectRequest::cleanAll()
 	{
 		AssociationList l;
 
-		AssociationListIterator alit(*this);
-
-		while (++alit) {
-			if (alit.key()->cleanAll()) {
-				l.insert(alit.key());
+		//AssociationListIterator alit(*this);
+		for(const auto& alit: *this) {
+		//while (++alit) {
+			if (alit->cleanAll()) {
+				l.insert(alit);
 			}
 		}
 
-		AssociationListIterator lit(l);
-
-		while (++lit) {
-			Association *a=lit.key();
+		//AssociationListIterator lit(l);
+		for(const auto& lit: l) {
+		//while (++lit) {
+			Association *a=lit;
 			deleteOne( a );
 		}
 
-		if (entries() == 0) {
+		if (size() == 0) {
 			return 1;
 		} else {
 			return 0;
@@ -310,10 +311,10 @@ ConnectRequest::cleanAll()
 void
 ConnectRequest::print()
 	{
-		AssociationListIterator alit(*this);
-
-		while (++alit) {
-			alit.key()->print();
+		//AssociationListIterator alit(*this);
+		for(const auto& alit: *this) {
+		//while (++alit) {
+			alit->print();
 		}
 
 	}
@@ -321,11 +322,11 @@ ConnectRequest::print()
 Association *
 ConnectRequest::find(Vertex * uutv)
 	{
-		AssociationListIterator alit(*this);
-
-		while (++alit) {
-			if (alit.key()->getVertex() == uutv) {
-				return alit.key();
+		//AssociationListIterator alit(*this);
+		for(const auto& alit: *this) {
+		//while (++alit) {
+			if (alit->getVertex() == uutv) {
+				return alit;
 			}
 		}
 		return 0;
@@ -337,15 +338,15 @@ ConnectRequestIterator::ConnectRequestIterator( ConnectRequest &d )
 	{
 	}
 
-ConnectRequestList::ConnectRequestList()
-	:RWTValSlist<ConnectRequest *>()
-	{
-	}
+// ConnectRequestList::ConnectRequestList()
+// 	:RWTValSlist<ConnectRequest *>()
+// 	{
+// 	}
 
-ConnectRequestListIterator::ConnectRequestListIterator( ConnectRequestList &d )
-	:RWTValSlistIterator< ConnectRequest *> (d)
-	{
-	}
+// ConnectRequestListIterator::ConnectRequestListIterator( ConnectRequestList &d )
+// 	:RWTValSlistIterator< ConnectRequest *> (d)
+// 	{
+// 	}
 
 // Now we are finally to mother of all CONNECT/DISCONNECT logic
 // ConnectRequests keep track of alt the connections fo a Resource
@@ -395,10 +396,10 @@ ConnectRequests::getOne(Vertex * portv)
 			} else {
 				return insertEdge(portv, 0, 0);
 			}
-		} else if (entries() == 0) {
+		} else if (size() == 0) {
 			return 0;
 		} else {
-			return first();
+			return front();
 		}
 	}
 	
@@ -406,7 +407,7 @@ void
 ConnectRequests::deleteOne(ConnectRequest *& a)
 	{
 		assert(contains(a));
-		assert(a->entries() == 0);
+		assert(a->size() == 0);
 		remove(a);
 		////////connectRequestStack.push(a);
 		a = 0;
@@ -415,7 +416,7 @@ ConnectRequests::deleteOne(ConnectRequest *& a)
 int 
 ConnectRequests::isEmpty()
 	{
-		return (entries()==0);
+		return (size()==0);
 	}
 		
 int 
@@ -430,20 +431,20 @@ int
 ConnectRequests::cleanAll()
 	{
 		ConnectRequestList l;
-		ConnectRequestListIterator crlit(*this);
-
-		while (++crlit) {
-			if (crlit.key()->cleanAll()) {
-				l.insert(crlit.key());
+		//ConnectRequestListIterator crlit(*this);
+		for(const auto& crlit: *this) {
+		//while (++crlit) {
+			if (crlit->cleanAll()) {
+				l.insert(crlit);
 			}
 		}
-		ConnectRequestListIterator lit(l);
-
-		while (++lit) {
-			ConnectRequest * cr = lit.key();
+		//ConnectRequestListIterator lit(l);
+		for(const auto& lit: l) {
+		//while (++lit) {
+			ConnectRequest * cr = lit;
 			deleteOne( cr );
 		}
-		if (entries() == 0) {
+		if (size() == 0) {
 			return 1;
 		} else {
 			return 0;
@@ -453,10 +454,10 @@ ConnectRequests::cleanAll()
 void 
 ConnectRequests::print()
 	{
-		ConnectRequestListIterator crlit(*this);
-
-		while (++crlit) {
-			crlit.key()->print();
+		//ConnectRequestListIterator crlit(*this);
+		for(const auto& crlit: *this) {
+		//while (++crlit) {
+			crlit->print();
 		}
 	}
 		
@@ -471,10 +472,11 @@ ConnectRequests::init( Resource * r )
 ConnectRequest * 
 ConnectRequests::find(Vertex * portv)
 		{
-			ConnectRequestListIterator crlit(*this);
-			while(++crlit){
-				if(crlit.key()->getVertex()==portv){
-					return crlit.key();
+			//ConnectRequestListIterator crlit(*this);
+			for(const auto& crlit: *this) {
+			//while(++crlit){
+				if(crlit->getVertex()==portv){
+					return crlit;
 				}
 			}
 			return 0;	
@@ -490,11 +492,11 @@ AssociationStack::AssociationStack():m_instantiated(0){}
 Association *
 AssociationStack::getOne(Vertex * uutv,ConnectRequest * cr)
 		{
-			if(isEmpty()){
+			if(empty()){
 				m_instantiated++;
 				return new Association(uutv,cr);
 			} else {
-				Association *a= pop();
+				Association *a= top(); pop();
 				a->init(uutv,cr);
 				return a;
 			}
@@ -505,11 +507,12 @@ AssociationListStack::AssociationListStack():m_instantiated(0){}
 AssociationList *
 AssociationListStack::getOne()
 		{
-			if(isEmpty()){
+			if(empty()){
 				m_instantiated++;
 				return new AssociationList;
 			} else {
-				return pop();
+				auto t=top(); pop();
+				return t;
 			}
 		}
 
@@ -517,11 +520,11 @@ ConnectRequestStack::ConnectRequestStack():m_instantiated(0){}
 ConnectRequest *
 ConnectRequestStack::getOne(Vertex * portv,ConnectRequests * crs)
 		{
-			if(isEmpty()){
+			if(empty()){
 				m_instantiated++;
 				return new ConnectRequest(portv,crs);
 			} else {
-				ConnectRequest *cr= pop();
+				ConnectRequest *cr= top(); pop();
 				cr->init(portv,crs);
 				return cr;
 			}

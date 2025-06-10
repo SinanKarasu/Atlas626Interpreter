@@ -9,23 +9,25 @@ VertexStack::VertexStack ()
 RWBoolean
 VertexStack::Empty()
 	{
-		return (length()==0);
+		return empty();
 	}
 	
 void
 VertexStack::Push(Vertex * v)
 	{
-		append(v);
+		push_back(v);
 	}
 	
 Vertex * 
 VertexStack::Top()
 	{
-		return last();
+		return back();
 	}
 	
 Vertex *
 VertexStack::Pop()
 	{
-		return removeLast();
+		auto theLastOne = Top(); pop_back(); // pople always complain that the non-native speakers of English tend to skip the definitive article the 'the'.
+										// So here it is.
+		return theLastOne;
 	}

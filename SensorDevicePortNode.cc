@@ -5,7 +5,7 @@
 #include	"DevicePortNode.h"
 #include	"SensorDevicePortNode.h"
 
-const NodeType SensorDevicePortNode::m_NodeType=SensorDevicePortNodeType;
+//const NodeType SensorDevicePortNode::m_NodeType=SensorDevicePortNodeType;
 
 SensorDevicePortNode::SensorDevicePortNode (const NodeName & node )
 		:DevicePortNode ( node , SensorDevicePortNodeType )

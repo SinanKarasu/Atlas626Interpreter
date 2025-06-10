@@ -144,9 +144,10 @@ AST *
 SpawnTasksAllAction	::	eval( AST * a )
 				{
 					m_context->init(0);	// message says "INITIALIZE"
-					ASTListIterator tit(*m_tasks);
-					while(++tit){
-						m_context->init(tit.key());
+					//ASTListIterator tit(*m_tasks);
+					for(const auto& tit: *m_tasks) {
+					//while(++tit){
+						m_context->init(tit);
 					}
 					m_context->eval(0);	// message says "WAIT FOR ALL"
 					return 0;
@@ -155,7 +156,7 @@ SpawnTasksAllAction	::	eval( AST * a )
 Long
 SpawnTasksAllAction	::	length	( int indx ) const
 				{
-					return m_tasks->entries();
+					return m_tasks->size();
 				}
 
 SpawnTasksAnyAction	::	SpawnTasksAnyAction ( ASTList * tasks )
@@ -168,9 +169,10 @@ AST *
 SpawnTasksAnyAction	::	eval( AST * a )
 				{
 					m_context->init(0);	// message says "INITIALIZE"
-					ASTListIterator tit(*m_tasks);
-					while(++tit){
-						m_context->init(tit.key());
+					//ASTListIterator tit(*m_tasks);
+					for(const auto& tit: *m_tasks) {					
+					//while(++tit){
+						m_context->init(tit);
 					}
 					m_context->eval(this);	// message says "WAIT FOR ANY"
 					return 0;

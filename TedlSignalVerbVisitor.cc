@@ -37,13 +37,13 @@ AST *	TedlSignalVerbVisitor :: VisitModifierListType		( ModifierListType * a )
 	{
 		ASTList * modifierList =  a->_modifierList;
 		
-		ASTListIterator		it( *modifierList );
+		//ASTListIterator		it( *modifierList );
 		
 		// for each MODIFIER in the modifierList,
 		// shove the values to the arguments.
-		
-		while ( ++it ){
-			m_repository->assign(it.key());
+		for(const auto& it: *modifierList) {
+		//while ( ++it ){
+			m_repository->assign(it);
 		}
 		return 0;	// Hopefully we got all we need.
 		
@@ -53,13 +53,13 @@ AST *	TedlSignalVerbVisitor :: VisitReqModifierListType		( ModifierListType * a 
 	{
 		ASTList * modifierList =  a->_modifierList;
 		
-		ASTListIterator		it( *modifierList );
+		//ASTListIterator		it( *modifierList );
 		
 		// for each MODIFIER in the modifierList,
 		// shove the values to the arguments.
-		
-		while ( ++it ){
-			m_repository->assign(it.key());
+		for(const auto& it: *modifierList) {		
+		//while ( ++it ){
+			m_repository->assign(it);
 		}
 		return 0;	// Hopefully we got all we need.
 		

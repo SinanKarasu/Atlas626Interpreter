@@ -1,3 +1,4 @@
+#include	"AppendCompat.h"
 #include	"SwitchModel.h"
 #include	"TedlDeviceAST.h"
 #include	"TAGContext.h"
@@ -57,9 +58,10 @@ SwitchModel::setState(int state ,ReverseMap * rm)
 		m_SwitchState=state;
 		invalidateDynamicClass();
 		if(rm){
-			EdgeListIterator clit(m_ContactList);
-			while(++clit){
-				Edge * e=clit.key();
+			//EdgeListIterator clit(m_ContactList);
+			for(const auto& clit: m_ContactList) {
+			//while(++clit){
+				Edge * e=clit;
 				rm->processEdge(e);
 				//rm->processNode(e->Sorc);
 				//rm->processNode(e->Dest);
@@ -78,11 +80,12 @@ SwitchModel::addContact(int state,const const std::string & from, const const st
 		Vertex * dest=AddNode(NodeName(to,this),SwitchContactNodeType);
 		
 		// search to see if we have this contact already
-		EdgeListIterator P(m_ContactList);
+		//EdgeListIterator P(m_ContactList);
 	
 		// BEGIN... this is a consistency check and should be disabled eventually.....
-		while(++P){
-			Edge * e=P.key();
+		for(const auto& P: m_ContactList) {
+			//while(++P){
+			Edge * e=P;
 			assert(!((e->Sorc->m_Rank==sorc->m_Rank) && (e->Dest->m_Rank==dest->m_Rank)));
 			assert(!((e->Sorc->m_Rank==dest->m_Rank) && (e->Dest->m_Rank==sorc->m_Rank)));
 		}
@@ -110,12 +113,12 @@ SwitchModel::addContacts	(	int state,int dstate,
 				)
 	{
 		Edge * edge;
-		for(int i=0;i<FromList.entries();i++){
+		for(int i=0;i<FromList.size();i++){
 			addContact(state,FromList[i],ToList[i]);
 		}
 		m_AllStates.set(state);
 		if(dstate>=0)m_DefaultState=dstate;
-		if( (FromList.entries()==0) && m_DefaultState==c_Und ){
+		if( (FromList.size()==0) && m_DefaultState==c_Und ){
 			m_DefaultState=state;
 		}
 		m_SwitchState=m_DefaultState;
@@ -173,9 +176,10 @@ SwitchModel::resetResource(int softOrHard)
 		}
 		invalidateDynamicClass();
 		calculateDynamicClass();
-		EdgeListIterator clit(m_ContactList);
-		while(++clit){
-			Edge * e=clit.key();
+		//EdgeListIterator clit(m_ContactList);
+		for(const auto& clit: m_ContactList) {
+		//while(++clit){
+			Edge * e=clit;
 			e->uncommit(0);
 		}
 		return Resource::resetResource(softOrHard);
@@ -201,7 +205,7 @@ SwitchModel::calculateDisconnect(int state)
 		} else if ( target.isSet(m_DefaultState) ){
 			tstate=m_DefaultState;
 		} else {
-			cerr << "PANIC.. Can not find a state to disconnect to...." << endl;
+			std::cerr << "PANIC.. Can not find a state to disconnect to...." << std::endl;
 			assert(target.isSet(m_DefaultState));
 		}
 		
@@ -211,7 +215,7 @@ SwitchModel::calculateDisconnect(int state)
 				// but the disconnect state we found is different than requested.
 				// Somebody is computing wrong....
 				if(!m_AllStates.isSet(state)){
-					cerr << "PANIC.. No such state to disconnect to...." << endl;
+					std::cerr << "PANIC.. No such state to disconnect to...." << std::endl;
 					assert(m_AllStates.isSet(state));
 				}
 				tstate=state;
@@ -225,9 +229,10 @@ int
 SwitchModel::uncommitEdges(Association * usingAssociation,Association & edgeList)
 	{
 		int status=1;
-		EdgeListIterator clit(m_ContactList);
-		while(++clit){
-			Edge * e=clit.key();
+		//EdgeListIterator clit(m_ContactList);
+		for(const auto& clit: m_ContactList) {
+		//while(++clit){
+			Edge * e=clit;
 			if(edgeList.contains(e)){	// 7-25-1999. Appears that not checked agains m_other....
 				e->uncommit(usingAssociation);
 			}		
@@ -240,9 +245,10 @@ int
 SwitchModel::commitEdges(int state,Association * usingAssociation,EdgeList & edgeList)
 	{
 		int status=1;
-		EdgeListIterator clit(m_ContactList);
-		while(++clit){
-			Edge * e =clit.key();
+		//EdgeListIterator clit(m_ContactList);
+		for(const auto& clit: m_ContactList) {
+		//while(++clit){
+			Edge * e =clit;
 			if(edgeList.contains(e)){
 				e->uncommit(usingAssociation);	// remove usingAssociation first
 				if(e->committed()){	// anybody else ???
@@ -262,9 +268,10 @@ void
 SwitchModel::invalidateDynamicClass	()
 	{
 		Vertex::V_DFSDynamicSearch++;
-		EdgeListIterator clit(m_ContactList);
-		while(++clit){
-			Edge * e=clit.key();
+		//EdgeListIterator clit(m_ContactList);
+		for(const auto& clit: m_ContactList) {
+		//while(++clit){
+			Edge * e=clit;
 			//e->Source->invalidateDynamicClass();
 			//e->Dest->invalidateDynamicClass();
 			e->invalidateDynamicClass();
@@ -273,9 +280,10 @@ SwitchModel::invalidateDynamicClass	()
 void
 SwitchModel::calculateDynamicClass	()
 	{
-		EdgeListIterator clit(m_ContactList);
-		while(++clit){
-			Edge * e=clit.key();
+		//EdgeListIterator clit(m_ContactList);
+		for(const auto& clit: m_ContactList) {
+		//while(++clit){
+			Edge * e=clit;
 			e->calculateDynamicClass();
 		}
 	}
@@ -285,7 +293,7 @@ SwitchModel::calculateDynamicClass	()
 
 void
 SwitchModel::createReverseMap(ReverseMap * rm){
-	int states=m_ConnectVector.entries();
+	int states=m_ConnectVector.size();
 	for(int state=0;state<states;state++){
 		//pcnt++;
 		//if(pcnt==1207){

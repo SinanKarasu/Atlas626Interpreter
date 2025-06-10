@@ -4,19 +4,19 @@
 #include	"Circuit.h"
 
 Resource *
-TPSHardware::clone(Resource * previous,RWCString & newName)
+TPSHardware::clone(Resource * previous,const RWCString & newName)
 	{
 		return new TPSHardware(newName,this);
 	}
 
 
-TPSHardware::TPSHardware(RWCString & name,RWCString &  version)
+TPSHardware::TPSHardware(const RWCString & name,const RWCString &  version)
 	:Resource(0,name,version)
 	{
 	}
 
 
-TPSHardware::TPSHardware(RWCString & newName,Resource * source)
+TPSHardware::TPSHardware(const RWCString & newName,Resource * source)
 	:Resource(0,newName,source)
 	{
 		circuit()->Build(this,source);

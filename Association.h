@@ -89,7 +89,7 @@ public:
 	ConnectRequestIterator( ConnectRequest &d );
 };
 
-class ConnectRequestList : public RWTValSlist<ConnectRequest *>{
+class ConnectRequestList : public AppendableList<ConnectRequest *>{
 public:
 	ConnectRequestList();
 };

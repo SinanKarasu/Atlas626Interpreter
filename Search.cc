@@ -10,25 +10,42 @@ extern ExecEnv execEnv;
 #include<sys/types.h>
 #include<time.h>
 
+#include <chrono>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
+
 
 double timer()
 {
-	double seconds,u_seconds;
-	struct timeval tv;
+// 	double seconds,u_seconds;
+// 	struct timeval tv;
+// 
+// 	gettimeofday(&tv,NULL);
+// 
+// 	//
+// 	// seconds since midnight
+// 	//
+// 	seconds=tv.tv_sec%(60*60*24);
+// 
+// 	//
+// 	// convert micro seconds to seconds
+// 	//
+// 	u_seconds=((float)tv.tv_usec*1e-6);
+// 
+// 	return seconds+u_seconds;
 
-	gettimeofday(&tv,NULL);
 
-	//
-	// seconds since midnight
-	//
-	seconds=tv.tv_sec%(60*60*24);
+    using namespace std::chrono;
+    // Get the current time point
+	auto now = std::chrono::system_clock::now();
+	// Get the duration since the epoch
+	auto duration = now.time_since_epoch();
 
-	//
-	// convert micro seconds to seconds
-	//
-	u_seconds=((float)tv.tv_usec*1e-6);
-
-	return seconds+u_seconds;
+	// Convert the duration to milliseconds as a double
+  	double milliseconds = std::chrono::duration<double, std::milli>(duration).count();
+  	return milliseconds/1000.0;
+	
 }
 
 
@@ -63,50 +80,50 @@ edgeImpedance(Edge * e,DFSContext & c)
 	// we are attempting a path from c.v to c.w
 	if(v->committed(c.w)){	// committed to one of us?
 		if(execEnv.rejReason()){
-			debugtrace << " ACCEPTING (RESOURCE)Committed " << v->theName() << endl;
-			debugtrace << " FOR DEVICE " << c.w->getResource()->theName() << endl;
+			debugtrace << " ACCEPTING (RESOURCE)Committed " << v->theName() << std::endl;
+			debugtrace << " FOR DEVICE " << c.w->getResource()->theName() << std::endl;
 			v->listCommitted() ;
 		}
 		return PathData(e->Cost(AnyPathMode),1);
 	} else if(v->committed(c.v)){	// or committed to other of us?
 		if(execEnv.rejReason()){
-			debugtrace << " ACCEPTING (UUT)Committed " << v->theName() << endl;
-			debugtrace << " FOR DEVICE " << c.v->getResource()->theName() << endl;
+			debugtrace << " ACCEPTING (UUT)Committed " << v->theName() << std::endl;
+			debugtrace << " FOR DEVICE " << c.v->getResource()->theName() << std::endl;
 			v->listCommitted() ;
 		}
 		return PathData(e->Cost(AnyPathMode),1);
 	//} else if(v->dynamicClass()==c.v->dynamicClass()){
 	//	if(execEnv.rejReason()){
-	//		debugtrace << " ACCEPTING (RESOURCE)W/Reservation " << v->theName() << endl;
-	//		debugtrace << " FOR DEVICE " << c.v->getResource()->theName() << endl;
+	//		debugtrace << " ACCEPTING (RESOURCE)W/Reservation " << v->theName() << std::endl;
+	//		debugtrace << " FOR DEVICE " << c.v->getResource()->theName() << std::endl;
 	//		v->listCommitted() ;
 	//	}
 	//	return e->Cost(AnyPathMode);
 	} else if(v->dynamicClass()==c.w->dynamicClass()){
 		if(execEnv.rejReason()){
-			debugtrace << " ACCEPTING (RESOURCE)W/Reservation " << v->theName() << endl;
-			debugtrace << " FOR DEVICE " << c.w->getResource()->theName() << endl;
+			debugtrace << " ACCEPTING (RESOURCE)W/Reservation " << v->theName() << std::endl;
+			debugtrace << " FOR DEVICE " << c.w->getResource()->theName() << std::endl;
 			v->listCommitted() ;
 		}
 		return PathData(e->Cost(AnyPathMode),1);
 	} else if(v->getNodeType()==SourceDevicePortNodeType){
 		if(execEnv.edgeTrace()){
-			debugtrace << " REJECTED SourcePort " << v->theName() << endl;
+			debugtrace << " REJECTED SourcePort " << v->theName() << std::endl;
 		}
 		return PathData(e->Cost(AnyPathMode)*10.0,1);// prematurely ran into a Source
 	} else if(v->getNodeType()==LoadDevicePortNodeType){ 
 		if(execEnv.edgeTrace()){
-			debugtrace << " REJECTED LoadPort " << v->theName() << endl;
+			debugtrace << " REJECTED LoadPort " << v->theName() << std::endl;
 		}
 		return PathData(e->Cost(AnyPathMode)*20.0,1);
 	} else if(v->getNodeType()==PointSourceNodeType){ 
 		if(execEnv.edgeTrace()){
-			debugtrace << " REJECTED PointSource " << v->theName() << endl;
+			debugtrace << " REJECTED PointSource " << v->theName() << std::endl;
 		}
 		return PathData(e->Cost(AnyPathMode)*10.0,1);
 	} else if(v->committed()){	// Committed to somebody else?
 		if(execEnv.rejReason()){
-			debugtrace << " REJECTED Committed " << v->theName() << endl;
+			debugtrace << " REJECTED Committed " << v->theName() << std::endl;
 			v->listCommitted() ;
 		}
 		return PathData(e->Cost(AnyPathMode)*20.0,1);
@@ -124,12 +141,12 @@ DFSCost( Vertex * v , const Impedance currentCost, DFSContext & c, const int cur
 	v->m_Jumps=currentHops;
 	
 	if(execEnv.nodeTrace()){
-		cerr << " At the node " << v->theName() << endl;
-		cerr << "	Current cost: "<<currentCost << endl;
+		std::cerr << " At the node " << v->theName() << std::endl;
+		std::cerr << "	Current cost: "<<currentCost << std::endl;
 	}
 	
 	if(currentCost>=c.maxCost){
-		return PathData(c.maxCost+1,0);
+		return PathData(c.maxCost+1.0,0);
 	}
 
 	if(v==c.w){	// TargetNode. We got it.....
@@ -149,16 +166,17 @@ DFSCost( Vertex * v , const Impedance currentCost, DFSContext & c, const int cur
 		// so continue on
 	} else if(v->getNodeType()==UutConnectorNodeType){
 		// This is an unrelated UUT pin, don't pursue
-		return PathData(c.maxCost+1,0);
+		return PathData(c.maxCost+1.0,0);
 	}
 
 	Impedance cost,zCost;int tryIt;int hop;int pathFound=0;
 
-	EdgeListIterator P(*(v->Adj));
-	while(++P){
-		Edge * e=P.key();
+	//EdgeListIterator P(*(v->Adj));
+	for(const auto P: *(v->Adj)) {
+	//while(++P){
+		Edge * e=P;
 		if(execEnv.edgeTrace()){
-			cerr << " The Edge " << e->theName() << endl;
+			std::cerr << " The Edge " << e->theName() << std::endl;
 		}
 		//cost=e->Cost(AnyPathMode);
 		tryIt=1;
@@ -197,7 +215,7 @@ DFSCost( Vertex * v , const Impedance currentCost, DFSContext & c, const int cur
 					minCost=zCost.m_Cost;
 					pathFound=zCost.m_pathFound;
 					if(execEnv.edgeTrace()){
-						cerr << " Accepting edge " << e->theName() << endl;
+						std::cerr << " Accepting edge " << e->theName() << std::endl;
 					}
 				}
 			} else {
@@ -224,7 +242,7 @@ DFSCost( Vertex * v , const Impedance currentCost, DFSContext & c, const int cur
 						minCost=zCost.m_Cost;
 						pathFound=zCost.m_pathFound;
 						if(execEnv.edgeTrace()){
-							cerr << " Accepting edge " << e->theName() << endl;
+							std::cerr << " Accepting edge " << e->theName() << std::endl;
 						}
 					}
 				}
@@ -243,51 +261,51 @@ int nodeAllowed(Vertex * v,DFSContext & c)
 	
 	if(v->committed(c.w)){	// committed to one of us?
 		if(execEnv.rejReason()){
-			debugtrace << " ACCEPTING (RESOURCE)Committed " << v->theName() << endl;
-			debugtrace << " FOR DEVICE " << c.w->getResource()->theName() << endl;
+			debugtrace << " ACCEPTING (RESOURCE)Committed " << v->theName() << std::endl;
+			debugtrace << " FOR DEVICE " << c.w->getResource()->theName() << std::endl;
 			v->listCommitted() ;
 		}
 		return 1;	// etc..
 	} else if(v->committed(c.v)){	// or committed to other of us?
 		if(execEnv.rejReason()){
-			debugtrace << " ACCEPTING (UUT)Committed " << v->theName() << endl;
-			debugtrace << " FOR DEVICE " << c.v->getResource()->theName() << endl;
+			debugtrace << " ACCEPTING (UUT)Committed " << v->theName() << std::endl;
+			debugtrace << " FOR DEVICE " << c.v->getResource()->theName() << std::endl;
 			v->listCommitted() ;
 		}
 		return 1;	// etc..
 	} else if(v->getNodeType()==SourceDevicePortNodeType){
 		if(execEnv.edgeTrace()){
-			debugtrace << " REJECTED SourcePort " << v->theName() << endl;
+			debugtrace << " REJECTED SourcePort " << v->theName() << std::endl;
 		}
 		return 0;	// prematurely ran into a Source
 	} else if(v->getNodeType()==LoadDevicePortNodeType){ 
 		if(execEnv.edgeTrace()){
-			debugtrace << " REJECTED LoadPort " << v->theName() << endl;
+			debugtrace << " REJECTED LoadPort " << v->theName() << std::endl;
 		}
 		return 0;	// etc..
 	} else if(v->getNodeType()==PointSourceNodeType){ 
 		if(execEnv.edgeTrace()){
-			debugtrace << " REJECTED PointSource " << v->theName() << endl;
+			debugtrace << " REJECTED PointSource " << v->theName() << std::endl;
 		}
 		return 0;	// etc..
 	//} else if(v->dynamicClass()==c.v->dynamicClass()){
 	//	if(execEnv.rejReason()){
-	//		debugtrace << " ACCEPTING (RESOURCE)W/Reservation " << v->theName() << endl;
-	//		debugtrace << " FOR DEVICE " << c.v->getResource()->theName() << endl;
+	//		debugtrace << " ACCEPTING (RESOURCE)W/Reservation " << v->theName() << std::endl;
+	//		debugtrace << " FOR DEVICE " << c.v->getResource()->theName() << std::endl;
 	//		v->listCommitted() ;
 	//	}
 	//	return 1;	// etc..
 	} else if(v->dynamicClass()==c.w->dynamicClass()){
 		if(execEnv.rejReason()){
-			debugtrace << " ACCEPTING (RESOURCE)W/Reservation " << v->theName() << endl;
-			debugtrace << " FOR DEVICE " << c.w->getResource()->theName() << endl;
+			debugtrace << " ACCEPTING (RESOURCE)W/Reservation " << v->theName() << std::endl;
+			debugtrace << " FOR DEVICE " << c.w->getResource()->theName() << std::endl;
 			v->listCommitted() ;
 		}
 		return 1;	// etc..
 	
 	} else if(v->committed()){	// Committed to somebody else?
 		if(execEnv.rejReason()){
-			debugtrace << " REJECTED Committed " << v->theName() << endl;
+			debugtrace << " REJECTED Committed " << v->theName() << std::endl;
 			v->listCommitted() ;
 		}
 		return 0;
@@ -305,13 +323,13 @@ DFSDecision( Vertex * v , const Impedance currentCost, DFSContext & c, const int
 	
 	
 	if(execEnv.nodeTrace()){
-		cerr << " At the node " << v->theName() << endl;
+		std::cerr << " At the node " << v->theName() << std::endl;
 	}
 
 
 	
 	if(currentCost>=c.maxCost){
-		return PathData(c.maxCost+1,0);
+		return PathData(c.maxCost+1.0,0);
 	}
 
 	if(v==c.w){	// TargetNode. We got it.....
@@ -331,17 +349,18 @@ DFSDecision( Vertex * v , const Impedance currentCost, DFSContext & c, const int
 		// so continue on
 	} else if(v->getNodeType()==UutConnectorNodeType){
 		// This is an unrelated UUT pin, don't pursue
-		return PathData(c.maxCost+1,0);
+		return PathData(c.maxCost+1.0,0);
 	}
 
 	PathData minCost(c.maxCost+0.1,0);
 
-	EdgeListIterator P(*(v->Adj));
+	//EdgeListIterator P(*(v->Adj));
 	Impedance cost;int tryIt;int hop;PathData zCost;
-	while(++P){
-		Edge * e=P.key();
+	for(const auto P: *(v->Adj)){
+	//while(++P){
+		Edge * e=P;
 		if(execEnv.edgeTrace()){
-			cerr << " The Edge " << e->theName() << endl;
+			std::cerr << " The Edge " << e->theName() << std::endl;
 		}
 		cost=e->Cost(AnyPathMode);
 		hop = e->Hops();
@@ -368,7 +387,7 @@ DFSDecision( Vertex * v , const Impedance currentCost, DFSContext & c, const int
 					w->m_PrevEdge=e->m_other;
 					minCost=zCost;
 					if(execEnv.edgeTrace()){
-						cerr << " Accepting edge " << e->theName() << endl;
+						std::cerr << " Accepting edge " << e->theName() << std::endl;
 					}
 				}
 			} else {
@@ -396,7 +415,7 @@ DFSDecision( Vertex * v , const Impedance currentCost, DFSContext & c, const int
 						w->m_PrevEdge=e->m_other;
 						minCost=zCost;
 						if(execEnv.edgeTrace()){
-							cerr << " Accepting edge " << e->theName() << endl;
+							std::cerr << " Accepting edge " << e->theName() << std::endl;
 						}
 					}
 				}
@@ -452,20 +471,20 @@ Graph::FindPath( Vertex* StartNode ,Vertex* TargetNode , EdgeList & edgeList  )
 	double endtime=timer();
 	
 	if(double(found.m_Cost)>maxCost){
-		cerr	<< " Searching for path from:" ;
-		cerr	<< StartNode->theName() ;
-		cerr	<< " To:";
-		cerr	<< TargetNode->theName() ;
-		//cerr	<< endl;
+		std::cerr	<< " Searching for path from:" ;
+		std::cerr	<< StartNode->theName() ;
+		std::cerr	<< " To:";
+		std::cerr	<< TargetNode->theName() ;
+		//std::cerr	<< std::endl;
 		
-		cerr	<< " -- ";
+		std::cerr	<< " -- ";
 			
-		cerr << " PATH NOT Found" 	<< endl;
-		cerr << " Elapsed Time " 	<< endtime-starttime << " Secs " << endl;
-		cerr <<  endl;
-		cerr << "Cost:" << found.m_Cost << " Max allowed:" << maxCost << endl;
+		std::cerr << " PATH NOT Found" 	<< std::endl;
+		std::cerr << " Elapsed Time " 	<< endtime-starttime << " Secs " << std::endl;
+		std::cerr <<  std::endl;
+		std::cerr << "Cost:" << found.m_Cost << " Max allowed:" << maxCost << std::endl;
 		
-		cerr << " ABORTING Search"	<< endl;
+		std::cerr << " ABORTING Search"	<< std::endl;
 		return -1;
 	}
 	extern int s1,s2;
@@ -474,9 +493,9 @@ Graph::FindPath( Vertex* StartNode ,Vertex* TargetNode , EdgeList & edgeList  )
 		debugtrace 	<< " Found after " << c.actualHops 	<< " Hops From: "
 				<< StartNode->theName() 		<< " To: "
 				<< TargetNode->theName()
-				<< endl;
+				<< std::endl;
 				
-		debugtrace << " Elapsed Time " << endtime-starttime << " Secs " << endl;
+		debugtrace << " Elapsed Time " << endtime-starttime << " Secs " << std::endl;
 
 	}
 	
@@ -491,7 +510,7 @@ Graph::FindPath( Vertex* StartNode ,Vertex* TargetNode , EdgeList & edgeList  )
 				}
 				debugtrace << "..." ;
 				debugtrace << x->theName();
-				debugtrace << endl;
+				debugtrace << std::endl;
 				printcount=0;
 			}
 			x=NULL;
@@ -521,7 +540,7 @@ Graph::FindPath( Vertex* StartNode ,Vertex* TargetNode , EdgeList & edgeList  )
 			x=e->Dest;
 		}
 		if(printcount>2){
-			debugtrace << endl;
+			debugtrace << std::endl;
 			printcount=0;
 		}
 	}

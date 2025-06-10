@@ -30,7 +30,7 @@ TedlParser::init()
 class TedlBox:public NestedParserBlackBox<TedlLexer,TedlParser,AtlasToken> 
 	{
 		public:
-		TedlBox(const char * f):NestedParserBlackBox<TedlLexer,TedlParser,AtlasToken>(f){}
+		TedlBox(const std::string& f):NestedParserBlackBox<TedlLexer,TedlParser,AtlasToken>(f){}
 	};
 
 
@@ -46,7 +46,7 @@ int tedlmain(  RWCString model ,const RWCString & dbd )
 			tedl_p = new TedlBox(model);
 		}
 		catch ( FileNotFound fnf) {
-			cerr << " Tedl Model File " << fnf << " Not found" << endl;
+			std::cerr << " Tedl Model File " << fnf << " Not found" << std::endl;
 			return -1;
 		} 
 		
@@ -59,7 +59,7 @@ int tedlmain(  RWCString model ,const RWCString & dbd )
 			tedl_p->ResetFile(model);
 		}
 		catch ( FileNotFound fnf) {
-			cerr << " Model File " << fnf << " Not found" << endl;
+			std::cerr << " Model File " << fnf << " Not found" << std::endl;
 			return -1;
 		} 
 	}

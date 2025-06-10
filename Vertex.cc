@@ -135,10 +135,11 @@ int
 Vertex::setEquivalenceClass	(const int parent)
 	{		
 			m_ConstantParent=parent;
-			EdgeListIterator P(*(Adj));
+			//EdgeListIterator P(*(Adj));
 			int low=m_Rank;
-			while( ++P ){
-				Edge * e=P.key();Vertex * Dest;
+			for(const auto& P: *(Adj)){
+			//while( ++P ){
+				Edge * e=P;Vertex * Dest;
 				if( Dest=e->Destination(HardWiredMode )){
 					if( e->Dest->m_ConstantParent==c_Und ){
 						int x=e->Dest->setEquivalenceClass(m_ConstantParent);
@@ -172,10 +173,11 @@ Vertex::setDynamicClass(const int parent)
 	{
 			m_DfsDyn = c_Und-1;
 			m_DynamicParent=parent;
-			EdgeListIterator P(*(Adj));
+			//EdgeListIterator P(*(Adj));
 			int low=m_Rank;
-			while( ++P ){
-				Edge * e=P.key();
+			for(const auto& P: *(Adj)){
+			//while( ++P ){
+				Edge * e=P;
 				if( e->Destination(CurrentMode )){
 					if( e->Dest->m_DfsDyn<c_Und ){
 						// looped back, ignore....
@@ -295,14 +297,15 @@ Vertex *
 Vertex::checkSourceLoop(Vertex * o,DFSContext & c)
 	{
 		Vertex * loopedThru=this;
-		cout << "Checking At Vertex " << theName() << endl;
+		std::cout << "Checking At Vertex " << theName() << std::endl;
 		DFSNUM(++Graph::G_DfsSearch);
 		if(isSource()){
 			getResource()->checkLoopThruConnections(this,c);
 		}
-		EdgeListIterator P(*(Adj));
-		while(++P){
-			Edge * e=P.key();
+		//EdgeListIterator P(*(Adj));
+		for(const auto& P: *(Adj)){
+		//while(++P){
+			Edge * e=P;
 			Vertex * w;
 			if(w=e->Destination(HardWiredMode)){
 				if(!(w->DFSvisited())){
@@ -340,10 +343,11 @@ Vertex::theType(void)
 double
 Vertex::computeVoltage()
 	{
-		EdgeListIterator P(*(Adj));
+		//EdgeListIterator P(*(Adj));
 		double sum_vy=0.0;double sum_y=0.0;
-		while(++P){
-			Edge * e=P.key();
+		for(const auto& P: *(Adj)){
+		//while(++P){
+			Edge * e=P;
 			Vertex * w;
 			if(w=e->Destination(AnyPathMode)){
 				double y_i=e->getAdmittance();

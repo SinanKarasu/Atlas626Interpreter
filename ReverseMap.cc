@@ -68,9 +68,10 @@ DFSGet(Vertex * v,Set & nt,VertexList & vl)
 		if(nt.isSet(v->getNodeType())){
 			vl.append(v);
 		}
-		EdgeListIterator P(*(v->Adj));
-		while(++P){
-			Edge * e=P.key();
+		//EdgeListIterator P(*(v->Adj));
+		for(const auto& P: *(v->Adj)) {
+		//while(++P){
+			Edge * e=P;
 			Vertex * w=e->Destination(CurrentMode);
 			if(w && (!(w->DFSvisited()))){
 				DFSGet(w,nt,vl);
@@ -92,7 +93,7 @@ ReverseMap::reportUUTNodeConnections(Vertex * v)
 		Graph::G_DfsSearchStart=Graph::G_DfsSearch+1;
 		VertexList ateNodes;
 		DFSGet(v,nt,ateNodes);
-		if(ateNodes.entries()>0){
+		if(ateNodes.size()>0){
 			(*m_NodeNodeList)(v,ateNodes);
 		}
 	}
@@ -108,11 +109,12 @@ ReverseMap::getUUTNodes(Vertex * v)
 
 		Graph::G_DfsSearchStart=Graph::G_DfsSearch+1;
 		DFSGet(v,nt,uutNodes);
-		VertexListIterator vlit(uutNodes);
+		//VertexListIterator vlit(uutNodes);
 		int count=0;
-		while(++vlit){
+		for(const auto& vlit: uutNodes) {
+		//while(++vlit){
 			count++;
-			reportUUTNodeConnections(vlit.key());
+			reportUUTNodeConnections(vlit);
 		}
 		return count;
 	}
@@ -132,14 +134,15 @@ ReverseMap::setResourceState(const RWCString & key)
 			rme=rme->getChild();
 		}
 		if(m_NodeNodeList){
-			VertexDictionaryIterator mvlit(m_manipulatedVertices);
-			while(++mvlit){
+			//VertexDictionaryIterator mvlit(m_manipulatedVertices);
+			for(const auto& mvlit: m_manipulatedVertices) {
+			//while(++mvlit){
 				Vertex * v=0;
-				m_manipulatedVertices.findValue(mvlit.key(),v);
+				m_manipulatedVertices.findValue(mvlit.first,v);
 				if(v){
 					getUUTNodes(v);
 				}
-				m_processedVertices.insertKeyAndValue(mvlit.key(),v);
+				m_processedVertices.insertKeyAndValue(mvlit.first,v);
 			}
 			m_manipulatedVertices.clear();
 		}

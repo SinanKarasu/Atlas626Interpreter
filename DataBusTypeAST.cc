@@ -62,21 +62,21 @@ TestEquipBusRole::check( AST * a )	// we are the subset,a is the superset
 					*supset = a;
 		AST			*result = this;
 		AST			*mod	= 0;
-		ASTListIterator		it( *m_mmsList );
+		//ASTListIterator		it( *m_mmsList );
 		
 		// for each MODIFIER in the m_mmsList,
 		// make sure we are covered.
-		
-		while ( ++it ){
-			StringAST modifier(it.key()->getName());
+		for(const auto& it: *m_mmsList ) {
+		//while ( ++it ){
+			StringAST modifier(it->getName());
 			if(mod=supset->data(&modifier)){
-				if(  it.key()->check( mod ) ){
+				if(  it->check( mod ) ){
 					result = this;
 				} else {
 					return 0;
 				}
 			} else {	// oops , modifier not found!!!
-				//Error_Report(" Modifier is not covered. ", it.key());
+				//Error_Report(" Modifier is not covered. ", it);
 				return 0;
 			}
 			
@@ -95,13 +95,14 @@ Long
 TestEquipBusRole::compare( AST * o ) const	// we are the superset
 	{
 		AST	*subset = o;
-		ASTListIterator		it( *m_mmsList );
+		//ASTListIterator		it( *m_mmsList );
 			
 		long	result = -2;
-		while ( ++it ){
+		for(const auto& it: *m_mmsList) {
+		//while ( ++it ){
 			assert(0);
 			
-			switch(  subset->compare(it.key() ) ){
+			switch(  subset->compare(it ) ){
 				case   1:
 						result = 1;
 						break;
@@ -127,12 +128,12 @@ void
 TestEquipBusRole::print(AST * a) const
 	{
 
-		ASTListIterator		it( *m_mmsList );
+		//ASTListIterator		it( *m_mmsList );
 		
 		// for each BUS ROLE in the m_mmsList,
-		
-		while ( ++it ){
-			it.key()->print();
+		for(const auto& it: *m_mmsList) {
+		//while ( ++it ){
+			it->print();
 		}
 	}
 
@@ -140,12 +141,12 @@ TestEquipBusRole::print(AST * a) const
 AST *
 TestEquipBusRole::init( AST * a ){
 
-		ASTListIterator		it( *m_mmsList );
+		//ASTListIterator		it( *m_mmsList );
 		
 		// for each MODIFIER in the m_mmsList,
-		
-		while ( ++it ){
-			it.key()->init(a);
+		for(const auto& it: *m_mmsList) {
+		//while ( ++it ){
+			it->init(a);
 		}
 		return this;
 } 
@@ -163,13 +164,13 @@ Talker			::check( AST * a )
 		if(!m_equipList){
 			return this;
 		}
-		ASTListIterator		it( *m_equipList );
+		//ASTListIterator		it( *m_equipList );
 		
 		// for each Name in the m_equipList,
 		// make sure we are covered.
-		
-		while ( ++it ){
-			StringAST name(it.key()->getName());
+		for(const auto& it: *m_equipList) {
+		//while ( ++it ){
+			StringAST name(it->getName());
 			if(!(mod=supset->data(&name))){
 				return 0;
 			}
@@ -205,13 +206,14 @@ Listener	::check( AST * a )
 		if(!m_equipList){
 			return this;
 		}
-		ASTListIterator		it( *m_equipList );
+		// ASTListIterator		it( *m_equipList );
 		
 		// for each Name in the m_equipList,
 		// make sure we are covered.
 		
-		while ( ++it ){
-			StringAST name(it.key()->getName());
+		for(const auto& it: *m_equipList) {
+		//while ( ++it ){
+			StringAST name(it->getName());
 			if(!(mod=supset->data(&name))){
 				return 0;
 			}
@@ -276,7 +278,8 @@ DataBusData		::DataBusData		( ANTLRTokenPtr p ,AST * a)
 ExchangeModels		::ExchangeModels( ASTList * l )
 				:DataBusTypeAST(0,0)
 				,m_exchangeModelList(l)
-				,m_it(0){};
+				//,m_it(0)
+				{};
 AST *
 ExchangeModels::data(AST * a)
 	{
@@ -296,19 +299,19 @@ ExchangeModels::check( AST * a )	// we are the subset,a is the superset
 		// for each MODIFIER in the m_exchangeModelList,
 		// make sure we are covered.
 		
-		while ( ++(*m_it) ){
-			StringAST modifier(m_it->key()->getName());
+		while ( (*m_it)!= (*m_exchangeModelList).end()){
+			StringAST modifier((*(*m_it))->getName());
 			if(mod=supset->data(&modifier)){
-				if(  m_it->key()->check( mod ) ){
+				if(  (*(*m_it))->check( mod ) ){
 					result = this;
 				} else {
 					return 0;
 				}
 			} else {	// oops , Bus Mode!!!
-				Error_Report(" BUS MODE is not covered. ", m_it->key());
+				Error_Report(" BUS MODE is not covered. ", (*(*m_it)));
 				return 0;
 			}
-			
+			++m_it;
 		}
 		return result;
 	}
@@ -321,17 +324,19 @@ ExchangeModels::assign   ( AST * a )
 
 
 Long
-ExchangeModels::compare( AST * o ) const	// we are the superset
+ExchangeModels::compare( AST * o ) const	// we are the superset. o is the subset.
 	{
 		AST	*subset = o;
 
 		//init();
 					
 		long	result = -2;
-		while ( ++(*m_it) ){
+		//while ( ++(*m_it) ){
+		while ( (*m_it)!= (*m_exchangeModelList).end()){
+
 			assert(0);
 			
-			switch(  subset->compare(m_it->key() ) ){
+			switch(  subset->compare((*(*m_it) )) ){
 				case   1:
 						result = 1;
 						break;
@@ -357,12 +362,12 @@ void
 ExchangeModels::print(AST * a) const
 	{
 
-		ASTListIterator		it( *m_exchangeModelList );
+		// ASTListIterator		it( *m_exchangeModelList );
 		
 		// for each MODIFIER in the m_exchangeModelList,
-		
-		while ( ++it ){
-			it.key()->print();
+		for(const auto& it: *m_exchangeModelList) {
+		//while ( ++it ){
+			it->print();
 		}
 	}
 
@@ -370,14 +375,15 @@ ExchangeModels::print(AST * a) const
 AST *
 ExchangeModels::init( AST * a ){
 
-		if(!m_it){
-			m_it= new ASTListIterator( *m_exchangeModelList );
-		}
-		m_it->reset();
+// 		if(!m_it){
+// 			m_it= (*m_exchangeModelList).begin() ; //new ASTListIterator( *m_exchangeModelList );
+// 		}
+// 		m_it->reset();
 		// for each MODIFIER in the m_exchangeModelList,
 		if(a){
-			while ( ++(*m_it) ){
-				m_it->key()->init(a);
+			for(const auto& it: *m_exchangeModelList ) {
+			//while ( ++(*m_it) ){
+				it->init(a);
 			}
 		}
 		return this;
@@ -388,8 +394,8 @@ ExchangeModels::succ( AST * a ){
 
 		if(m_it){
 			
-			if(++(*m_it)){
-				return m_it->key();
+			if(++(*m_it) == (*m_exchangeModelList).end() ){
+				return *(*m_it);
 			} else {
 				return 0;
 			}
@@ -470,7 +476,7 @@ TestEquipRoleName::data(AST * a)
 void
 TestEquipRoleName::print(AST * a) const
 	{
-		cout << "Modifier Print>>" << getName() << endl;
+		std::cout << "Modifier Print>>" << getName() << std::endl;
 	}
 			
 AST *
@@ -483,7 +489,7 @@ TestEquipRoleName::init(AST * a)
 			Error_Report("NOUN "+nounEntry->noun+" Does not support "
 				+ m_modifierEntry->modifier,getToken());
 		} else if(modifierEntry!=m_modifierEntry){
-			cout << "Changed modifier " << endl;
+			std::cout << "Changed modifier " << std::endl;
 			m_modifierEntry=modifierEntry;
 		}
 		return this;
@@ -531,7 +537,7 @@ AST *	BusModeName::data(AST * a)
 
 void  BusModeName::print(AST * a) const
 	{
-		cout << "Modifier Print>>" << getName() << endl;
+		std::cout << "Modifier Print>>" << getName() << std::endl;
 	}
 			
 AST *	BusModeName::init(AST * a)
@@ -543,7 +549,7 @@ AST *	BusModeName::init(AST * a)
 			Error_Report("NOUN "+nounEntry->noun+" Does not support "
 				+ m_modifierEntry->modifier,getToken());
 		} else if(modifierEntry!=m_modifierEntry){
-			cout << "Changed modifier " << endl;
+			std::cout << "Changed modifier " << std::endl;
 			m_modifierEntry=modifierEntry;
 		}
 		return this;
@@ -595,7 +601,7 @@ AST *	BusParameterName::data(AST * a)
 
 void  BusParameterName::print(AST * a) const
 	{
-		cout << "Modifier Print>>" << getName() << endl;
+		std::cout << "Modifier Print>>" << getName() << std::endl;
 	}
 			
 AST *	BusParameterName::init(AST * a)
@@ -607,7 +613,7 @@ AST *	BusParameterName::init(AST * a)
 			Error_Report("NOUN "+nounEntry->noun+" Does not support "
 				+ m_modifierEntry->modifier,getToken());
 		} else if(modifierEntry!=m_modifierEntry){
-			cout << "Changed modifier " << endl;
+			std::cout << "Changed modifier " << std::endl;
 			m_modifierEntry=modifierEntry;
 		}
 		return this;

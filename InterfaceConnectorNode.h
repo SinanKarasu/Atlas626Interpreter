@@ -11,7 +11,7 @@ public:
 	virtual	int		isSource(Vertex * w=0);
 	virtual NodeType	theType(void);
 private:
-	const NodeType m_NodeType = InterfaceConnectorNodeType;
+	static const NodeType m_NodeType = InterfaceConnectorNodeType;
 };
 
 #endif // InterfaceConnectorNode_H

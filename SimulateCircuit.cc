@@ -11,29 +11,30 @@
 
 
 int connectedComponent(Vertex * v){
-	cout << " ^^^^^^^^^^^^^^^ connectedComponent:" << v->theName() << endl ;
+	std::cout << " ^^^^^^^^^^^^^^^ connectedComponent:" << v->theName() << std::endl ;
 	return 0;
 }
 
 
 int doKirchoff (Vertex * v){
-	EdgeListIterator P(*(v->Adj));
-	while (++P) {
-		Edge * y = P.key();
-		cout << " ^^^^^^^^^^^^^^^ doKirchoff:" << y->theName() << endl ;
+	//EdgeListIterator P(*(v->Adj));
+	for(const auto& P: *(v->Adj)) {
+	//while (++P) {
+		Edge * y = P;
+		std::cout << " ^^^^^^^^^^^^^^^ doKirchoff:" << y->theName() << std::endl ;
 	}
 	return 0;
 }
 
 
 int isWired (Edge * e){
-	//cout << " ^^^^^^^^^^^^^^^ isWired " << endl ;
+	//std::cout << " ^^^^^^^^^^^^^^^ isWired " << std::endl ;
 	return e->Closed();
 }
 
 int isAdmittance (Edge * e)
 {
-	//cout << " ^^^^^^^^^^^^^^^ isAdmittance " << endl ;
+	//std::cout << " ^^^^^^^^^^^^^^^ isAdmittance " << std::endl ;
 	return 1;
 }
 

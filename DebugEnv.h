@@ -40,22 +40,36 @@ public:
 typedef AST * ASTPtr;
 
 	
-class	DebugInfoDictionary:public RWTValHashDictionary < ASTPtr ,DebugInfo * >{
+using DebugInfoDictionary = AppendableMap<ASTPtr ,DebugInfo * >;
+////class	DebugInfoDictionary:public RWTValHashDictionary < ASTPtr ,DebugInfo * >{
+////public:
+////	DebugInfoDictionary();
+////
+////private:
+////	enum {
+////	NbrBuckets = RWDEFAULT_CAPACITY};
+////	               
+////};
+////
+////class	DebugInfoDictionaryIterator:public RWTValHashDictionaryIterator < ASTPtr ,DebugInfo * >{
+////public:
+////	DebugInfoDictionaryIterator(DebugInfoDictionary & d);
+////};
+////
+class LineInfoList:public AppendableList<LineInfo*> {
 public:
-	DebugInfoDictionary();
-
-private:
-	enum {
-	NbrBuckets = RWDEFAULT_CAPACITY};
-	               
+	bool findLineInfo(int lineNo, LineInfo*& out) {
+	    out = nullptr;
+	    for (LineInfo* info : *this) {
+	        if (info->m_LineNo > lineNo) {
+	            return true;
+	        }
+	        out = info;
+	    }
+	    return false;
+	}
 };
 
-class	DebugInfoDictionaryIterator:public RWTValHashDictionaryIterator < ASTPtr ,DebugInfo * >{
-public:
-	DebugInfoDictionaryIterator(DebugInfoDictionary & d);
-};
-
-using LineInfoList = AppendableList<LineInfo*>;
 using LineInfoListIterator = LineInfoList::iterator;
 ////class	LineInfoList:public RWTValSlist < LineInfo * >{
 ////public:

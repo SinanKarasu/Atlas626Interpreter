@@ -80,7 +80,7 @@ Contact::Destination(const DestinationMode mode)
 void
 Contact::insertThyself(EdgeList * edgeList)
 	{
-		edgeList->prepend(this);
+		edgeList->push_front(this);
 //		edgeList->append(this);
 	}
 

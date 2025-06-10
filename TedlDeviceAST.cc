@@ -186,7 +186,7 @@ TedlDeviceDriver::call_func()
 	Func func;
 		
 
-	func = (Func)dlsym(deviceDriverLibraryHandle,getName());
+	func = (Func)dlsym(deviceDriverLibraryHandle,getName().c_str());
 	if ( func == NULL ){
 		throw TedlExecutionError(RWCString("dlsym: ")+RWCString(dlerror()));
 	}
@@ -205,7 +205,8 @@ TedlDeviceDriver::TedlDeviceDriver(ANTLRTokenPtr p)
 	{
 	}
 
-#include "strstream.h"
+//#include "strstream.h"
+#include <sstream>
 
 AST *
 TedlDeviceDriver::init    ( AST * a )
@@ -213,7 +214,7 @@ TedlDeviceDriver::init    ( AST * a )
 		AST * x;
 
 		x=ASTdown();
-		strstream ss;
+		std::ostringstream ss;
 		ss << getName();
 		int f=0;
 		while(x){
@@ -256,7 +257,7 @@ TedlDeviceDriver::init    ( AST * a )
 
 			x=x->ASTright();
 		}
-		ss << ")" <<  ends;
+		ss << ")" <<  std::ends;
 		
 		//cout << ss.str() << endl;
 		
@@ -269,7 +270,7 @@ TedlDeviceDriver::eval(AST * a)
 		AST * x;
 
 		if(execEnv.deviceTrace()){
-			debugtrace << " Calling " << getName() << endl ;
+			debugtrace << " Calling " << getName() << std::endl ;
 		}
 		
 		if(getName()=="btime"){
@@ -296,7 +297,7 @@ TedlDeviceDriver::eval(AST * a)
 				x=x->ASTright();
 			}
 			if(execEnv.deviceTrace()){
-				debugtrace << argCount << " Arguments " << endl;
+				debugtrace << argCount << " Arguments " << std::endl;
 			}
 			call_func();
 			x=ASTdown();

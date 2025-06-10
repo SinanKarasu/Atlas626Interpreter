@@ -5,6 +5,7 @@
 #include	"Edge.h"
 
 #include	"Vertex.h"
+#include <iostream>
 
 extern AssociationListStack theAssociationListStack;
 
@@ -117,7 +118,7 @@ Edge::committed(Association * r)
 			}
 			return 0;
 		} else if(r==0){
-			return (m_usingAssociationList->entries()>0);
+			return (m_usingAssociationList->size()>0);
 		} else if(m_usingAssociationList->contains(r)){
 			return 1;
 		} else {
@@ -135,12 +136,13 @@ Edge::onlycommitted(Association * r)
 			}
 			return 1;
 		} else {
-			AssociationListIterator rcblit(*m_usingAssociationList);
-			while(++rcblit){
-				if(r==rcblit.key()){
-				} else if(r->getResource() !=rcblit.key()->getResource()) {
+			//AssociationListIterator rcblit(*m_usingAssociationList);
+			//while(++rcblit){
+			for(const auto& rcblit: *m_usingAssociationList) {
+				if(r==rcblit){
+				} else if(r->getResource() !=rcblit->getResource()) {
 						return 0;
-				} else if(r->getVertex() !=rcblit.key()->getVertex()) {
+				} else if(r->getVertex() !=rcblit->getVertex()) {
 						return 0;
 				}
 			}
@@ -184,13 +186,14 @@ void
 Edge::listCommitted(Association * r)
 	{
 		if(m_usingAssociationList){
-			AssociationListIterator rcblit(*m_usingAssociationList);
-			while(++rcblit){
-				cout << "//--" << rcblit.key()->theName();
-				if(r && r==rcblit.key()){
-					cout << "<--- Requesting Association !! ";
+			//AssociationListIterator rcblit(*m_usingAssociationList);
+			for(const auto& rcblit: *m_usingAssociationList) {
+			//while(++rcblit){
+				std::cout << "//--" << rcblit->theName();
+				if(r && r==rcblit){
+					std::cout << "<--- Requesting Association !! ";
 				}
-				cout << endl;
+				std::cout << std::endl;
 			}
 		} else if(m_other->m_usingAssociationList){
 			m_other->listCommitted(r);

@@ -2,7 +2,7 @@
 #include "TedlDictionary.h"
 #include "ResourceList.h"
 
-unsigned TedlLabelHash(const RWCString& str) { return str.hash(); }
+// unsigned TedlLabelHash(const RWCString& str) { return str.hash(); }
 
 
 DeviceEquivalence::DeviceEquivalence(RWCString name, RWCString capability)
@@ -31,20 +31,20 @@ DeviceEquivalence::operator RWCString	()	const
 // 		return m_Name;
 // 	}
 
-TedlSymbolDictionary::TedlSymbolDictionary()
-	:RWTValHashDictionary<RWCString ,DeviceEquivalence * >(TedlLabelHash)
-	{
-		resize(NbrBuckets);
-	}
-
-ResourceDictionary::ResourceDictionary()
-	:RWTValHashDictionary<RWCString,Resource *>(TedlLabelHash)
-	{
-		resize(NbrBuckets);
-	}
-
-ResourceDictionaryIterator::ResourceDictionaryIterator( ResourceDictionary &d )
-	:RWTValHashDictionaryIterator<RWCString,Resource *> (d)
-	{
-	}
+// TedlSymbolDictionary::TedlSymbolDictionary()
+// 	:RWTValHashDictionary<RWCString ,DeviceEquivalence * >(TedlLabelHash)
+// 	{
+// 		resize(NbrBuckets);
+// 	}
+// 
+// ResourceDictionary::ResourceDictionary()
+// 	:RWTValHashDictionary<RWCString,Resource *>(TedlLabelHash)
+// 	{
+// 		resize(NbrBuckets);
+// 	}
+// 
+// ResourceDictionaryIterator::ResourceDictionaryIterator( ResourceDictionary &d )
+// 	:RWTValHashDictionaryIterator<RWCString,Resource *> (d)
+// 	{
+// 	}
 

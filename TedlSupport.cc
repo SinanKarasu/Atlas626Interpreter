@@ -70,17 +70,17 @@ Resource *	TedlParser::getDevice( const std::string& nodeName )
 
 int	TedlParser::removeAll(int softHard)
 	{
-		ResourceListIterator arit(activeResources);
+		//ResourceListIterator arit(activeResources);
 		ResourceList	tempList(activeResources);
 
 		//while(++arit){
 		//	templist.insert(arit.key());
 		//}
 
-		ResourceListIterator tlit(tempList);
-
-		while(++tlit){
-			tlit.key()->resetResource(softHard);
+		//ResourceListIterator tlit(tempList);
+		for(const auto& tlit:tempList) {
+		//while(++tlit){
+			tlit->resetResource(softHard);
 		}
 		return 0;
 	}
@@ -249,10 +249,11 @@ TedlParser::argModifier(NounEntry * n, ANTLRTokenPtr t )
 			ModifierEntry * modifierEntry=0;
 			RWCString left;
 			RWCString value=t->getText();
-			if(value(0,1)=="."){
+			if(value.substr(0,1)=="."){
 				value.replace(0,1,"");
 			}
-			value.toUpper();
+			//value.toUpper();
+			toUpper(value);
 			if(modifierEntry = mnemonicsDB->theModifierEntry(value,n,left)){
 				if(!(left=="")){
 					modifierEntry=modifierEntry->clone();

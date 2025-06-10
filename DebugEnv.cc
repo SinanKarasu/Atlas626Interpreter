@@ -22,10 +22,10 @@ ASTPtrHash( const ASTPtr &  p ) { return (unsigned long)(p); }
 //	{
 //	}
 
-DebugInfoDictionaryIterator::DebugInfoDictionaryIterator(DebugInfoDictionary & d)
-	:RWTValHashDictionaryIterator < ASTPtr , DebugInfo * >(d)
-	{
-	}
+////DebugInfoDictionaryIterator::DebugInfoDictionaryIterator(DebugInfoDictionary & d)
+////	:RWTValHashDictionaryIterator < ASTPtr , DebugInfo * >(d)
+////	{
+////	}
 
 const int
 DebugEnv::sendDebugInfo( const AST  *   a,StatusWord s)
@@ -60,32 +60,33 @@ LineInfo::getScope()
 		}
 	}
 
-unsigned
-ASTPtrHash( const AST * & p ) { return unsigned(p); }
+////unsigned
+////ASTPtrHash( const AST * & p ) { return unsigned(p); }
+////
+////DebugInfoDictionary :: DebugInfoDictionary()
+////	:RWTValHashDictionary<AST *,DebugInfo *> (ASTPtrHash)
+////        {resize(NbrBuckets);}
 
-DebugInfoDictionary :: DebugInfoDictionary()
-	:RWTValHashDictionary<AST *,DebugInfo *> (ASTPtrHash)
-        {resize(NbrBuckets);}
-
-RWBoolean
-LineInfoList :: findValue( int lineNo, LineInfo *& value)
-	{
-		value=0;
-		LineInfoListIterator lilit(*this);
-		while(++lilit){
-			if(lilit.key()->m_LineNo > lineNo){
-				return TRUE;
-			}
-			value=lilit.key();
-		}
-		return FALSE;
-
-	}
-
-LineInfoListIterator::LineInfoListIterator(LineInfoList & d)
-	:RWTValSlistIterator < LineInfo * > (d)
-	{
-	}
+////RWBoolean
+////LineInfoList :: findValue( int lineNo, LineInfo *& value)
+////	{
+////		value=0;
+////		LineInfoListIterator lilit(*this);
+////		while(++lilit){
+////			if(lilit.key()->m_LineNo > lineNo){
+////				return TRUE;
+////			}
+////			value=lilit.key();
+////		}
+////		return FALSE;
+////
+////	}
+////
+////LineInfoListIterator::LineInfoListIterator(LineInfoList & d)
+////	:RWTValSlistIterator < LineInfo * > (d)
+////	{
+////	}
+////
 
 DebugEnv::DebugEnv(AtlasBox * b)
 	:m_box(b)
@@ -128,7 +129,7 @@ AST *
 DebugEnv::setBreakPoint(int lineNo,int mode,CallBack f)
 	{
 		LineInfo * lineInfo=0;
-		lineInfoList.findValue( lineNo, lineInfo);
+		lineInfoList.findLineInfo( lineNo, lineInfo);
 		if(lineInfo){
 			pthread_mutex_lock(&m_mutex);
 			lineInfo->m_LineAction->setBreakPoint(mode);
@@ -182,9 +183,10 @@ DebugEnv::sendPath(EdgeList & edgeList)
 	{
 		EdgeList lEdgeList;
 		if(m_path_cb){
-			EdgeListIterator elit(edgeList);
-			while(++elit){
-				lEdgeList.append(elit.key());
+			//EdgeListIterator elit(edgeList);
+			for(const auto& elit: edgeList) {
+			//while(++elit){
+				lEdgeList.append(elit);
 			}
 			DebugInfo debugInfo(m_where);
 			debugInfo.m_EdgeList=&lEdgeList;
@@ -238,7 +240,7 @@ void
 DebugEnv::setEnv(int LineNo)
 	{
 		LineInfo * x=0;
-		lineInfoList.findValue(LineNo,x);
+		lineInfoList.findLineInfo(LineNo,x);
 		if(x){
 			m_box->parser()->setScope(x->getScope());
 		}

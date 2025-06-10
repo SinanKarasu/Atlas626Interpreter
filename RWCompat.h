@@ -170,6 +170,16 @@ private:
 
 using RWBitVec = BitVec;
 
+#include <algorithm>
+#include <cctype>
+#include <string>
+
+void toUpper(std::string& str) {
+    std::transform(str.begin(), str.end(), str.begin(),
+                   [](unsigned char c) { return std::toupper(c); });
+}
+
+
 // std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
 //     for (size_t i = 0; i < bv.size(); ++i) {
 //         os.put(bv[i] ? '1' : '0');

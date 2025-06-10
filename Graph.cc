@@ -30,14 +30,16 @@ void Graph::Build(Resource * r, Resource  * source )
 {
 	Graph * g=source->circuit();
 	
-	VertexListIterator vit(g->m_VertexList);
-	while(++vit){
-		Vertex * vertex = vit.key();
+	//VertexListIterator vit(g->m_VertexList);
+	for(const auto vit: g->m_VertexList) {
+	//while(++vit){
+		Vertex * vertex = vit;
 		r->AddNode(vertex->getName(),vertex->getNodeType());	// This is necessary for isolated nodes..
 									// Such as DVM HI etc....
-		EdgeListIterator P(*(vertex->Adj));
-		while( ++P){
-			Edge * e=P.key();
+		//EdgeListIterator P(*(vertex->Adj));
+		for(const auto P: *(vertex->Adj)) {
+		//while( ++P){
+			Edge * e=P;
 			if(e->getResource()==source){
 				Resource * rSource	=e->Sorc->getResource();
 				Resource * rDest	=e->Dest->getResource();
@@ -81,7 +83,7 @@ Graph::AddNode( Vertex * Result )
 	Result->m_Graph=this;
 	Result->Adj= new EdgeList;
 		
-	Table.insert( Result );		// insert at NumVertices for the global table
+	Table.append( Result );		// insert at NumVertices for the global table
 	m_VertexList.insert(Result);	// and into the Graph local list
 	return Table[NumVertices++];
 
@@ -110,12 +112,12 @@ void
 Graph::PrintPath( int DestNode ) const
 {
 	if( Table[ DestNode ]->Dist() == Infinity ) {
-		cout << Table[ DestNode ]->getName() << " is unreachable";
+		std::cout << Table[ DestNode ]->getName() << " is unreachable";
 	} else {
 		PrintPathRec( DestNode );
-		cout << " (cost is " << Table[ DestNode ]->Dist() << ")";
+		std::cout << " (cost is " << Table[ DestNode ]->Dist() << ")";
 	}
-	cout << endl;
+	std::cout << std::endl;
 }
 
 
@@ -127,9 +129,9 @@ Graph::PrintPathRec( int DestNode ) const
 {
 	if( Table[ DestNode ]->m_Prev != NullVertex ) {
 		PrintPathRec( Table[ DestNode ]->m_Prev );
-		cout << " to ";
+		std::cout << " to ";
 	}
-	cout << Table[ DestNode ]->getName();
+	std::cout << Table[ DestNode ]->getName();
 }
 
 
@@ -186,13 +188,14 @@ Graph::linkDynamic(Edge * e)
 void
 AllWires(Vertex * v ,DFSContext & c)
 {
-	cout	<< "\t" << "(" << v->m_Rank << "," << v->equivalenceClass() << ")"
-		<< v->theName() << endl;
+	std::cout	<< "\t" << "(" << v->m_Rank << "," << v->equivalenceClass() << ")"
+		<< v->theName() << std::endl;
 	v->DFSNUM(c.count1=++Graph::G_DfsSearch);
-	EdgeListIterator P(*(v->Adj));
-	while(++P){
+	//EdgeListIterator P(*(v->Adj));
+	for(const auto P : *(v->Adj)){
+	//while(++P){
 		Vertex * w;
-		if(w=P.key()->Destination(HardWiredMode)){
+		if(w=P->Destination(HardWiredMode)){
 			assert(v->equivalenceClass()==w->equivalenceClass());
 			if(!(w->DFSvisited())){
 				AllWires(w,c);
@@ -207,8 +210,8 @@ void Graph::DumpTable()
 	int i;
 	
 	for( i = 0; i < Graph::numVertices(); i++ ){
-		EdgeListIterator P(*(Graph::vertex( i )->Adj));
-		cout	<< i
+		//EdgeListIterator P(*(Graph::vertex( i )->Adj));
+		std::cout	<< i
 			<< "("
 			<< Graph::vertex( i )->equivalenceClass()
 			<< ","
@@ -217,27 +220,28 @@ void Graph::DumpTable()
 			<< ":" << Graph::vertex( i )->theName()
 			<< " >>>" ;
 		int count=0;
-		while(++P ){
-			Edge * e=P.key();
+		for(const auto P: *(Graph::vertex( i )->Adj)) {
+		//while(++P ){
+			Edge * e=P;
 			count++;
-			cout << e->theName();
+			std::cout << e->theName();
 			if(count % 5 == 0){
-				cout << endl;
-				cout << "          ";
+				std::cout << std::endl;
+				std::cout << "          ";
 			}
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 	
 	
 	ClearData( );
 
 	DFSContext c(0,0,0);
-	cout << " WIRE CONNECTIVITY " << endl;
+	std::cout << " WIRE CONNECTIVITY " << std::endl;
 	for( i = 0; i < NumVertices; i++ ) {
 		Vertex * W=Table[ i ];
 		if( !W->DFSvisited() ){
-				cout << "(" << W->m_Rank << "," << W->equivalenceClass() << ")" << W->theName() << endl;
+				std::cout << "(" << W->m_Rank << "," << W->equivalenceClass() << ")" << W->theName() << std::endl;
 				AllWires(W,c);	
 		}
 	}
@@ -267,10 +271,11 @@ EquivClasses(Vertex * v ,DFSContext & c)
 	// This routine sets the Hard Connected Components
 	v->DFSNUM(c.count1=++Graph::G_DfsSearch);
 	v->LOWPT(v->DFSNUM());
-	EdgeListIterator P(*(v->Adj));
-	while(++P){
+	//EdgeListIterator P(*(v->Adj));
+	for(const auto P: *(v->Adj)) {
+	//while(++P){
 		Vertex * w;
-		if(w=P.key()->Destination(HardWiredMode)){	// Is this a hard wire?
+		if(w=P->Destination(HardWiredMode)){	// Is this a hard wire?
 			if(!(w->DFSvisited())){
 				EquivClasses(w,c);
 				w->CURRENT(1);
@@ -299,10 +304,11 @@ AllResources(Vertex * v ,DFSContext & c)
 {
 	v->DFSNUM(c.count1=++Graph::G_DfsSearch);
 	v->commitEquivalence();
-	EdgeListIterator P(*(v->Adj));
-	while(++P){
+	//EdgeListIterator P(*(v->Adj));
+	for(const auto P: *(v->Adj)) {
+	//while(++P){
 		Vertex * w;
-		if(w=P.key()->Destination(HardWiredMode)){
+		if(w=P->Destination(HardWiredMode)){
 			if(!(w->DFSvisited())){
 				AllResources(w,c);
 			}
@@ -323,10 +329,11 @@ void
 AllEq(Vertex * v ,DFSContext & c)
 {
 	v->DFSNUM(c.count1=++Graph::G_DfsSearch);
-	EdgeListIterator P(*(v->Adj));
-	while(++P){
+	//EdgeListIterator P(*(v->Adj));
+	for(const auto P: *(v->Adj)) {
+	//while(++P){
 		Vertex * w;
-		if(w=P.key()->Destination(HardWiredMode)){
+		if(w=P->Destination(HardWiredMode)){
 			assert(v->equivalenceClass()==w->equivalenceClass());
 			if(!(w->DFSvisited())){
 				AllEq(w,c);
@@ -412,7 +419,7 @@ Graph::Initialize( )
 				if(W->isSource()){
 					int s=W->getEquivalence()->getSourceCount();
 					if(s>0){
-						cout << "Checking " << W->theName() << endl;
+						std::cout << "Checking " << W->theName() << std::endl;
 						if(W->theName()=="ATE:PP-T34"){
 							int ijkl=1234;
 						}
@@ -422,7 +429,7 @@ Graph::Initialize( )
 								<< W->theName()
 								<< " Source LOOPS to:"
 								<< v->theName()
-								<< endl ;
+								<< std::endl ;
 						}
 					}
 				}
@@ -450,22 +457,22 @@ int Graph::TagCritical(Vertex * here, Edge * to_here , TAGContext & lookAhead )
 
       		nl=now=min=here->DFSNUM();
       		
-		EdgeListIterator P(*(here->Adj));
-		
-		while (++P) {
+		//EdgeListIterator P(*(here->Adj));
+		for(const auto P: *(here->Adj)) {
+		//while (++P) {
 			Vertex * there;
-			if (there=P.key()->Destination(CurrentMode)){	//traversable path ?
+			if (there=P->Destination(CurrentMode)){	//traversable path ?
 				if( !there->DFSvisited()){	// not yet visited
-					nl=TagCritical(there,P.key()->m_other,localLookAhead);//see if we loop back
-					P.key()->setIsthmus(nl>now);
-					P.key()->setLookAhead(localLookAhead);
+					nl=TagCritical(there,P->m_other,localLookAhead);//see if we loop back
+					P->setIsthmus(nl>now);
+					P->setLookAhead(localLookAhead);
 					if (nl<min) {min=nl;}		//remember lowest node seen
-				} else if (P.key()==to_here) {
+				} else if (P==to_here) {
 					//this is how we came here, so ignore. Allows multiple wires.
 				} else {	// Already visited so must be a cycle
-					P.key()->setIsthmus(0);
-					TAGContext temp(P.key()->Dest);
-					P.key()->setLookAhead(temp);
+					P->setIsthmus(0);
+					TAGContext temp(P->Dest);
+					P->setLookAhead(temp);
 					if(there->DFSNUM() < min){
 						min=there->DFSNUM();
 					}

@@ -4,7 +4,7 @@
 #include	"Vertex.h"
 #include	"InterfaceConnectorNode.h"
 
-const NodeType InterfaceConnectorNode::m_NodeType=InterfaceConnectorNodeType;
+// const NodeType InterfaceConnectorNode::m_NodeType=InterfaceConnectorNodeType;
 
 InterfaceConnectorNode::InterfaceConnectorNode (const NodeName & node )
 		:Vertex ( node , InterfaceConnectorNodeType )

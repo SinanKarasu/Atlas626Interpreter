@@ -20,7 +20,9 @@ DevicePath::admitConnect(Vertex * w)
 RWCString 
 DevicePath::theName() 
 	{
-		return "DevicePath:"+m_nodeName;
+		//sik return std::string("DevicePath:")+m_nodeName;
+		return std::string("DevicePath:")+m_nodeName.getName();
+
 	}
 
 
@@ -46,15 +48,15 @@ DevicePath::isSource(Vertex * w)
 // DevicePathDictionary::DevicePathDictionary():RWTValHashDictionary<RWCString,DevicePath *>(DevicePathHash)
 //         {resize(NbrBuckets);}
 
-DevicePathList::DevicePathList()
-	:RWTValSlist<DevicePath *>()
-	{
-	}
+// DevicePathList::DevicePathList()
+// 	:RWTValSlist<DevicePath *>()
+// 	{
+// 	}
 	
-DevicePathListIterator::DevicePathListIterator( DevicePathList &d )
-        :RWTValSlistIterator<DevicePath *> (d)
-        {
-        }
+// DevicePathListIterator::DevicePathListIterator( DevicePathList &d )
+//         :RWTValSlistIterator<DevicePath *> (d)
+//         {
+//         }
 
 // DevicePathDictionaryIterator::DevicePathDictionaryIterator(DevicePathDictionary &d)
 // 	:RWTValHashDictionaryIterator< RWCString,DevicePath *> (d) 

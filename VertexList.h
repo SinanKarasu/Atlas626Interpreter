@@ -3,14 +3,16 @@
 
 class Vertex;
 
-class VertexList : public RWTValSlist<Vertex *> {
-public:
-	VertexList();
-};
+// class VertexList : public RWTValSlist<Vertex *> {
+// public:
+// 	VertexList();
+// };
 
-class VertexListIterator : public RWTValSlistIterator<Vertex *>{
-	public: VertexListIterator( VertexList &d );
-};
+using VertexList = AppendableList<Vertex *>;
+
+// class VertexListIterator : public RWTValSlistIterator<Vertex *>{
+// 	public: VertexListIterator( VertexList &d );
+// };
 
 
 class VertexListStack : public RWTStack< VertexList * , RWTValOrderedVector < VertexList * > >{

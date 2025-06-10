@@ -108,7 +108,7 @@ Equivalence::onlycommitted(Vertex * v,Equivalence * last)
 	{
 		assert(v);
 		if(m_usingDeviceNodes){
-			if(committed(v)&&(m_usingDeviceNodes->entries()==1)){
+			if(committed(v)&&(m_usingDeviceNodes->size()==1)){
 				if( last && m_fwd != last ){
 					return (m_fwd->committed(0,last)==0); // search for any commitment
 				} else {
@@ -150,13 +150,14 @@ void
 Equivalence::listCommitted(Vertex * v,Equivalence * last)
 	{
 		if(m_usingDeviceNodes){
-			VertexListIterator vlit(*m_usingDeviceNodes);
-			while(++vlit){
-				cout << "//--" << vlit.key()->theName();
-				if(v && v==vlit.key()){
-					cout << "<--- Requesting Vertex!! ";
+			//VertexListIterator vlit(*m_usingDeviceNodes);
+			for(const auto& vlit: *m_usingDeviceNodes) {
+			//while(++vlit){
+				std::cout << "//--" << vlit->theName();
+				if(v && v==vlit){
+					std::cout << "<--- Requesting Vertex!! ";
 				}
-				cout << endl;
+				std::cout << std::endl;
 			}
 		}
 		if( last && m_fwd != last ){

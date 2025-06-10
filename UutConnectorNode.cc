@@ -4,7 +4,7 @@
 #include	"Vertex.h"
 #include	"UutConnectorNode.h"
 
-const NodeType UutConnectorNode::m_NodeType=UutConnectorNodeType;
+// const NodeType UutConnectorNode::m_NodeType=UutConnectorNodeType;
 
 UutConnectorNode::UutConnectorNode(const NodeName & node )
 		:Vertex ( node , UutConnectorNodeType )
