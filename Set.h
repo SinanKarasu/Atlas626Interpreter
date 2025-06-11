@@ -43,7 +43,7 @@ class Set : public BitVec {
 
 
 //friend 
-std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
+inline std::ostream& operator<<(std::ostream& os, const BitVec& bv) {
     for (size_t i = 0; i < bv.size(); ++i) {
         os.put(bv[i] ? '1' : '0');
     }
