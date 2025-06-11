@@ -8,27 +8,27 @@
 // 	{
 // 	}
 // 
-// InitData::InitData(AST * rep,AST * data,InitList * list)
-// 		:_rep(rep),_counter(0),_data(data),_list(list),_iterator(0)
-// 		{q
-// 			if(_list){
-// 				_iterator=new InitListIterator (*_list);
-// 			}
-// 		};
+InitData::InitData(AST * rep,AST * data,InitList * list)
+		:_rep(rep),_counter(0),_data(data),_list(list),_iterator(0)
+		{
+			if(_list){
+				_iterator=new InitListIterator (*_list);
+			}
+		};
 // 
 // InitListIterator::InitListIterator(InitList & il)
 // 	:RWTPtrSlistIterator<InitData>(il)
 // 	{
 // 	}
 // 
-// void
-// InitData::reset()
-// 	{
-// 		_counter=0;
-// 		if(_list){
-// 			_iterator->reset();
-// 		}
-// 	}
+void
+InitData::reset()
+	{
+		_counter=0;
+		if(_list){
+			_iterator->reset();
+		}
+	}
 // 
 // RWBoolean
 // InitData::more()

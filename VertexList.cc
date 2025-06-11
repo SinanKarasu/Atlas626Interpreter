@@ -12,7 +12,9 @@
 // 	}
 // 
 // 
-// VertexListStack::VertexListStack():m_instantiated(0){}
+VertexListStack::VertexListStack()
+	:RWTStack< VertexList * , RWTValOrderedVector < VertexList * > >()
+,m_instantiated(0){}
 
 VertexList *
 VertexListStack::getOne()

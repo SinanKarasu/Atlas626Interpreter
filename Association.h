@@ -33,10 +33,10 @@ private:
 	ConnectRequest * m_ConnectRequest;
 };
 
-class AssociationIterator : public EdgeListIterator{
-public:
-	AssociationIterator( Association &d );
-};
+////class AssociationIterator : public EdgeListIterator{
+////public:
+////	AssociationIterator( Association &d );
+////};
 
 class AssociationList : public AppendableList<Association *>{
 public:
@@ -84,20 +84,21 @@ private:
 
 };
 
-class ConnectRequestIterator : public AssociationListIterator{
-public:
-	ConnectRequestIterator( ConnectRequest &d );
-};
+////class ConnectRequestIterator : public AssociationListIterator{
+////public:
+////	ConnectRequestIterator( ConnectRequest &d );
+////};
 
 class ConnectRequestList : public AppendableList<ConnectRequest *>{
 public:
 	ConnectRequestList();
 };
 
-class ConnectRequestListIterator : public RWTValSlistIterator<ConnectRequest *>{
-public:
-	ConnectRequestListIterator( ConnectRequestList &d );
-};
+////class ConnectRequestListIterator : public RWTValSlistIterator<ConnectRequest *>{
+////public:
+////	ConnectRequestListIterator( ConnectRequestList &d );
+////};
+////
 
 class ConnectRequests : public ConnectRequestList {
 public:
@@ -129,10 +130,10 @@ private:
 	Resource * m_Resource;
 };
 
-class ConnectRequestsIterator : public ConnectRequestListIterator{
-public:
-	ConnectRequestsIterator( ConnectRequestList &d );
-};
+////class ConnectRequestsIterator : public ConnectRequestListIterator{
+////public:
+////	ConnectRequestsIterator( ConnectRequestList &d );
+////};
 
 
 class AssociationStack : public RWTStack< Association * , RWTValOrderedVector < Association * > >{

@@ -41,6 +41,10 @@ class astream : public std::fstream {
 
 astream &operator<<(astream &s, const BitVec *x);
 
+inline astream &operator<<(astream &s, const BitVec &x) {
+    return s << &x;
+}
+
 astream &operator>>(astream &s, AST *a);
 // astream		&operator<<( astream &s, AST *a );
 

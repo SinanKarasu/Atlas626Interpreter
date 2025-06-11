@@ -842,11 +842,12 @@ TerminalType::operator<<( astream& s )
 AST *
 TerminalType::eval( AST * a ){return this;};
 
-// Long
-// TerminalType::compare( AST * o ) const
-// 	{
-// 		return this->_data->compareTo( *(RWCString *)((o->eval())->data()) );
-// 	}
+Long
+TerminalType::compare( AST * o ) const
+	{
+		//sik is this correct?
+		return this->_data->compare( *(RWCString *)((o->eval())->data()) );
+	}
 	
 ////Long
 ////TerminalType::compare( AST * o ) const

@@ -72,7 +72,7 @@ inline bool ends_with(const std::string& str, const std::string& suffix) {
 
 
 
-std::vector<bool> bitwise_not(const std::vector<bool>& bits) {
+inline std::vector<bool> bitwise_not(const std::vector<bool>& bits) {
     std::vector<bool> result(bits.size());
     for (size_t i = 0; i < bits.size(); ++i) {
         result[i] = !bits[i];
@@ -174,7 +174,7 @@ using RWBitVec = BitVec;
 #include <cctype>
 #include <string>
 
-void toUpper(std::string& str) {
+inline void toUpper(std::string& str) {
     std::transform(str.begin(), str.end(), str.begin(),
                    [](unsigned char c) { return std::toupper(c); });
 }

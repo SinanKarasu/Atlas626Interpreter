@@ -141,10 +141,10 @@ Association::print()
 		EdgeList::print(this);
 	}
 
-AssociationIterator::AssociationIterator( Association &d )
-        :EdgeListIterator (d)
-	{
-	}
+////AssociationIterator::AssociationIterator( Association &d )
+////        :EdgeListIterator (d)
+////	{
+////	}
 
 ////AssociationList::AssociationList():RWTValSlist<Association *>()
 ////	{
@@ -157,6 +157,7 @@ AssociationIterator::AssociationIterator( Association &d )
 //		return RWCString("[")+m_ConnectRequest->theName()+"]"+m_uutv->theName();
 //	}
 
+AssociationList::AssociationList():AppendableList<Association *>() {}
 
 void
 AssociationList::print()
@@ -333,12 +334,15 @@ ConnectRequest::find(Vertex * uutv)
 	}
 
 
-ConnectRequestIterator::ConnectRequestIterator( ConnectRequest &d )
-	:AssociationListIterator (d)
-	{
-	}
+////ConnectRequestIterator::ConnectRequestIterator( ConnectRequest &d )
+////	:AssociationListIterator (d)
+////	{
+////	}
 
 // ConnectRequestList::ConnectRequestList()
+ConnectRequestList::ConnectRequestList():AppendableList<ConnectRequest *>()
+{
+}
 // 	:RWTValSlist<ConnectRequest *>()
 // 	{
 // 	}
@@ -482,10 +486,10 @@ ConnectRequests::find(Vertex * portv)
 			return 0;	
 		}
 
-ConnectRequestsIterator::ConnectRequestsIterator( ConnectRequestList &d )
-	:ConnectRequestListIterator (d)
-	{
-	}
+////ConnectRequestsIterator::ConnectRequestsIterator( ConnectRequestList &d )
+////	:ConnectRequestListIterator (d)
+////	{
+////	}
 
 //----------------------------------------------------------
 AssociationStack::AssociationStack():m_instantiated(0){}

@@ -165,6 +165,8 @@ TheType	PREDFunction::getType	( AST * a ) const { return ASTdown()->getType(); }
 #include <iomanip>
 #include <sstream>
 
+DATEFunction::DATEFunction():BuiltinFunctionAST(){ ast = 0; }
+
 AST* DATEFunction::eval(AST* ast) {
     using namespace std::chrono;
 
