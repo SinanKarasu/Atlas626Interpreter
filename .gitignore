@@ -14,7 +14,11 @@
 cmake-build-*/
 CMakeFiles/
 CMakeCache.txt
-Makefile
+
+**/cmake-*/Makefile
+!Makefile
+
+##Makefile
 CMakeScripts/
 Testing/
 CTestTestfile.cmake
